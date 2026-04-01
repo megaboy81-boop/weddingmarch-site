@@ -76,7 +76,7 @@ const stats = [
 <!-- ══════ VIDEO SCROLL — 섹션 1 (frames 001~064) ════════════════════════ -->
 <section id="vs1" style="height:350vh;position:relative;">
   <div style="position:sticky;top:0;height:100dvh;overflow:hidden;background:#070305;">
-    <canvas id="vc1" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;"></canvas>
+    <canvas id="vc1" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;transition:opacity 0.6s ease;"></canvas>
     <div style="position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(7,3,5,0.3) 0%,rgba(7,3,5,0.05) 50%,rgba(7,3,5,0.75) 100%);pointer-events:none;"></div>
     <div style="position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at center,transparent 50%,rgba(7,3,5,0.4) 100%);pointer-events:none;"></div>
     <!-- 텍스트 -->
@@ -114,7 +114,7 @@ const stats = [
 <!-- ══════ VIDEO SCROLL — 섹션 2 (frames 065~128) ════════════════════════ -->
 <section id="vs2" style="height:350vh;position:relative;">
   <div style="position:sticky;top:0;height:100dvh;overflow:hidden;background:#070305;">
-    <canvas id="vc2" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;"></canvas>
+    <canvas id="vc2" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;transition:opacity 0.6s ease;"></canvas>
     <div style="position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(7,3,5,0.3) 0%,rgba(7,3,5,0.05) 50%,rgba(7,3,5,0.75) 100%);pointer-events:none;"></div>
     <div style="position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at center,transparent 50%,rgba(7,3,5,0.4) 100%);pointer-events:none;"></div>
     <div style="position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8vw 12vh;pointer-events:none;">
@@ -136,7 +136,7 @@ const stats = [
 <!-- ══════ VIDEO SCROLL — 섹션 3 (frames 129~192) ════════════════════════ -->
 <section id="vs3" style="height:350vh;position:relative;">
   <div style="position:sticky;top:0;height:100dvh;overflow:hidden;background:#070305;">
-    <canvas id="vc3" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;"></canvas>
+    <canvas id="vc3" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;transition:opacity 0.6s ease;"></canvas>
     <div style="position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(7,3,5,0.3) 0%,rgba(7,3,5,0.05) 50%,rgba(7,3,5,0.75) 100%);pointer-events:none;"></div>
     <div style="position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at center,transparent 50%,rgba(7,3,5,0.4) 100%);pointer-events:none;"></div>
     <div style="position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8vw 12vh;pointer-events:none;">
@@ -385,15 +385,12 @@ const stats = [
         target = Math.round(prog * (FRAMES - 1));
         if (progEl) progEl.style.width = `${prog * 100}%`;
 
-        // 섹션 진입/퇴장 시 페이드 (앞 10%, 뒤 10% 구간)
-        let opacity = 1;
-        const fadeZone = 0.1;
-        if (prog < fadeZone) {
-          opacity = prog / fadeZone;                        // 페이드인
-        } else if (prog > 1 - fadeZone) {
-          opacity = (1 - prog) / fadeZone;                 // 페이드아웃
-        }
-        canvas.style.opacity = String(Math.max(0, Math.min(1, opacity)));
+        // 섹션 끝 20% 구간에서 페이드아웃
+        const fadeZone = 0.2;
+        const opacity = prog > 1 - fadeZone
+          ? Math.max(0, (1 - prog) / fadeZone)
+          : 1;
+        canvas.style.opacity = String(opacity);
 
         // 섹션1 스크롤 화살표 페이드
         if (secId === 'vs1') {
