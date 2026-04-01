@@ -12,30 +12,33 @@ const heroImages = [
 ];
 
 const stats = [
-  { number: '120+', label: '드레스 보유' },
-  { number: '2회', label: '피팅 시스템' },
-  { number: '5★', label: '신부 만족도' },
-  { number: '7년+', label: '춘천 No.1' },
+  { number: 120, suffix: '+', label: '드레스 보유' },
+  { number: 2,   suffix: '회', label: '피팅 시스템' },
+  { number: 5,   suffix: '★', label: '신부 만족도' },
+  { number: 7,   suffix: '년+', label: '춘천 No.1'  },
 ];
 
 const features = [
   {
-    icon: '👗',
+    icon: '✦',
     title: '드레스 120벌',
     desc: '국내외 다양한 스타일의 웨딩드레스 120벌 보유. 신상 정기 업데이트로 항상 최신 트렌드.',
-    badge: 'Collection'
+    badge: 'Collection',
+    delay: ''
   },
   {
-    icon: '✦',
+    icon: '◇',
     title: '2회 피팅 시스템',
     desc: '3개월 전 1차 피팅(3벌) + 1개월 전 2차 피팅(3벌). 타샵 차별화된 전문 피팅 서비스.',
-    badge: 'Signature'
+    badge: 'Signature',
+    delay: 'delay-200'
   },
   {
-    icon: '💍',
+    icon: '♡',
     title: '원스톱 웨딩',
     desc: '드레스 대여 + 헤어·메이크업 + 도우미까지. 미래웨딩홀 1층 입점, 결혼식 당일 이동 없이.',
-    badge: 'All-in-One'
+    badge: 'All-in-One',
+    delay: 'delay-400'
   },
 ];
 
@@ -62,33 +65,40 @@ const reviews = [
 ---
 <Layout title={title} description={description}>
 
-  <!-- 풀스크린 히어로 슬라이더 -->
-  <section class='relative h-screen min-h-[600px] overflow-hidden'>
+  <!-- ====== HERO 섹션 — Three.js 파티클 + 슬라이더 ====== -->
+  <section class='relative h-screen min-h-[600px] overflow-hidden' style='background: #1a0a0f;'>
+    <!-- 배경 슬라이더 이미지 -->
     {heroImages.map((src, i) => (
       <div class={`hero-slide absolute inset-0 ${i === 0 ? 'active' : ''}`} data-index={i}>
         <img src={src} alt={`웨딩마치 드레스 ${i+1}`}
           class='w-full h-full object-cover object-center'
           loading={i === 0 ? 'eager' : 'lazy'} />
-        <div class='absolute inset-0' style='background: linear-gradient(to bottom, rgba(26,16,8,0.3) 0%, rgba(26,16,8,0.1) 40%, rgba(26,16,8,0.65) 100%);'></div>
+        <div class='absolute inset-0' style='background: linear-gradient(to bottom, rgba(26,10,15,0.4) 0%, rgba(26,10,15,0.1) 40%, rgba(26,10,15,0.75) 100%);'></div>
       </div>
     ))}
 
-    <!-- 히어로 텍스트 -->
-    <div class='absolute bottom-0 left-0 right-0 px-8 pb-24 md:pb-28'>
-      <div class='max-w-6xl mx-auto'>
-        <p class='text-white/60 text-xs tracking-[0.5em] uppercase mb-4 font-light'>Chuncheon Bridal Salon</p>
-        <h1 class='font-display text-5xl md:text-7xl lg:text-8xl text-white font-light tracking-wider leading-none mb-4'>
-          Wedding<br/>
-          <em class='not-italic font-light' style='color: #F7E7CE;'>March</em>
+    <!-- Three.js 파티클 캔버스 -->
+    <canvas id='particle-canvas'></canvas>
+
+    <!-- 히어로 텍스트 오버레이 -->
+    <div class='absolute inset-0 flex flex-col justify-end z-10'>
+      <div class='max-w-6xl mx-auto w-full px-8 pb-28 md:pb-32'>
+        <p class='hero-text-1 text-white/60 text-xs tracking-[0.6em] uppercase mb-4 font-light'>Chuncheon Bridal Salon · Since 2020</p>
+        <h1 class='font-display leading-none mb-5'>
+          <span class='hero-text-2 block text-5xl md:text-7xl lg:text-8xl text-white font-light tracking-wider'>Wedding</span>
+          <span class='hero-text-3 block text-5xl md:text-7xl lg:text-8xl font-light tracking-wider' style='color: #D4AF75; font-style: italic;'>March</span>
         </h1>
-        <p class='text-white/75 text-lg md:text-xl font-light mb-8 max-w-md'>촬영보다 본식이 더 예뻤어요</p>
-        <div class='flex flex-col sm:flex-row gap-4'>
+        <p class='hero-text-4 text-white/70 text-lg md:text-xl font-light mb-8'>
+          촬영보다 본식이 더 예뻤어요
+        </p>
+        <div class='hero-text-4 flex flex-col sm:flex-row gap-4'>
           <a href='/contact'
-             class='inline-block border-2 border-white text-white px-10 py-4 text-sm tracking-[0.2em] uppercase font-light hover:bg-white hover:text-[#8B3A47] transition-all duration-300'>
+             class='inline-block text-white px-10 py-4 text-sm tracking-[0.2em] uppercase font-light hover:opacity-90 transition-all duration-300 shadow-lg'
+             style='background: linear-gradient(135deg, #B76E79, #8B3A47);'>
             피팅 예약하기
           </a>
           <a href='/gallery'
-             class='inline-block text-white/70 px-10 py-4 text-sm tracking-[0.2em] uppercase font-light hover:text-white transition-colors border border-white/30 hover:border-white/60'>
+             class='inline-block border border-white/40 text-white/80 px-10 py-4 text-sm tracking-[0.2em] uppercase font-light hover:border-white hover:text-white transition-all duration-300'>
             드레스 보러가기
           </a>
         </div>
@@ -96,7 +106,7 @@ const reviews = [
     </div>
 
     <!-- 슬라이더 인디케이터 -->
-    <div class='absolute bottom-8 right-8 flex gap-2' id='slide-indicators'>
+    <div class='absolute bottom-8 right-8 flex gap-2 z-10' id='slide-indicators'>
       {heroImages.map((_, i) => (
         <button
           class={`slide-dot rounded-full transition-all duration-300 h-2 ${i === 0 ? 'bg-white w-6' : 'bg-white/40 w-2'}`}
@@ -106,134 +116,156 @@ const reviews = [
     </div>
 
     <!-- 스크롤 유도 -->
-    <div class='absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-1 text-white/40'>
-      <span class='text-xs tracking-[0.3em] uppercase'>Scroll</span>
-      <div class='w-px h-8 bg-white/30 animate-pulse'></div>
+    <div class='absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 z-10 text-white/40'>
+      <span class='text-[10px] tracking-[0.4em] uppercase'>Scroll</span>
+      <div class='w-px h-10' style='background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);'></div>
     </div>
   </section>
 
-  <!-- 숫자 스탯 -->
-  <section class='py-12 border-b border-[#E8DDD5]' style='background: #F7E7CE;'>
+  <!-- ====== 숫자 스탯 — 카운터 애니메이션 ====== -->
+  <section class='py-14 border-b' style='background: linear-gradient(135deg, #F7E7CE 0%, #FEFCF9 100%); border-color: #E8DDD5;'>
     <div class='max-w-5xl mx-auto px-6'>
       <div class='grid grid-cols-2 md:grid-cols-4 gap-8 text-center'>
-        {stats.map((stat) => (
-          <div class='group'>
-            <p class='font-display text-4xl md:text-5xl font-light text-[#8B3A47] mb-1 group-hover:scale-105 transition-transform duration-300'>{stat.number}</p>
-            <p class='text-xs tracking-[0.25em] text-[#B76E79] uppercase font-light'>{stat.label}</p>
+        {stats.map((stat, i) => (
+          <div class={`fade-in-up delay-${i * 100}`}>
+            <p class='font-display text-4xl md:text-5xl font-light mb-1' style='color: #8B3A47;'>
+              <span class='counter-num' data-target={stat.number} data-suffix={stat.suffix}>0</span>
+            </p>
+            <p class='text-xs tracking-[0.25em] uppercase font-light' style='color: #B76E79;'>{stat.label}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- 브랜드 특징 -->
-  <section class='py-24 px-6' style='background: #FAF8F5;'>
+  <!-- ====== 브랜드 특징 — VanillaTilt 3D 카드 ====== -->
+  <section class='py-24 px-6' style='background: #FEFCF9;'>
     <div class='max-w-6xl mx-auto'>
       <div class='text-center mb-16'>
-        <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-4'>Why Wedding March</p>
-        <h2 class='font-display text-4xl md:text-5xl font-light text-gray-900 mb-4'>왜 웨딩마치인가요?</h2>
-        <div class='w-12 h-px bg-[#B76E79] mx-auto mb-4'></div>
-        <p class='text-gray-500 font-light text-sm'>춘천 신부들이 웨딩마치를 선택하는 이유</p>
+        <p class='fade-in-up text-xs tracking-[0.5em] uppercase font-light mb-4' style='color: #B76E79;'>Why Wedding March</p>
+        <h2 class='fade-in-up delay-100 font-display text-4xl md:text-5xl font-light text-gray-900 mb-5'>왜 웨딩마치인가요?</h2>
+        <div class='fade-in-up delay-200 section-divider'></div>
+        <p class='fade-in-up delay-300 text-gray-500 font-light text-sm mt-4'>춘천 신부들이 웨딩마치를 선택하는 이유</p>
       </div>
       <div class='grid grid-cols-1 md:grid-cols-3 gap-8'>
         {features.map((feat) => (
-          <div class='group relative bg-white border border-[#E8DDD5] p-10 hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden'>
-            <span class='absolute top-5 right-5 text-[10px] tracking-[0.3em] text-[#B76E79] uppercase border border-[#D4A0A7] px-2 py-0.5'>{feat.badge}</span>
-            <div class='text-3xl mb-5 opacity-60'>{feat.icon}</div>
-            <div class='w-8 h-px bg-[#B76E79] mb-5'></div>
+          <div
+            class={`tilt-card fade-in-up ${feat.delay} relative bg-white border p-10 overflow-hidden cursor-default`}
+            style='border-color: #E8DDD5;'
+            data-tilt
+            data-tilt-max='8'
+            data-tilt-speed='400'
+            data-tilt-glare='true'
+            data-tilt-max-glare='0.15'
+          >
+            <span class='absolute top-5 right-5 text-[10px] tracking-[0.3em] uppercase border px-2 py-0.5' style='color: #B76E79; border-color: #D4A0A7;'>{feat.badge}</span>
+            <div class='font-display text-2xl mb-5' style='color: #B76E79;'>{feat.icon}</div>
+            <div class='w-8 h-px mb-5' style='background: linear-gradient(90deg, #B76E79, #D4AF75);'></div>
             <h3 class='font-display text-2xl font-light text-gray-900 mb-4'>{feat.title}</h3>
             <p class='text-gray-500 text-sm leading-relaxed font-light'>{feat.desc}</p>
-            <div class='absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#B76E79] to-[#D4A0A7] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left'></div>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- 갤러리 섹션 -->
-  <section class='py-20' style='background: #1a1008;'>
+  <!-- ====== 갤러리 섹션 — 마소너리 그리드 ====== -->
+  <section class='py-20' style='background: #1a0a0f;'>
     <div class='max-w-6xl mx-auto px-6 mb-10'>
       <div class='flex items-end justify-between'>
         <div>
-          <p class='text-xs tracking-[0.5em] text-[#D4A0A7] uppercase font-light mb-3'>Our Collection</p>
-          <h2 class='font-display text-4xl md:text-5xl font-light text-white'>드레스 갤러리</h2>
+          <p class='fade-in-left text-xs tracking-[0.5em] uppercase font-light mb-3' style='color: #D4A0A7;'>Our Collection</p>
+          <h2 class='fade-in-left delay-100 font-display text-4xl md:text-5xl font-light text-white'>드레스 갤러리</h2>
         </div>
-        <a href='/gallery' class='hidden md:inline-block text-[#D4A0A7] text-xs tracking-[0.3em] uppercase border-b border-[#D4A0A7] pb-0.5 hover:text-white hover:border-white transition-colors'>
+        <a href='/gallery' class='fade-in-right hidden md:inline-block text-xs tracking-[0.3em] uppercase pb-0.5 hover:text-white hover:border-white transition-colors font-light' style='color: #D4A0A7; border-bottom: 1px solid #D4A0A7;'>
           전체 보기 →
         </a>
       </div>
     </div>
-    <div class='grid grid-cols-2 md:grid-cols-4 gap-px' style='background: #1a1008;'>
-      <div class='col-span-2 overflow-hidden group relative' style='height: 380px;'>
-        <img src='/images/instagram/02.webp' alt='웨딩마치 대표 드레스' class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-105' />
+
+    <div class='grid grid-cols-2 md:grid-cols-4 gap-px' style='background: #1a0a0f;'>
+      <div class='col-span-2 overflow-hidden group relative fade-in-scale' style='height: 380px;'>
+        <img src='/images/instagram/02.webp' alt='웨딩마치 대표 드레스'
+             class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-105' />
         <div class='absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-500'></div>
+        <div class='absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500' style='background: linear-gradient(to top, rgba(26,10,15,0.8), transparent);'>
+          <p class='text-white/90 text-sm font-light tracking-wider'>대표 컬렉션</p>
+        </div>
       </div>
       {[
-        { src: '/images/instagram/05.webp', alt: '슬림핏 드레스' },
-        { src: '/images/instagram/08.webp', alt: '볼가운 드레스' },
-        { src: '/images/instagram/01.webp', alt: '미니멀 드레스' },
-        { src: '/images/instagram/04.webp', alt: '에이라인 드레스' },
+        { src: '/images/instagram/05.webp', alt: '슬림핏 드레스', label: '슬림핏', delay: 'delay-100' },
+        { src: '/images/instagram/08.webp', alt: '볼가운 드레스', label: '볼가운', delay: 'delay-200' },
+        { src: '/images/instagram/01.webp', alt: '미니멀 드레스', label: '미니멀', delay: 'delay-300' },
+        { src: '/images/instagram/04.webp', alt: '에이라인 드레스', label: '에이라인', delay: 'delay-400' },
       ].map((img) => (
-        <div class='aspect-square overflow-hidden group relative'>
+        <div class={`aspect-square overflow-hidden group relative fade-in-scale ${img.delay}`}>
           <img src={img.src} alt={img.alt} class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110' loading='lazy' />
-          <div class='absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-500'></div>
+          <div class='absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-end justify-start p-3'>
+            <span class='text-white/0 group-hover:text-white/90 transition-all duration-300 text-xs tracking-wider font-light'>{img.label}</span>
+          </div>
         </div>
       ))}
     </div>
+
     <div class='text-center mt-10 px-6'>
       <a href='/gallery'
-         class='inline-block border border-[#D4A0A7] text-[#D4A0A7] px-12 py-4 text-xs tracking-[0.3em] uppercase font-light hover:bg-[#D4A0A7] hover:text-[#1a1008] transition-all duration-300'>
+         id='gallery-cta'
+         class='fade-in-up inline-block px-12 py-4 text-xs tracking-[0.3em] uppercase font-light transition-all duration-300'
+         style='border: 1px solid #D4A0A7; color: #D4A0A7;'>
         전체 갤러리 보기
       </a>
     </div>
   </section>
 
-  <!-- 봄 시즌 배너 -->
-  <section class='py-16 px-6 relative overflow-hidden text-center' style='background: #B76E79;'>
-    <div class='absolute top-0 left-0 w-64 h-64 rounded-full opacity-10 -translate-x-32 -translate-y-32' style='background: #FAF8F5;'></div>
-    <div class='absolute bottom-0 right-0 w-96 h-96 rounded-full opacity-10 translate-x-48 translate-y-48' style='background: #FAF8F5;'></div>
-    <div class='max-w-4xl mx-auto relative'>
-      <p class='text-white/70 text-xs tracking-[0.5em] uppercase font-light mb-4'>2026 Spring Season</p>
-      <h2 class='font-display text-4xl md:text-5xl font-light text-white mb-4'>봄 성수기 특별 프로모션</h2>
-      <div class='w-12 h-px bg-white/40 mx-auto mb-6'></div>
-      <p class='text-white/80 font-light text-lg mb-8'>
+  <!-- ====== 봄 시즌 CTA 배너 ====== -->
+  <section class='py-20 px-6 relative overflow-hidden text-center' style='background: linear-gradient(135deg, #B76E79 0%, #8B3A47 100%);'>
+    <div class='absolute top-0 left-0 w-64 h-64 rounded-full opacity-10 -translate-x-32 -translate-y-32' style='background: #FEFCF9;'></div>
+    <div class='absolute bottom-0 right-0 w-96 h-96 rounded-full opacity-10 translate-x-48 translate-y-48' style='background: #FEFCF9;'></div>
+    <div class='absolute top-8 left-1/2 -translate-x-1/2 w-px h-12 opacity-30' style='background: #D4AF75;'></div>
+
+    <div class='max-w-4xl mx-auto relative z-10'>
+      <p class='fade-in-up text-white/70 text-xs tracking-[0.5em] uppercase font-light mb-4'>2026 Spring Season</p>
+      <h2 class='fade-in-up delay-100 font-display text-4xl md:text-5xl font-light text-white mb-5'>봄 성수기 특별 프로모션</h2>
+      <div class='fade-in-up delay-200 w-12 h-px mx-auto mb-6' style='background: rgba(255,255,255,0.4);'></div>
+      <p class='fade-in-up delay-300 text-white/80 font-light text-lg mb-8'>
         4~6월 성수기 피팅 날짜가 빠르게 마감되고 있습니다.<br/>
         원하는 날짜를 미리 확보하세요.
       </p>
-      <div class='flex flex-col sm:flex-row gap-4 justify-center'>
+      <div class='fade-in-up delay-400 flex flex-col sm:flex-row gap-4 justify-center'>
         <a href='/contact'
-           class='inline-block bg-white text-[#8B3A47] px-12 py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-[#FAF8F5] transition-colors shadow-lg'>
+           class='inline-block bg-white px-12 py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-[#FEFCF9] transition-colors shadow-lg'
+           style='color: #8B3A47;'>
           지금 예약하기
         </a>
         <a href='/packages'
-           class='inline-block border border-white/50 text-white px-12 py-4 text-sm tracking-[0.2em] uppercase font-light hover:bg-white/10 transition-colors'>
+           class='inline-block border border-white/50 text-white px-12 py-4 text-sm tracking-[0.2em] uppercase font-light hover:bg-white/10 transition-all duration-300'>
           패키지 보기
         </a>
       </div>
     </div>
   </section>
 
-  <!-- 신부 후기 -->
-  <section class='py-24 px-6' style='background: #FAF8F5;'>
+  <!-- ====== 신부 후기 ====== -->
+  <section class='py-24 px-6' style='background: #FEFCF9;'>
     <div class='max-w-6xl mx-auto'>
       <div class='text-center mb-16'>
-        <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-4'>Bride Reviews</p>
-        <h2 class='font-display text-4xl md:text-5xl font-light text-gray-900 mb-4'>신부들의 이야기</h2>
-        <div class='w-12 h-px bg-[#B76E79] mx-auto'></div>
+        <p class='fade-in-up text-xs tracking-[0.5em] uppercase font-light mb-4' style='color: #B76E79;'>Bride Reviews</p>
+        <h2 class='fade-in-up delay-100 font-display text-4xl md:text-5xl font-light text-gray-900 mb-5'>신부들의 이야기</h2>
+        <div class='fade-in-up delay-200 section-divider'></div>
       </div>
       <div class='grid grid-cols-1 md:grid-cols-3 gap-8'>
-        {reviews.map((review) => (
-          <div class='bg-white border border-[#E8DDD5] p-8 relative group hover:shadow-xl transition-all duration-500'>
-            <div class='font-display text-6xl text-[#D4A0A7]/30 leading-none mb-4 font-light'>"</div>
-            <div class='w-16 h-16 rounded-full overflow-hidden mb-5 border-2 border-[#D4A0A7]'>
+        {reviews.map((review, i) => (
+          <div class={`fade-in-up delay-${i*200} bg-white border p-8 relative hover:shadow-xl transition-all duration-500 hover:-translate-y-1`} style='border-color: #E8DDD5;'>
+            <div class='font-display text-6xl leading-none mb-4 font-light select-none' style='color: rgba(212,160,167,0.25);'>"</div>
+            <div class='w-14 h-14 rounded-full overflow-hidden mb-5 border-2' style='border-color: #D4A0A7;'>
               <img src={review.img} alt='신부 후기' class='w-full h-full object-cover' loading='lazy' />
             </div>
             <div class='flex gap-0.5 mb-4'>
-              {[1,2,3,4,5].map(() => <span class='text-[#B76E79] text-sm'>★</span>)}
+              {[1,2,3,4,5].map(() => <span class='text-sm' style='color: #B76E79;'>★</span>)}
             </div>
             <p class='text-gray-600 text-sm leading-relaxed mb-5 font-light italic'>"{review.text}"</p>
-            <div class='border-t border-[#E8DDD5] pt-4'>
-              <p class='text-[#B76E79] text-xs tracking-wider font-medium'>{review.name}</p>
+            <div class='border-t pt-4' style='border-color: #E8DDD5;'>
+              <p class='text-xs tracking-wider font-medium' style='color: #B76E79;'>{review.name}</p>
               <p class='text-gray-400 text-xs mt-0.5'>{review.date}</p>
             </div>
           </div>
@@ -242,52 +274,51 @@ const reviews = [
     </div>
   </section>
 
-  <!-- 인스타그램 스트립 (10장 전부) -->
-  <section class='py-16 px-6 border-t border-[#E8DDD5]' style='background: #FAF8F5;'>
+  <!-- ====== 인스타그램 스트립 ====== -->
+  <section class='py-16 px-6 border-t' style='background: #FEFCF9; border-color: #E8DDD5;'>
     <div class='max-w-6xl mx-auto'>
       <div class='flex items-center justify-between mb-8'>
-        <div class='flex items-center gap-3'>
-          <svg class='w-5 h-5 text-[#B76E79]' fill='currentColor' viewBox='0 0 24 24'>
+        <div class='fade-in-left flex items-center gap-3'>
+          <svg class='w-5 h-5' fill='currentColor' viewBox='0 0 24 24' style='color: #B76E79;'>
             <path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'/>
           </svg>
           <p class='text-sm font-medium text-gray-700'>@ch_weddingmarch</p>
         </div>
         <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
-           class='text-xs tracking-[0.3em] text-[#B76E79] uppercase border-b border-[#B76E79] pb-0.5 hover:text-[#8B3A47] hover:border-[#8B3A47] transition-colors'>
+           class='fade-in-right text-xs tracking-[0.3em] uppercase pb-0.5 hover:text-[#8B3A47] transition-colors font-light'
+           style='color: #B76E79; border-bottom: 1px solid #B76E79;'>
           팔로우 →
         </a>
       </div>
       <div class='grid grid-cols-5 md:grid-cols-10 gap-1'>
         {['00','01','02','03','04','05','06','07','08','09'].map((n) => (
           <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
-             class='aspect-square overflow-hidden group relative'>
+             class='aspect-square overflow-hidden group relative fade-in-scale'>
             <img src={`/images/instagram/${n}.webp`} alt='웨딩마치 인스타그램'
               class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-110' loading='lazy' />
-            <div class='absolute inset-0 bg-[#B76E79]/0 group-hover:bg-[#B76E79]/30 transition-colors duration-300 flex items-center justify-center'>
-              <svg class='w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300' fill='currentColor' viewBox='0 0 24 24'>
-                <path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'/>
-              </svg>
-            </div>
+            <div class='absolute inset-0 bg-[#B76E79]/0 group-hover:bg-[#B76E79]/30 transition-colors duration-300'></div>
           </a>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- 최종 CTA -->
-  <section class='py-24 px-6 text-center' style='background: #FAF8F5;'>
-    <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-5'>Start Your Journey</p>
-    <h2 class='font-display text-4xl md:text-6xl font-light text-gray-900 mb-6'>
+  <!-- ====== 최종 CTA ====== -->
+  <section class='py-32 px-6 text-center relative overflow-hidden' style='background: #FEFCF9;'>
+    <div class='absolute inset-0 pointer-events-none' style='background: radial-gradient(ellipse at center, rgba(183,110,121,0.06) 0%, transparent 70%);'></div>
+    <p class='fade-in-up text-xs tracking-[0.5em] uppercase font-light mb-5' style='color: #B76E79;'>Start Your Journey</p>
+    <h2 class='fade-in-up delay-100 font-display text-4xl md:text-6xl font-light text-gray-900 mb-6'>
       당신의 특별한 날,<br/>
-      <span style='color: #B76E79; font-style: italic;'>웨딩마치와 함께</span>
+      <span class='gold-gradient font-light' style='font-style: italic;'>웨딩마치와 함께</span>
     </h2>
-    <div class='w-12 h-px bg-[#B76E79] mx-auto mb-8'></div>
-    <p class='text-gray-500 font-light mb-10 text-lg'>
+    <div class='fade-in-up delay-200 section-divider mb-8'></div>
+    <p class='fade-in-up delay-300 text-gray-500 font-light mb-10 text-lg'>
       춘천 최고의 웨딩드레스 전문샵에서<br/>
       평생 기억될 드레스를 만나보세요.
     </p>
     <a href='/contact'
-       class='inline-block bg-[#B76E79] text-white px-16 py-5 text-sm tracking-[0.3em] uppercase font-light hover:bg-[#8B3A47] transition-all duration-300 shadow-xl'>
+       class='fade-in-up delay-400 inline-block text-white px-16 py-5 text-sm tracking-[0.3em] uppercase font-light shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300'
+       style='background: linear-gradient(135deg, #B76E79, #8B3A47);'>
       무료 상담 예약하기
     </a>
   </section>
@@ -295,32 +326,156 @@ const reviews = [
 </Layout>
 
 <script>
-  // 히어로 슬라이더
+  // ============================================================
+  // 1. Three.js 파티클 — 히어로 배경
+  // ============================================================
+  (function initParticles() {
+    const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement | null;
+    if (!canvas) return;
+    const THREE = (window as any).THREE;
+    if (!THREE) {
+      // THREE가 아직 로드 안됐으면 잠시 후 재시도
+      setTimeout(initParticles, 200);
+      return;
+    }
+
+    const parent = canvas.parentElement!;
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(parent.offsetWidth, parent.offsetHeight);
+    renderer.setClearColor(0x000000, 0);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, parent.offsetWidth / parent.offsetHeight, 0.1, 1000);
+    camera.position.z = 50;
+
+    const count = window.innerWidth < 768 ? 80 : 150;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
+
+    const palette = [
+      [0.718, 0.431, 0.475],
+      [0.831, 0.686, 0.459],
+      [0.980, 0.925, 0.910],
+      [1.0, 1.0, 1.0],
+    ];
+
+    for (let i = 0; i < count; i++) {
+      positions[i*3]   = (Math.random()-0.5)*80;
+      positions[i*3+1] = (Math.random()-0.5)*80;
+      positions[i*3+2] = (Math.random()-0.5)*30;
+      const c = palette[Math.floor(Math.random()*palette.length)];
+      colors[i*3]=c[0]; colors[i*3+1]=c[1]; colors[i*3+2]=c[2];
+    }
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const material = new THREE.PointsMaterial({
+      size: 0.8, vertexColors: true, transparent: true, opacity: 0.6, sizeAttenuation: true
+    });
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    let mx = 0, my = 0;
+    window.addEventListener('mousemove', e => {
+      mx = (e.clientX/window.innerWidth - 0.5) * 0.3;
+      my = (e.clientY/window.innerHeight - 0.5) * 0.3;
+    }, { passive: true });
+
+    let frame = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+      frame++;
+      particles.rotation.y += 0.0008;
+      particles.rotation.x += 0.0003;
+      particles.rotation.y += (mx - particles.rotation.y*0.5) * 0.015;
+      particles.rotation.x += (-my - particles.rotation.x*0.5) * 0.015;
+      material.opacity = 0.35 + Math.sin(frame*0.02)*0.2;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = parent.offsetWidth / parent.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(parent.offsetWidth, parent.offsetHeight);
+    });
+  })();
+
+  // ============================================================
+  // 2. 히어로 슬라이더
+  // ============================================================
   const slides = document.querySelectorAll<HTMLElement>('.hero-slide');
   const dots = document.querySelectorAll<HTMLElement>('.slide-dot');
   let current = 0;
 
   function goToSlide(n: number) {
     slides[current].classList.remove('active');
-    dots[current].style.width = '8px';
+    (dots[current] as HTMLElement).style.width = '8px';
     dots[current].classList.add('bg-white/40');
     dots[current].classList.remove('bg-white');
-
     current = n;
-
     slides[current].classList.add('active');
-    dots[current].style.width = '24px';
+    (dots[current] as HTMLElement).style.width = '24px';
     dots[current].classList.remove('bg-white/40');
     dots[current].classList.add('bg-white');
   }
 
-  let timer = setInterval(() => goToSlide((current + 1) % slides.length), 5000);
-
+  let slideTimer = setInterval(() => goToSlide((current+1) % slides.length), 5500);
   dots.forEach((dot, i) => {
     dot.addEventListener('click', () => {
-      clearInterval(timer);
+      clearInterval(slideTimer);
       goToSlide(i);
-      timer = setInterval(() => goToSlide((current + 1) % slides.length), 5000);
+      slideTimer = setInterval(() => goToSlide((current+1) % slides.length), 5500);
     });
   });
+
+  // ============================================================
+  // 3. 카운터 애니메이션
+  // ============================================================
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target as HTMLElement;
+      const target = parseInt(el.dataset.target || '0');
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800;
+      const start = performance.now();
+      function update(now: number) {
+        const t = Math.min((now-start)/duration, 1);
+        const eased = 1 - Math.pow(1-t, 3);
+        el.textContent = Math.round(eased*target) + suffix;
+        if (t < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+      counterObs.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.counter-num').forEach(el => counterObs.observe(el));
+
+  // ============================================================
+  // 4. VanillaTilt 초기화
+  // ============================================================
+  const VT = (window as any).VanillaTilt;
+  if (VT) {
+    VT.init(document.querySelectorAll('[data-tilt]'), {
+      max: 8, speed: 400, glare: true, 'max-glare': 0.15,
+    });
+  }
+
+  // ============================================================
+  // 5. 갤러리 CTA 호버
+  // ============================================================
+  const galleryCta = document.getElementById('gallery-cta');
+  if (galleryCta) {
+    galleryCta.addEventListener('mouseover', () => {
+      galleryCta.style.background = '#D4A0A7';
+      galleryCta.style.color = '#1a0a0f';
+    });
+    galleryCta.addEventListener('mouseout', () => {
+      galleryCta.style.background = 'transparent';
+      galleryCta.style.color = '#D4A0A7';
+    });
+  }
 </script>
