@@ -1,0 +1,94 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = '드레스 갤러리 | 웨딩마치 춘천 웨딩드레스샵';
+const description = '춘천 웨딩마치 드레스 갤러리. 드레스 120벌 보유, 에이라인·볼가운·슬림핏 등 다양한 스타일. 강원도 춘천 웨딩드레스 전문샵.';
+
+const categories = ['전체', '에이라인', '볼가운', '슬림핏', '미니멀', '레이스'];
+
+const images = [
+  { src: '/images/instagram/00.webp', alt: '웨딩마치 드레스', style: '에이라인' },
+  { src: '/images/instagram/01.webp', alt: '신상 드레스 - 비즈 포인트', style: '미니멀' },
+  { src: '/images/instagram/02.webp', alt: '웨딩마치 드레스', style: '볼가운' },
+  { src: '/images/instagram/03.webp', alt: '웨딩마치 드레스', style: '에이라인' },
+  { src: '/images/instagram/04.webp', alt: '웨딩마치 드레스', style: '볼가운' },
+  { src: '/images/instagram/05.webp', alt: '미래컨벤션 웨딩홀 실착', style: '슬림핏' },
+  { src: '/images/instagram/06.webp', alt: '웨딩마치 드레스', style: '에이라인' },
+  { src: '/images/instagram/07.webp', alt: '신상 드레스', style: '레이스' },
+  { src: '/images/instagram/08.webp', alt: '자개 웨딩드레스', style: '볼가운' },
+  { src: '/images/instagram/09.webp', alt: '미래컨벤션 웨딩홀 실착', style: '에이라인' },
+  { src: '/images/instagram/10.webp', alt: '웨딩마치 드레스', style: '슬림핏' },
+  { src: '/images/instagram/11.webp', alt: '웨딩마치 드레스', style: '미니멀' },
+];
+---
+<Layout title={title} description={description}>
+
+  <!-- 페이지 헤더 -->
+  <section class='py-16 px-4 bg-gradient-to-b from-rose-50 to-white text-center'>
+    <p class='text-rose-gold font-medium tracking-[0.3em] text-sm uppercase mb-3'>Gallery</p>
+    <h1 class='font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4'>드레스 갤러리</h1>
+    <p class='text-gray-500 max-w-xl mx-auto'>
+      춘천 웨딩마치의 드레스 컬렉션을 만나보세요.<br/>
+      120벌 중 나만의 드레스를 찾아드립니다.
+    </p>
+  </section>
+
+  <!-- 카테고리 필터 -->
+  <section class='sticky top-16 z-40 bg-white border-b border-gray-100 py-3 px-4'>
+    <div class='max-w-5xl mx-auto flex gap-2 overflow-x-auto pb-1 scrollbar-hide'>
+      {categories.map((cat, i) => (
+        <button 
+          class={}
+          data-category={cat}>
+          {cat}
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <!-- 갤러리 그리드 (Masonry) -->
+  <section class='py-10 px-4'>
+    <div class='max-w-5xl mx-auto'>
+      <!-- 실제 인스타그램 이미지 그리드 -->
+      <div class='columns-2 md:columns-3 gap-3 md:gap-4 space-y-3 md:space-y-4'>
+        {images.map((item, i) => (
+          <div class={}>
+            <img 
+              src={item.src} 
+              alt={item.alt}
+              class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
+              loading='lazy'
+            />
+            <!-- 호버 오버레이 -->
+            <div class='absolute inset-0 bg-rose-gold/0 group-hover:bg-rose-gold/20 transition-all duration-300 flex items-end'>
+              <div class='w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/60 to-transparent'>
+                <span class='text-white text-sm font-medium'>{item.style}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- 인스타그램 더보기 -->
+      <div class='mt-12 text-center bg-rose-50 rounded-2xl p-8'>
+        <p class='text-gray-600 text-sm mb-4'>더 많은 드레스 사진을 보고 싶으신가요?</p>
+        <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
+           class='inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white px-8 py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity'>
+          <svg xmlns='http://www.w3.org/2000/svg' class='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
+            <path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'/>
+          </svg>
+          @ch_weddingmarch 인스타그램
+        </a>
+      </div>
+
+      <!-- 예약 유도 -->
+      <div class='mt-10 text-center'>
+        <p class='text-gray-600 mb-4'>마음에 드는 스타일이 있으신가요?</p>
+        <a href='/contact' class='inline-block bg-rose-gold text-white px-10 py-4 rounded-full font-medium hover:bg-deep-rose transition-colors shadow-lg'>
+          피팅 예약하기
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>

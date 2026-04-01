@@ -1,0 +1,170 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = '예약 · 문의 | 웨딩마치 춘천 웨딩드레스';
+const description = '춘천 웨딩마치 예약 및 문의. 인스타그램 DM 또는 문의 폼으로 연락주세요. 강원도 춘천 웨딩드레스 전문샵.';
+---
+<Layout title={title} description={description}>
+
+  <!-- 페이지 헤더 -->
+  <section class='py-16 px-4 bg-gradient-to-b from-rose-50 to-white text-center'>
+    <p class='text-rose-gold font-medium tracking-[0.3em] text-sm uppercase mb-3'>Reservation</p>
+    <h1 class='font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4'>예약 · 문의</h1>
+    <p class='text-gray-500 max-w-xl mx-auto'>
+      피팅 예약 및 서비스 문의를 남겨주세요.<br/>
+      빠르게 연락드리겠습니다.
+    </p>
+  </section>
+
+  <section class='py-12 px-4'>
+    <div class='max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12'>
+
+      <!-- 문의 폼 -->
+      <div>
+        <h2 class='font-display text-2xl font-bold text-gray-900 mb-6'>예약 문의</h2>
+        
+        <!-- 네이버 예약 위젯 자리 (Phase 2 연동 예정) -->
+        <div class='bg-rose-50 rounded-2xl p-6 mb-6 border-2 border-dashed border-rose-gold/30'>
+          <p class='text-center text-rose-gold text-sm font-medium mb-2'>네이버 예약 연동 준비 중</p>
+          <p class='text-center text-gray-500 text-xs'>네이버 스마트플레이스 예약 위젯이 여기에 표시됩니다</p>
+        </div>
+        
+        <!-- 직접 문의 폼 -->
+        <form 
+          name='wedding-inquiry'
+          method='POST'
+          class='space-y-4'
+          id='inquiry-form'>
+          
+          <div>
+            <label for='name' class='block text-sm font-medium text-gray-700 mb-1'>신부 성함 <span class='text-rose-gold'>*</span></label>
+            <input type='text' id='name' name='name' required
+              placeholder='홍길동'
+              class='w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-gold focus:ring-2 focus:ring-rose-gold/20 outline-none transition-all text-sm' />
+          </div>
+          
+          <div>
+            <label for='phone' class='block text-sm font-medium text-gray-700 mb-1'>연락처 <span class='text-rose-gold'>*</span></label>
+            <input type='tel' id='phone' name='phone' required
+              placeholder='010-0000-0000'
+              class='w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-gold focus:ring-2 focus:ring-rose-gold/20 outline-none transition-all text-sm' />
+          </div>
+          
+          <div>
+            <label for='wedding-date' class='block text-sm font-medium text-gray-700 mb-1'>결혼 예정일</label>
+            <input type='date' id='wedding-date' name='wedding-date'
+              class='w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-gold focus:ring-2 focus:ring-rose-gold/20 outline-none transition-all text-sm' />
+          </div>
+          
+          <div>
+            <label for='venue' class='block text-sm font-medium text-gray-700 mb-1'>예식장</label>
+            <input type='text' id='venue' name='venue'
+              placeholder='미래웨딩홀, 춘천그랜드호텔 등'
+              class='w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-gold focus:ring-2 focus:ring-rose-gold/20 outline-none transition-all text-sm' />
+          </div>
+          
+          <div>
+            <label for='service' class='block text-sm font-medium text-gray-700 mb-1'>원하시는 서비스</label>
+            <div class='grid grid-cols-2 gap-2'>
+              {['드레스 대여', '헤어메이크업', '도우미', '올인원 패키지'].map((svc) => (
+                <label class='flex items-center gap-2 cursor-pointer group'>
+                  <input type='checkbox' name='service' value={svc}
+                    class='w-4 h-4 text-rose-gold border-gray-300 rounded focus:ring-rose-gold' />
+                  <span class='text-sm text-gray-600 group-hover:text-rose-gold transition-colors'>{svc}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+          
+          <div>
+            <label for='message' class='block text-sm font-medium text-gray-700 mb-1'>문의 내용</label>
+            <textarea id='message' name='message' rows='4'
+              placeholder='드레스 스타일, 궁금한 점 등을 자유롭게 남겨주세요'
+              class='w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-gold focus:ring-2 focus:ring-rose-gold/20 outline-none transition-all text-sm resize-none'></textarea>
+          </div>
+          
+          <button type='submit'
+            class='w-full bg-rose-gold text-white py-4 rounded-xl font-medium hover:bg-deep-rose transition-colors text-sm shadow-lg hover:shadow-xl'>
+            문의 보내기
+          </button>
+          
+          <p class='text-xs text-gray-400 text-center'>
+            * 개인정보는 예약 상담 목적으로만 사용됩니다
+          </p>
+        </form>
+      </div>
+      
+      <!-- 연락처 & 위치 정보 -->
+      <div class='space-y-8'>
+        <div>
+          <h2 class='font-display text-2xl font-bold text-gray-900 mb-6'>바로 연락하기</h2>
+          
+          <!-- 인스타 DM (주요 채널) -->
+          <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
+             class='flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 border border-pink-100 hover:shadow-md transition-all mb-4'>
+            <div class='w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center flex-shrink-0'>
+              <svg class='w-6 h-6 text-white' fill='currentColor' viewBox='0 0 24 24'>
+                <path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'/>
+              </svg>
+            </div>
+            <div>
+              <p class='font-medium text-gray-900 text-sm'>인스타그램 DM</p>
+              <p class='text-pink-600 text-sm'>@ch_weddingmarch</p>
+              <p class='text-gray-400 text-xs mt-0.5'>가장 빠른 답변 채널</p>
+            </div>
+          </a>
+        </div>
+        
+        <!-- 위치 정보 -->
+        <div class='bg-gray-50 rounded-2xl p-6'>
+          <h3 class='font-medium text-gray-900 mb-4'>오시는 길</h3>
+          
+          <!-- 네이버 지도 자리 (Phase 2 연동 예정) -->
+          <div class='w-full h-48 bg-gray-200 rounded-xl mb-4 flex items-center justify-center'>
+            <p class='text-gray-400 text-sm'>네이버 지도 연동 예정</p>
+          </div>
+          
+          <div class='space-y-2 text-sm text-gray-600'>
+            <p class='flex items-start gap-2'>
+              <span class='text-rose-gold mt-0.5'>📍</span>
+              강원도 춘천시 퇴계로 118, 1층 104호 (미래타워)
+            </p>
+            <p class='flex items-start gap-2'>
+              <span class='text-rose-gold mt-0.5'>🅿</span>
+              미래웨딩홀 주차장 이용 가능
+            </p>
+            <p class='flex items-start gap-2'>
+              <span class='text-rose-gold mt-0.5'>⏰</span>
+              영업시간: 월~일 10:00 - 20:00
+            </p>
+          </div>
+          
+          <a href='https://naver.me/weddingmarch' target='_blank' rel='noopener'
+             class='mt-4 block text-center text-sm text-rose-gold border border-rose-gold rounded-xl py-2 hover:bg-rose-50 transition-colors'>
+            네이버 지도에서 보기
+          </a>
+        </div>
+        
+        <!-- 봄 시즌 안내 -->
+        <div class='bg-rose-gold/10 border border-rose-gold/30 rounded-2xl p-5'>
+          <p class='text-rose-gold font-medium text-sm mb-1'>🌸 봄 성수기 안내</p>
+          <p class='text-gray-700 text-sm leading-relaxed'>
+            4~6월 성수기 피팅 날짜가 빠르게 마감되고 있습니다. 
+            원하는 날짜를 확보하려면 지금 바로 연락해 주세요.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<script>
+  const form = document.getElementById('inquiry-form');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('문의가 접수되었습니다. 곧 연락드리겠습니다!\n\n더 빠른 답변은 인스타그램 @ch_weddingmarch로 DM 주세요.');
+    });
+  }
+</script>

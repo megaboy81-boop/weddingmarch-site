@@ -1,0 +1,143 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = '웨딩마치 | 춘천 웨딩드레스샵',
+  description = '강원도 춘천 웨딩드레스 전문샵 웨딩마치. 드레스 대여부터 헤어·메이크업·도우미까지 원스톱 웨딩 서비스. 미래웨딩홀 1층 입점, 2회 피팅 시스템.',
+  ogImage = '/images/og-main.jpg'
+} = Astro.props;
+
+const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
+---
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>{title}</title>
+  <meta name='description' content={description} />
+  <meta name='keywords' content='춘천웨딩드레스, 춘천드레스샵, 강원웨딩드레스, 춘천웨딩, 웨딩마치, 춘천웨딩스드메, 미래웨딩홀드레스, 춘천2회피팅' />
+  <meta name='robots' content='index, follow' />
+  <link rel="canonical" href={canonicalURL?.toString() ?? Astro.url.href} />
+
+  <!-- OG Tags -->
+  <meta property='og:type' content='website' />
+  <meta property='og:title' content={title} />
+  <meta property='og:description' content={description} />
+  <meta property='og:image' content={ogImage} />
+  <meta property='og:locale' content='ko_KR' />
+  <meta property='og:site_name' content='웨딩마치' />
+
+  <!-- Twitter Card -->
+  <meta name='twitter:card' content='summary_large_image' />
+  <meta name='twitter:title' content={title} />
+  <meta name='twitter:description' content={description} />
+  <meta name='twitter:image' content={ogImage} />
+
+  <!-- 구조화 데이터 (LocalBusiness) -->
+  <script type='application/ld+json'>
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": ["LocalBusiness", "BeautySalon"],
+      "name": "웨딩마치",
+      "description": "춘천 웨딩드레스 전문샵. 2회 피팅 시스템, 드레스 120벌 보유, 헤어·메이크업·도우미 원스톱 서비스",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "퇴계로 118, 1층 104호 (미래타워)",
+        "addressLocality": "춘천시",
+        "addressRegion": "강원도",
+        "addressCountry": "KR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 37.8813,
+        "longitude": 127.7298
+      },
+      "openingHours": "Mo-Su 10:00-20:00",
+      "priceRange": "₩₩",
+      "image": "/images/og-main.jpg",
+      "sameAs": ["https://www.instagram.com/ch_weddingmarch/"]
+    })}
+  </script>
+
+  <!-- 폰트 -->
+  <link rel='preconnect' href='https://fonts.googleapis.com' />
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+  <link href='https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap' rel='stylesheet' />
+</head>
+<body class='bg-white font-body text-gray-800'>
+  <!-- 네비게이션 -->
+  <header class='fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-rose-100 shadow-sm'>
+    <nav class='max-w-5xl mx-auto px-4 py-3 flex items-center justify-between'>
+      <a href='/' class='text-xl font-display font-bold text-rose-gold tracking-wider'>
+        WEDDING MARCH
+      </a>
+      <div class='hidden md:flex items-center gap-6 text-sm'>
+        <a href='/' class='text-gray-600 hover:text-rose-gold transition-colors'>홈</a>
+        <a href='/gallery' class='text-gray-600 hover:text-rose-gold transition-colors'>갤러리</a>
+        <a href='/packages' class='text-gray-600 hover:text-rose-gold transition-colors'>패키지</a>
+        <a href='/contact' class='bg-rose-gold text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-deep-rose transition-colors'>
+          예약하기
+        </a>
+      </div>
+      <!-- 모바일 예약 버튼 -->
+      <a href='/contact' class='md:hidden bg-rose-gold text-white px-4 py-2 rounded-full text-sm font-medium'>
+        예약하기
+      </a>
+    </nav>
+  </header>
+
+  <main class='pt-16'>
+    <slot />
+  </main>
+
+  <!-- 푸터 -->
+  <footer class='bg-gray-900 text-gray-300 py-10 px-4 mt-16'>
+    <div class='max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8'>
+      <div>
+        <h3 class='text-white font-display text-lg mb-3'>웨딩마치</h3>
+        <p class='text-sm leading-relaxed text-gray-400'>
+          강원도 춘천 웨딩드레스 전문샵<br/>
+          미래웨딩홀 1층 입점<br/>
+          드레스 120벌 · 2회 피팅 시스템
+        </p>
+      </div>
+      <div>
+        <h4 class='text-white text-sm font-semibold mb-3'>오시는 길</h4>
+        <p class='text-sm text-gray-400 leading-relaxed'>
+          강원도 춘천시 퇴계로 118<br/>
+          미래타워 1층 104호<br/>
+          주차: 미래웨딩홀 주차장 이용
+        </p>
+      </div>
+      <div>
+        <h4 class='text-white text-sm font-semibold mb-3'>운영시간</h4>
+        <p class='text-sm text-gray-400 leading-relaxed'>
+          월~일 10:00 – 20:00<br/>
+          인스타그램: @ch_weddingmarch<br/>
+        </p>
+        <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener' class='inline-block mt-2 text-rose-gold-light hover:text-rose-gold text-sm'>
+          인스타그램 바로가기 →
+        </a>
+      </div>
+    </div>
+    <div class='max-w-5xl mx-auto mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-500'>
+      © 2026 웨딩마치 · 강원도 춘천시 퇴계로 118
+    </div>
+  </footer>
+
+  <!-- 네이버 톡톡 플로팅 버튼 (Phase 2에서 실제 연동 예정) -->
+  <a href='#' id='naver-talk-btn' 
+     class='fixed bottom-6 right-6 z-50 bg-[#03C75A] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-[#02a84a] transition-colors'
+     title='네이버 톡톡으로 문의하기'
+     aria-label='네이버 톡톡 문의'>
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor' class='w-6 h-6'>
+      <path d='M12 2C6.477 2 2 6.477 2 12c0 2.89 1.226 5.496 3.188 7.337L4.5 22l2.813-1.406A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm1 15H7v-2h6v2zm2-4H7v-2h8v2zm0-4H7V7h8v2z'/>
+    </svg>
+  </a>
+</body>
+</html>

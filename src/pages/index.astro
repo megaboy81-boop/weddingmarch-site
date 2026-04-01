@@ -1,0 +1,181 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = '춘천웨딩드레스 웨딩마치 | 2회 피팅 · 드레스 120벌 · 미래웨딩홀 입점';
+const description = '강원도 춘천 웨딩드레스 전문샵 웨딩마치. 드레스 대여부터 헤어·메이크업·도우미까지 원스톱 웨딩 서비스. 미래웨딩홀 1층 입점, 2회 피팅 시스템.';
+---
+<Layout title={title} description={description}>
+
+  <!-- 히어로 섹션 -->
+  <section class='relative min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-rose-50 via-white to-champagne overflow-hidden'>
+    <!-- 배경 장식 -->
+    <div class='absolute inset-0 opacity-10'>
+      <div class='absolute top-20 left-10 w-64 h-64 rounded-full bg-rose-gold blur-3xl'></div>
+      <div class='absolute bottom-20 right-10 w-80 h-80 rounded-full bg-champagne blur-3xl'></div>
+    </div>
+    
+    <div class='relative text-center px-4 max-w-3xl mx-auto'>
+      <!-- 부제목 -->
+      <p class='text-rose-gold font-medium tracking-[0.3em] text-sm uppercase mb-4'>
+        Chuncheon Wedding Dress Shop
+      </p>
+      
+      <!-- 메인 제목 -->
+      <h1 class='font-display text-5xl md:text-7xl font-bold text-gray-900 leading-tight mb-6'>
+        웨딩마치
+      </h1>
+      
+      <!-- 슬로건 -->
+      <p class='text-xl md:text-2xl text-gray-600 mb-4 font-light'>
+        촬영보다 본식이 더 예뻤어요
+      </p>
+      
+      <p class='text-gray-500 mb-10 leading-relaxed max-w-xl mx-auto'>
+        강원도 춘천 웨딩드레스 전문샵 · 미래웨딩홀 1층 입점<br/>
+        드레스 120벌 · 2회 피팅 · 헤어·메이크업·도우미 원스톱
+      </p>
+      
+      <!-- CTA 버튼 -->
+      <div class='flex flex-col sm:flex-row gap-4 justify-center'>
+        <a href='/contact' 
+           class='bg-rose-gold text-white px-10 py-4 rounded-full text-lg font-medium hover:bg-deep-rose transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5'>
+          지금 예약하기
+        </a>
+        <a href='/gallery' 
+           class='bg-white text-rose-gold border-2 border-rose-gold px-10 py-4 rounded-full text-lg font-medium hover:bg-rose-50 transition-all duration-300'>
+          드레스 보러가기
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 강점 3가지 섹션 -->
+  <section class='py-20 px-4 bg-white'>
+    <div class='max-w-5xl mx-auto'>
+      <h2 class='text-center font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
+        왜 웨딩마치인가요?
+      </h2>
+      <p class='text-center text-gray-500 mb-14'>춘천 신부들이 웨딩마치를 선택하는 이유</p>
+      
+      <div class='grid grid-cols-1 md:grid-cols-3 gap-8'>
+        <!-- 강점 1 -->
+        <div class='text-center p-8 rounded-2xl bg-rose-50 hover:shadow-lg transition-shadow'>
+          <div class='text-4xl mb-4'>👗</div>
+          <h3 class='font-display text-xl font-bold text-gray-900 mb-3'>드레스 120벌</h3>
+          <p class='text-gray-600 text-sm leading-relaxed'>
+            국내외 다양한 스타일의 웨딩드레스 120벌 보유.<br/>
+            신상 20벌 정기 업데이트로 항상 최신 트렌드를 만나보세요.
+          </p>
+        </div>
+        
+        <!-- 강점 2 -->
+        <div class='text-center p-8 rounded-2xl bg-champagne/30 hover:shadow-lg transition-shadow'>
+          <div class='text-4xl mb-4'>✨</div>
+          <h3 class='font-display text-xl font-bold text-gray-900 mb-3'>2회 피팅 시스템</h3>
+          <p class='text-gray-600 text-sm leading-relaxed'>
+            3개월 전 3벌 + 1개월 전 3벌.<br/>
+            타샵과 차별화된 2회 피팅으로 완벽한 드레스를 찾아드립니다.
+          </p>
+        </div>
+        
+        <!-- 강점 3 -->
+        <div class='text-center p-8 rounded-2xl bg-rose-50 hover:shadow-lg transition-shadow'>
+          <div class='text-4xl mb-4'>💍</div>
+          <h3 class='font-display text-xl font-bold text-gray-900 mb-3'>원스톱 웨딩</h3>
+          <p class='text-gray-600 text-sm leading-relaxed'>
+            드레스 대여 + 헤어·메이크업 + 도우미까지.<br/>
+            미래웨딩홀 1층 입점으로 결혼식 당일 이동 없이 편리하게.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 갤러리 미리보기 -->
+  <section class='py-20 px-4 bg-gray-50'>
+    <div class='max-w-5xl mx-auto'>
+      <h2 class='text-center font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
+        드레스 갤러리
+      </h2>
+      <p class='text-center text-gray-500 mb-10'>웨딩마치 드레스 컬렉션을 만나보세요</p>
+      
+      <!-- 인스타그램 실제 이미지 그리드 -->
+      <div class='grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4'>
+        {[
+          { src: '/images/instagram/00.webp', alt: '웨딩마치 드레스' },
+          { src: '/images/instagram/01.webp', alt: '신상 드레스' },
+          { src: '/images/instagram/02.webp', alt: '웨딩마치 드레스' },
+          { src: '/images/instagram/03.webp', alt: '웨딩마치 드레스' },
+          { src: '/images/instagram/04.webp', alt: '볼가운 드레스' },
+          { src: '/images/instagram/05.webp', alt: '실착 웨딩 드레스' },
+        ].map((item) => (
+          <a href='/gallery' class='aspect-[3/4] rounded-xl overflow-hidden relative group cursor-pointer block'>
+            <img
+              src={item.src}
+              alt={item.alt}
+              class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
+              loading='lazy'
+            />
+            <div class='absolute inset-0 bg-rose-gold/0 group-hover:bg-rose-gold/20 transition-colors duration-300'></div>
+          </a>
+        ))}
+      </div>
+      
+      <div class='text-center mt-10'>
+        <a href='/gallery' class='inline-flex items-center gap-2 text-rose-gold border-b-2 border-rose-gold pb-1 hover:text-deep-rose hover:border-deep-rose transition-colors font-medium'>
+          전체 갤러리 보기 →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 후기 섹션 -->
+  <section class='py-20 px-4 bg-white'>
+    <div class='max-w-4xl mx-auto'>
+      <h2 class='text-center font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
+        신부들의 후기
+      </h2>
+      <p class='text-center text-gray-500 mb-12'>실제 웨딩마치를 이용한 신부님들의 이야기</p>
+      
+      <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+        <div class='bg-rose-50 rounded-2xl p-6'>
+          <div class='flex items-center gap-1 mb-3'>
+            {[1,2,3,4,5].map(() => <span class='text-yellow-400 text-sm'>★</span>)}
+          </div>
+          <p class='text-gray-700 text-sm leading-relaxed mb-4'>
+            촬영보다 본식이 더 예쁘다는 말을 정말 많이 들었어요. 드레스 퀄리티가 정말 달랐고, 2회 피팅 덕분에 완벽한 드레스를 찾을 수 있었습니다.
+          </p>
+          <p class='text-rose-gold text-xs font-medium'>춘천 신부 · 2025년 10월 결혼</p>
+        </div>
+        
+        <div class='bg-champagne/30 rounded-2xl p-6'>
+          <div class='flex items-center gap-1 mb-3'>
+            {[1,2,3,4,5].map(() => <span class='text-yellow-400 text-sm'>★</span>)}
+          </div>
+          <p class='text-gray-700 text-sm leading-relaxed mb-4'>
+            미래웨딩홀 바로 아래에 있어서 결혼식 당일 너무 편리했어요. 헤어메이크업부터 도우미까지 모두 한번에 해결됐습니다.
+          </p>
+          <p class='text-rose-gold text-xs font-medium'>강원 신부 · 2025년 5월 결혼</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 예약 CTA 섹션 -->
+  <section class='py-20 px-4 bg-gradient-to-r from-rose-gold to-deep-rose text-white'>
+    <div class='max-w-2xl mx-auto text-center'>
+      <h2 class='font-display text-3xl md:text-4xl font-bold mb-4'>
+        지금 바로 예약하세요
+      </h2>
+      <p class='text-rose-100 mb-8 text-lg'>
+        봄 성수기 피팅 날짜가 빠르게 마감되고 있습니다.<br/>
+        원하는 날짜를 미리 예약해 두세요.
+      </p>
+      <a href='/contact' 
+         class='inline-block bg-white text-rose-gold px-12 py-4 rounded-full text-lg font-bold hover:bg-rose-50 transition-colors shadow-lg'>
+        예약 문의하기
+      </a>
+    </div>
+  </section>
+
+</Layout>
