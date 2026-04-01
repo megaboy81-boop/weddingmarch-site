@@ -7,62 +7,73 @@ const description = '춘천 웨딩마치 드레스 갤러리. 드레스 120벌 �
 const categories = ['전체', '에이라인', '볼가운', '슬림핏', '미니멀', '레이스'];
 
 const images = [
-  { src: '/images/instagram/00.webp', alt: '웨딩마치 드레스', style: '에이라인' },
-  { src: '/images/instagram/01.webp', alt: '신상 드레스 - 비즈 포인트', style: '미니멀' },
-  { src: '/images/instagram/02.webp', alt: '웨딩마치 드레스', style: '볼가운' },
-  { src: '/images/instagram/03.webp', alt: '웨딩마치 드레스', style: '에이라인' },
-  { src: '/images/instagram/04.webp', alt: '웨딩마치 드레스', style: '볼가운' },
-  { src: '/images/instagram/05.webp', alt: '미래컨벤션 웨딩홀 실착', style: '슬림핏' },
-  { src: '/images/instagram/06.webp', alt: '웨딩마치 드레스', style: '에이라인' },
-  { src: '/images/instagram/07.webp', alt: '신상 드레스', style: '레이스' },
-  { src: '/images/instagram/08.webp', alt: '자개 웨딩드레스', style: '볼가운' },
-  { src: '/images/instagram/09.webp', alt: '미래컨벤션 웨딩홀 실착', style: '에이라인' },
-  { src: '/images/instagram/10.webp', alt: '웨딩마치 드레스', style: '슬림핏' },
-  { src: '/images/instagram/11.webp', alt: '웨딩마치 드레스', style: '미니멀' },
+  { src: '/images/instagram/00.webp', alt: '웨딩마치 드레스', style: '에이라인', featured: true },
+  { src: '/images/instagram/01.webp', alt: '신상 드레스 - 비즈 포인트', style: '미니멀', featured: false },
+  { src: '/images/instagram/02.webp', alt: '웨딩마치 드레스', style: '볼가운', featured: false },
+  { src: '/images/instagram/03.webp', alt: '웨딩마치 드레스', style: '에이라인', featured: false },
+  { src: '/images/instagram/04.webp', alt: '웨딩마치 드레스', style: '볼가운', featured: true },
+  { src: '/images/instagram/05.webp', alt: '미래컨벤션 웨딩홀 실착', style: '슬림핏', featured: false },
+  { src: '/images/instagram/06.webp', alt: '웨딩마치 드레스', style: '에이라인', featured: false },
+  { src: '/images/instagram/07.webp', alt: '신상 드레스', style: '레이스', featured: false },
+  { src: '/images/instagram/08.webp', alt: '자개 웨딩드레스', style: '볼가운', featured: true },
+  { src: '/images/instagram/09.webp', alt: '미래컨벤션 웨딩홀 실착', style: '에이라인', featured: false },
 ];
 ---
 <Layout title={title} description={description}>
 
-  <!-- 페이지 헤더 -->
-  <section class='py-16 px-4 bg-gradient-to-b from-rose-50 to-white text-center'>
-    <p class='text-rose-gold font-medium tracking-[0.3em] text-sm uppercase mb-3'>Gallery</p>
-    <h1 class='font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4'>드레스 갤러리</h1>
-    <p class='text-gray-500 max-w-xl mx-auto'>
-      춘천 웨딩마치의 드레스 컬렉션을 만나보세요.<br/>
-      120벌 중 나만의 드레스를 찾아드립니다.
-    </p>
-  </section>
-
-  <!-- 카테고리 필터 -->
-  <section class='sticky top-16 z-40 bg-white border-b border-gray-100 py-3 px-4'>
-    <div class='max-w-5xl mx-auto flex gap-2 overflow-x-auto pb-1 scrollbar-hide'>
-      {categories.map((cat, i) => (
-        <button 
-          class={}
-          data-category={cat}>
-          {cat}
-        </button>
-      ))}
+  <!-- 페이지 히어로 -->
+  <section class='relative h-64 md:h-80 overflow-hidden'>
+    <img src='/images/instagram/00.webp' alt='갤러리 헤더' class='w-full h-full object-cover object-top' />
+    <div class='absolute inset-0' style='background: linear-gradient(to bottom, rgba(26,16,8,0.5), rgba(26,16,8,0.7));'></div>
+    <div class='absolute inset-0 flex flex-col items-center justify-center text-center px-6'>
+      <p class='text-white/60 text-xs tracking-[0.5em] uppercase font-light mb-3'>Our Collection</p>
+      <h1 class='font-display text-4xl md:text-6xl font-light text-white tracking-wider mb-3'>Gallery</h1>
+      <div class='w-10 h-px bg-white/40'></div>
+      <p class='text-white/70 text-sm font-light mt-3'>웨딩마치 드레스 컬렉션 · 120벌 보유</p>
     </div>
   </section>
 
-  <!-- 갤러리 그리드 (Masonry) -->
-  <section class='py-10 px-4'>
-    <div class='max-w-5xl mx-auto'>
-      <!-- 실제 인스타그램 이미지 그리드 -->
-      <div class='columns-2 md:columns-3 gap-3 md:gap-4 space-y-3 md:space-y-4'>
+  <!-- 카테고리 필터 -->
+  <section class='sticky top-[72px] z-40 border-b border-[#E8DDD5]' style='background: rgba(250,248,245,0.97); backdrop-filter: blur(10px);'>
+    <div class='max-w-6xl mx-auto px-6 py-3'>
+      <div class='flex gap-2 overflow-x-auto pb-1 scrollbar-hide'>
+        {categories.map((cat, i) => (
+          <button
+            class={`filter-btn flex-shrink-0 px-5 py-2 text-xs tracking-[0.2em] uppercase font-light transition-all duration-300 border ${i === 0 ? 'bg-[#B76E79] text-white border-[#B76E79]' : 'text-gray-500 border-[#E8DDD5] hover:border-[#B76E79] hover:text-[#B76E79]'}`}
+            data-category={cat}>
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 갤러리 그리드 -->
+  <section class='py-12 px-6' style='background: #FAF8F5;'>
+    <div class='max-w-6xl mx-auto'>
+      <!-- 마소니 스타일 그리드 -->
+      <div class='columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4' id='gallery-grid'>
         {images.map((item, i) => (
-          <div class={}>
-            <img 
-              src={item.src} 
+          <div class='gallery-item break-inside-avoid mb-3 md:mb-4 group relative overflow-hidden cursor-pointer'
+               data-style={item.style}
+               data-index={i}
+               onclick={`openLightbox(${i})`}>
+            <img
+              src={item.src}
               alt={item.alt}
-              class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
+              class='w-full object-cover transition-transform duration-700 group-hover:scale-105 block'
               loading='lazy'
             />
             <!-- 호버 오버레이 -->
-            <div class='absolute inset-0 bg-rose-gold/0 group-hover:bg-rose-gold/20 transition-all duration-300 flex items-end'>
-              <div class='w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/60 to-transparent'>
-                <span class='text-white text-sm font-medium'>{item.style}</span>
+            <div class='absolute inset-0 bg-[#B76E79]/0 group-hover:bg-[#B76E79]/25 transition-all duration-400 flex flex-col items-end justify-start p-3'>
+              <span class='text-white text-[10px] tracking-[0.2em] uppercase bg-[#B76E79]/80 px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>{item.style}</span>
+            </div>
+            <!-- 확대 아이콘 -->
+            <div class='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+              <div class='w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/40 flex items-center justify-center'>
+                <svg class='w-4 h-4 text-white' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7'/>
+                </svg>
               </div>
             </div>
           </div>
@@ -70,25 +81,153 @@ const images = [
       </div>
 
       <!-- 인스타그램 더보기 -->
-      <div class='mt-12 text-center bg-rose-50 rounded-2xl p-8'>
-        <p class='text-gray-600 text-sm mb-4'>더 많은 드레스 사진을 보고 싶으신가요?</p>
+      <div class='mt-16 text-center bg-white border border-[#E8DDD5] p-10'>
+        <p class='text-xs tracking-[0.4em] text-[#B76E79] uppercase font-light mb-3'>Follow Us</p>
+        <p class='font-display text-2xl font-light text-gray-900 mb-2'>더 많은 드레스를 인스타그램에서</p>
+        <p class='text-gray-400 text-sm font-light mb-6'>실시간 업데이트되는 신상 드레스와 신부 후기</p>
         <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
-           class='inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white px-8 py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity'>
-          <svg xmlns='http://www.w3.org/2000/svg' class='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
+           class='inline-flex items-center gap-3 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white px-10 py-4 text-sm tracking-[0.2em] uppercase font-light hover:opacity-90 transition-opacity'>
+          <svg class='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
             <path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'/>
           </svg>
-          @ch_weddingmarch 인스타그램
+          @ch_weddingmarch 팔로우
         </a>
       </div>
 
-      <!-- 예약 유도 -->
-      <div class='mt-10 text-center'>
-        <p class='text-gray-600 mb-4'>마음에 드는 스타일이 있으신가요?</p>
-        <a href='/contact' class='inline-block bg-rose-gold text-white px-10 py-4 rounded-full font-medium hover:bg-deep-rose transition-colors shadow-lg'>
+      <!-- 예약 CTA -->
+      <div class='mt-8 text-center'>
+        <p class='text-gray-500 font-light mb-5 text-sm'>마음에 드는 스타일이 있으신가요?</p>
+        <a href='/contact'
+           class='inline-block bg-[#B76E79] text-white px-12 py-4 text-xs tracking-[0.3em] uppercase font-light hover:bg-[#8B3A47] transition-colors shadow-lg'>
           피팅 예약하기
         </a>
       </div>
     </div>
   </section>
 
+  <!-- 라이트박스 -->
+  <div id='lightbox' class='fixed inset-0 z-[100] bg-black/95 items-center justify-center'
+       onclick='closeLightbox(event)'>
+    <button class='absolute top-6 right-6 text-white/60 hover:text-white transition-colors' onclick='closeLightbox()'>
+      <svg class='w-8 h-8' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M6 18L18 6M6 6l12 12'/>
+      </svg>
+    </button>
+    <button id='lb-prev' class='absolute left-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors p-3'>
+      <svg class='w-8 h-8' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M15 19l-7-7 7-7'/>
+      </svg>
+    </button>
+    <img id='lb-img' src='' alt='' class='max-w-[85vw] max-h-[85vh] object-contain' />
+    <div class='absolute bottom-6 left-0 right-0 text-center'>
+      <p id='lb-caption' class='text-white/50 text-xs tracking-[0.3em] uppercase font-light'></p>
+    </div>
+    <button id='lb-next' class='absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors p-3'>
+      <svg class='w-8 h-8' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M9 5l7 7-7 7'/>
+      </svg>
+    </button>
+  </div>
+
 </Layout>
+
+<script>
+  const galleryImages = [
+    { src: '/images/instagram/00.webp', style: '에이라인' },
+    { src: '/images/instagram/01.webp', style: '미니멀' },
+    { src: '/images/instagram/02.webp', style: '볼가운' },
+    { src: '/images/instagram/03.webp', style: '에이라인' },
+    { src: '/images/instagram/04.webp', style: '볼가운' },
+    { src: '/images/instagram/05.webp', style: '슬림핏' },
+    { src: '/images/instagram/06.webp', style: '에이라인' },
+    { src: '/images/instagram/07.webp', style: '레이스' },
+    { src: '/images/instagram/08.webp', style: '볼가운' },
+    { src: '/images/instagram/09.webp', style: '에이라인' },
+  ];
+
+  let lbCurrent = 0;
+
+  (window as any).openLightbox = function(i: number) {
+    lbCurrent = i;
+    updateLightbox();
+    document.getElementById('lightbox')!.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  (window as any).closeLightbox = function(e?: Event) {
+    if (e && e.target !== document.getElementById('lightbox') && e.target !== (e.currentTarget as Element)) return;
+    if (e && !(e.target as Element).closest('#lightbox, button[onclick]')) {
+      // check if clicked on overlay
+      if ((e.target as Element).id !== 'lightbox') return;
+    }
+    document.getElementById('lightbox')!.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  function updateLightbox() {
+    (document.getElementById('lb-img') as HTMLImageElement).src = galleryImages[lbCurrent].src;
+    document.getElementById('lb-caption')!.textContent = `${galleryImages[lbCurrent].style} · ${lbCurrent + 1} / ${galleryImages.length}`;
+  }
+
+  document.getElementById('lb-prev')!.addEventListener('click', (e) => {
+    e.stopPropagation();
+    lbCurrent = (lbCurrent - 1 + galleryImages.length) % galleryImages.length;
+    updateLightbox();
+  });
+
+  document.getElementById('lb-next')!.addEventListener('click', (e) => {
+    e.stopPropagation();
+    lbCurrent = (lbCurrent + 1) % galleryImages.length;
+    updateLightbox();
+  });
+
+  // 닫기 버튼
+  const closeBtn = document.querySelector('#lightbox > button');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      document.getElementById('lightbox')!.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  }
+
+  // 오버레이 클릭
+  document.getElementById('lightbox')!.addEventListener('click', (e) => {
+    if ((e.target as Element).id === 'lightbox') {
+      document.getElementById('lightbox')!.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // 키보드
+  document.addEventListener('keydown', (e) => {
+    const lb = document.getElementById('lightbox')!;
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') { lb.classList.remove('open'); document.body.style.overflow = ''; }
+    if (e.key === 'ArrowLeft') { lbCurrent = (lbCurrent - 1 + galleryImages.length) % galleryImages.length; updateLightbox(); }
+    if (e.key === 'ArrowRight') { lbCurrent = (lbCurrent + 1) % galleryImages.length; updateLightbox(); }
+  });
+
+  // 카테고리 필터
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const galleryItems = document.querySelectorAll<HTMLElement>('.gallery-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => {
+        b.classList.remove('bg-[#B76E79]', 'text-white', 'border-[#B76E79]');
+        b.classList.add('text-gray-500', 'border-[#E8DDD5]');
+      });
+      btn.classList.add('bg-[#B76E79]', 'text-white', 'border-[#B76E79]');
+      btn.classList.remove('text-gray-500', 'border-[#E8DDD5]');
+
+      const cat = btn.dataset.category;
+      galleryItems.forEach(item => {
+        if (cat === '전체' || item.dataset.style === cat) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
