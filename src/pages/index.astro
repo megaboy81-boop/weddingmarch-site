@@ -438,26 +438,26 @@ const stats = [
       }, 900);
     }
 
-    // 제목 Split 애니메이션
+    // 제목 애니메이션 — flash 완전 방지
     const heroTitleEl = document.getElementById('hero-title') as HTMLElement | null;
     if (SplitType && titleLine1 && titleLine2) {
-      // flash 방지: split 직후에 h1 보이게 (chars가 y:120%에서 clip됨)
-      if (heroTitleEl) heroTitleEl.style.opacity = '1';
       const split1 = new SplitType(titleLine1, { types: 'chars' });
       const split2 = new SplitType(titleLine2, { types: 'chars' });
-      gsap.from([...split1.chars, ...split2.chars], {
-        y: '120%',
-        opacity: 0,
-        duration: 1.0,
-        stagger: 0.04,
-        ease: 'power4.out',
-        delay: 0.6,
+      const allChars = [...(split1.chars || []), ...(split2.chars || [])];
+      // 1. chars를 먼저 숨김 (gsap.set = 즉시, 프레임 없음)
+      gsap.set(allChars, { y: '120%', opacity: 0 });
+      // 2. 이제 h1 보이게 (chars는 overflow:hidden으로 클립됨 = 아무것도 안보임)
+      if (heroTitleEl) heroTitleEl.style.opacity = '1';
+      // 3. 애니메이션 실행
+      gsap.to(allChars, {
+        y: '0%', opacity: 1, duration: 1.0, stagger: 0.04, ease: 'power4.out', delay: 0.5,
       });
     } else if (titleLine1 && titleLine2) {
-      // Fallback: 블록 단위 페이드
+      // Fallback: GSAP만 있을 때
+      gsap.set([titleLine1, titleLine2], { y: 60, opacity: 0 });
       if (heroTitleEl) heroTitleEl.style.opacity = '1';
-      gsap.from([titleLine1, titleLine2], {
-        y: 60, opacity: 0, duration: 1.1, stagger: 0.2, ease: 'power3.out', delay: 0.5,
+      gsap.to([titleLine1, titleLine2], {
+        y: 0, opacity: 1, duration: 1.1, stagger: 0.2, ease: 'power3.out', delay: 0.5,
       });
     }
 
