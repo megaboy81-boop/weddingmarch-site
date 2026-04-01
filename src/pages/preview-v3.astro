@@ -1,0 +1,930 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout title="웨딩마치 | 춘천 웨딩드레스 전문샵" description="춘천 웨딩드레스 전문샵 웨딩마치. From 2017. 드레스 대여, 2회 피팅, 헤어·메이크업·도우미 원스톱 웨딩 서비스.">
+
+<style is:global>
+  /* Google Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+  /* Reset existing layout nav */
+  #main-nav { display: none !important; }
+  body { background: #111 !important; color: #fff !important; overflow-x: hidden; }
+
+  /* ── QH CSS Variables (faithful copy) ── */
+  :root {
+    --qh-black: #111111;
+    --qh-white: #ffffff;
+    --qh-font-heading: 'Space Grotesk', sans-serif;
+    --qh-font-sans: 'DM Sans', sans-serif;
+    --qh-spacing-tiny: 12px;
+    --qh-spacing-small: 20px;
+    --qh-spacing-unit: 60px;
+    --qh-spacing-double: 120px;
+    --qh-z-nav: 55;
+    --qh-ease: cubic-bezier(.38, .005, .215, 1);
+    --qh-ease-out: cubic-bezier(.19, 1, .22, 1);
+    --qh-speed: .3s;
+    --qh-speed-slow: .6s;
+  }
+
+  /* ── Base ── */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  .qh-body {
+    font-family: var(--qh-font-sans);
+    background: var(--qh-black);
+    color: var(--qh-white);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── Typography utils (faithful to QH) ── */
+  .u-text-heading {
+    font-family: var(--qh-font-heading);
+    text-transform: uppercase;
+    letter-spacing: -.03em;
+    margin: 0;
+    font-size: 6.75vw;
+    font-weight: 700;
+    line-height: .99;
+  }
+  .u-text-big {
+    font-family: var(--qh-font-heading);
+    text-transform: uppercase;
+    letter-spacing: -.03em;
+    font-size: 13.5vw;
+    font-weight: 700;
+    line-height: 1.0;
+  }
+  .u-p-label {
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: .08em;
+    opacity: .5;
+    font-family: var(--qh-font-sans);
+  }
+  .u-p-200 {
+    font-size: 16px;
+    line-height: 1.2;
+    font-family: var(--qh-font-sans);
+  }
+  .u-p-100 {
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  /* ── C-Link hover underline (faithful to QH) ── */
+  .c-link {
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+    transition: background-size var(--qh-speed) var(--qh-ease);
+  }
+  .c-link:hover {
+    background-size: 100% 1px;
+    background-position: 0 100%;
+  }
+
+  /* ── c-magic-link: dual-line hover ── */
+  .c-magic-link {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    line-height: 1.2;
+  }
+  .c-magic-link span {
+    display: block;
+    transition: transform var(--qh-speed) var(--qh-ease);
+  }
+  .c-magic-link span.hover-line {
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+  a:hover .c-magic-link span { transform: translateY(-100%); }
+
+  /* ── NAV (quentinhocde exact layout: fixed, padding small, grid 12col) ── */
+  .qh-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: var(--qh-spacing-small);
+    z-index: var(--qh-z-nav);
+    color: #fff;
+    display: grid;
+    grid-template-columns: 2fr 7fr 3fr;
+    align-items: start;
+    gap: 0 var(--qh-spacing-small);
+    pointer-events: none;
+  }
+  .qh-nav > * { pointer-events: auto; }
+
+  .qh-nav-logo {
+    font-family: var(--qh-font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+  }
+
+  .qh-nav-links {
+    display: flex;
+    flex-direction: row;
+    gap: var(--qh-spacing-tiny);
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  .qh-nav-links li { list-style: none; }
+  .qh-nav-link {
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+    opacity: .7;
+    transition: opacity var(--qh-speed);
+  }
+  .qh-nav-link:hover { opacity: 1; }
+
+  .qh-nav-social {
+    display: flex;
+    flex-direction: row;
+    gap: var(--qh-spacing-tiny);
+    justify-content: flex-end;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  .qh-nav-social a {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #fff;
+    text-decoration: none;
+    opacity: .5;
+    transition: opacity var(--qh-speed);
+  }
+  .qh-nav-social a:hover { opacity: 1; }
+
+  /* Mobile nav toggle */
+  .qh-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-family: var(--qh-font-heading);
+    text-transform: uppercase;
+    letter-spacing: -.02em;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  /* ── MOBILE NAV (fixed overlay, QH style) ── */
+  .qh-mobile-nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #111;
+    z-index: 50;
+    padding: var(--qh-spacing-small) var(--qh-spacing-tiny) var(--qh-spacing-tiny);
+    clip-path: inset(50% 50% 50% 50% round 8px);
+    transition: clip-path .5s var(--qh-ease);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .qh-mobile-nav.is-open {
+    display: flex;
+    clip-path: inset(0% 0% 0% 0% round 0px);
+  }
+  .qh-mobile-nav a {
+    font-family: var(--qh-font-heading);
+    font-size: 14vw;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -.03em;
+    line-height: 1;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: .1em 0;
+    transition: opacity .2s;
+  }
+  .qh-mobile-nav a:hover { opacity: .6; }
+  .qh-mobile-close {
+    position: absolute;
+    top: var(--qh-spacing-small);
+    right: var(--qh-spacing-small);
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: var(--qh-font-heading);
+    text-transform: uppercase;
+  }
+
+  /* ── HERO (QH: fixed full-screen, title at absolute bottom) ── */
+  .qh-home {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  /* Background image (QH uses c-background component, we use img) */
+  .qh-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+  }
+  .qh-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: .35;
+  }
+
+  /* Meta info grid (top-center area, QH: md:px-small px-tiny, mt-double, lg:translate-y-[-50%]) */
+  .qh-home-content {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0; right: 0;
+    padding: 0 var(--qh-spacing-small);
+    margin-top: var(--qh-spacing-double);
+  }
+  .qh-home-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0 var(--qh-spacing-small);
+  }
+
+  /* QH: col-span-2 for meta items */
+  .qh-meta-from { grid-column: span 2; }
+  .qh-meta-desc { grid-column: span 2; }
+  .qh-meta-services { grid-column: span 3; grid-column-start: 6; }
+  .qh-meta-location { grid-column: span 2; grid-column-start: 11; text-align: right; }
+
+  .qh-meta-item {
+    font-size: 16px;
+    line-height: 1.2;
+    opacity: .9;
+  }
+  .qh-meta-item p { margin: 0; }
+  .qh-meta-item p + p { margin-top: .2em; }
+
+  /* Big title at absolute bottom (QH: absolute md:bottom-small bottom-tiny md:left-small) */
+  .qh-title {
+    position: absolute;
+    bottom: var(--qh-spacing-small);
+    left: var(--qh-spacing-small);
+    right: var(--qh-spacing-small);
+    display: flex;
+    flex-direction: column;
+    line-height: .99;
+    overflow: hidden;
+  }
+  .qh-title-line {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+  .qh-title-line:first-child { margin-bottom: -.01em; }
+  .qh-title-line.right { justify-content: flex-end; }
+
+  .qh-title-word {
+    font-family: var(--qh-font-heading);
+    text-transform: uppercase;
+    letter-spacing: -.03em;
+    font-weight: 700;
+    font-size: 6.75vw;
+    line-height: .99;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Version tag (QH: absolute bottom-small left-small) */
+  .qh-version {
+    position: absolute;
+    bottom: var(--qh-spacing-small);
+    left: var(--qh-spacing-small);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    opacity: .3;
+  }
+
+  /* ── SCROLL SECTION (below fixed hero — needs spacer) ── */
+  .qh-spacer { height: 100svh; }
+
+  /* ── WORKS/SERVICES TABLE (QH c-table style) ── */
+  .qh-section {
+    background: #111;
+    padding: var(--qh-spacing-unit) var(--qh-spacing-small);
+    min-height: 100svh;
+  }
+  .qh-section-header {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0 var(--qh-spacing-small);
+    padding-bottom: var(--qh-spacing-small);
+    border-bottom: 1px solid rgba(255,255,255,.15);
+    margin-bottom: 0;
+  }
+  .qh-section-title { grid-column: span 4; }
+  .qh-section-title h2 {
+    font-family: var(--qh-font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -.02em;
+    margin: 0;
+  }
+
+  /* Table rows (QH: works list hoverable) */
+  .qh-table {
+    width: 100%;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  .qh-table-row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0 var(--qh-spacing-small);
+    padding: var(--qh-spacing-small) 0;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    position: relative;
+    cursor: default;
+    transition: color var(--qh-speed);
+    align-items: start;
+  }
+  .qh-table-row::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: calc(var(--qh-spacing-small) * -1);
+    right: calc(var(--qh-spacing-small) * -1);
+    top: 0;
+    background: #fff;
+    transform: scaleY(0);
+    transform-origin: top;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity var(--qh-speed), transform var(--qh-speed) var(--qh-ease);
+  }
+  .qh-table-row:hover::before {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  .qh-table-row:hover { color: #111; }
+
+  /* Thumbnail on hover */
+  .qh-table-row:hover .qh-row-thumb { opacity: 1; transform: scale(1); }
+
+  .qh-row-num {
+    grid-column: span 1;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    opacity: .4;
+    padding-top: 2px;
+  }
+  .qh-row-title {
+    grid-column: span 4;
+    font-family: var(--qh-font-heading);
+    font-size: clamp(24px, 3.5vw, 48px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -.03em;
+    line-height: 1;
+  }
+  .qh-row-desc {
+    grid-column: span 3;
+    font-size: 14px;
+    line-height: 1.4;
+    opacity: .7;
+    padding-top: 4px;
+  }
+  .qh-row-tag {
+    grid-column: span 2;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    opacity: .4;
+    padding-top: 6px;
+    text-align: right;
+    grid-column-start: 10;
+  }
+  .qh-row-thumb {
+    grid-column: span 2;
+    grid-column-start: 11;
+    opacity: 0;
+    transform: scale(.95);
+    transition: opacity var(--qh-speed) var(--qh-ease), transform var(--qh-speed) var(--qh-ease);
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 4px;
+    align-self: center;
+  }
+  .qh-row-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── ABOUT SECTION ── */
+  .qh-about {
+    background: #111;
+    padding: var(--qh-spacing-unit) var(--qh-spacing-small);
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .qh-about-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--qh-spacing-unit) var(--qh-spacing-small);
+    align-items: start;
+  }
+  .qh-about-col-label { grid-column: span 2; }
+  .qh-about-col-text { grid-column: span 5; }
+  .qh-about-col-list { grid-column: span 3; grid-column-start: 9; }
+
+  .qh-about-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    opacity: .4;
+  }
+  .qh-about-text {
+    font-size: clamp(20px, 2.5vw, 32px);
+    line-height: 1.3;
+    font-weight: 400;
+    letter-spacing: -.01em;
+  }
+  .qh-about-list {
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  .qh-about-list li {
+    font-size: 14px;
+    line-height: 1.4;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    opacity: .7;
+  }
+  .qh-about-list li:first-child { border-top: 1px solid rgba(255,255,255,.1); }
+
+  /* ── FOOTER ── */
+  .qh-footer {
+    background: #111;
+    padding: var(--qh-spacing-small);
+    border-top: 1px solid rgba(255,255,255,.1);
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0 var(--qh-spacing-small);
+    align-items: end;
+  }
+  .qh-footer-left { grid-column: span 4; }
+  .qh-footer-mid { grid-column: span 4; grid-column-start: 5; text-align: center; }
+  .qh-footer-right { grid-column: span 4; grid-column-start: 9; text-align: right; }
+  .qh-footer-copy {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    opacity: .3;
+  }
+  .qh-footer-cta {
+    display: inline-block;
+    font-family: var(--qh-font-heading);
+    font-size: clamp(16px, 2vw, 24px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -.02em;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    padding-bottom: 4px;
+    transition: border-color var(--qh-speed);
+  }
+  .qh-footer-cta:hover { border-color: #fff; }
+
+  /* ── TITLE ANIMATION (letter stagger on load) ── */
+  .qh-title-word .letter-inner {
+    display: inline-block;
+    transition: transform .8s var(--qh-ease-out);
+  }
+  .qh-home.is-loading .qh-title-word .letter-inner {
+    transform: translateY(100%);
+  }
+
+  /* Nav letter animation */
+  .qh-nav-logo,
+  .qh-home-content,
+  .qh-title {
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity .6s var(--qh-ease), transform .6s var(--qh-ease);
+  }
+  .qh-nav-logo { transition-delay: .8s; }
+  .qh-home-content { transition-delay: 1.2s; }
+  .qh-title { transition-delay: .5s; transform: none; }
+
+  body.is-ready .qh-nav-logo,
+  body.is-ready .qh-home-content,
+  body.is-ready .qh-title {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Title words slide up */
+  .qh-title-word {
+    overflow: hidden;
+  }
+  .qh-title-word-inner {
+    display: block;
+    transform: translateY(110%);
+    transition: transform 1s var(--qh-ease-out);
+  }
+  body.is-ready .qh-title-word-inner {
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .qh-nav {
+      grid-template-columns: 1fr 1fr;
+    }
+    .qh-nav-links,
+    .qh-nav-social { display: none; }
+    .qh-menu-btn { display: block; text-align: right; }
+
+    .qh-home-content { display: none; }
+
+    .qh-title-word { font-size: 10vw; }
+    .u-text-heading { font-size: 10vw; }
+
+    .qh-home-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .qh-table-row {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .qh-row-num { grid-column: span 1; }
+    .qh-row-title { grid-column: span 3; }
+    .qh-row-desc { grid-column: 1 / span 4; font-size: 13px; }
+    .qh-row-tag { grid-column: 1 / span 2; grid-column-start: 1; text-align: left; }
+    .qh-row-thumb { display: none; }
+
+    .qh-about-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--qh-spacing-small);
+    }
+    .qh-about-col-label { grid-column: span 1; }
+    .qh-about-col-text { grid-column: 1 / span 2; }
+    .qh-about-col-list { grid-column: 1 / span 2; grid-column-start: 1; }
+
+    .qh-footer {
+      grid-template-columns: 1fr 1fr;
+    }
+    .qh-footer-left { grid-column: 1; }
+    .qh-footer-mid { grid-column: 1 / span 2; text-align: left; order: -1; margin-bottom: var(--qh-spacing-small); }
+    .qh-footer-right { grid-column: 2; }
+
+    .qh-section-header { grid-template-columns: repeat(2, 1fr); }
+    .qh-section-title { grid-column: span 2; }
+  }
+
+  @media (max-width: 768px) {
+    .qh-nav { padding: var(--qh-spacing-tiny); }
+    .qh-title {
+      bottom: var(--qh-spacing-tiny);
+      left: var(--qh-spacing-tiny);
+      right: var(--qh-spacing-tiny);
+    }
+    .qh-title-word { font-size: 13vw; }
+    .qh-section { padding: var(--qh-spacing-small) var(--qh-spacing-tiny); }
+    .qh-about { padding: var(--qh-spacing-small) var(--qh-spacing-tiny); }
+    .qh-footer { padding: var(--qh-spacing-tiny); }
+    .qh-footer-mid { display: none; }
+  }
+</style>
+
+<!-- BODY wrapper -->
+<div class="qh-body">
+
+  <!-- ══════════ BACKGROUND ══════════ -->
+  <div class="qh-bg">
+    <img src={`${base}/images/bg/h1.jpg`} alt="" loading="eager" />
+  </div>
+
+  <!-- ══════════ MOBILE NAV ══════════ -->
+  <div class="qh-mobile-nav" id="qhMobileNav">
+    <button class="qh-mobile-close" id="qhMobileClose" type="button">Close</button>
+    <a href={`${base}/gallery`} class="c-link">갤러리</a>
+    <a href={`${base}/packages`} class="c-link">패키지</a>
+    <a href={`${base}/contact`} class="c-link">예약하기 ↗</a>
+  </div>
+
+  <!-- ══════════ NAV ══════════ -->
+  <header class="qh-nav">
+    <!-- Left: Logo -->
+    <a href={base || '/'} class="qh-nav-logo c-link">Wedding March</a>
+
+    <!-- Center: Links -->
+    <nav>
+      <ul class="qh-nav-links">
+        <li><a href={`${base}/gallery`} class="qh-nav-link c-link"><span class="c-magic-link"><span>갤러리</span><span class="hover-line" aria-hidden="true">갤러리</span></span></a></li>
+        <li><a href={`${base}/packages`} class="qh-nav-link c-link"><span class="c-magic-link"><span>패키지</span><span class="hover-line" aria-hidden="true">패키지</span></span></a></li>
+        <li><a href={`${base}/contact`} class="qh-nav-link c-link"><span class="c-magic-link"><span>예약하기 ↗</span><span class="hover-line" aria-hidden="true">예약하기 ↗</span></span></a></li>
+      </ul>
+    </nav>
+
+    <!-- Right: Social -->
+    <ul class="qh-nav-social">
+      <li><a href="https://www.instagram.com/weddingmarch_official/" target="_blank" rel="noopener" class="c-link">IG</a></li>
+      <li><a href="tel:033-255-5554" class="c-link">TEL</a></li>
+      <li><a href={`${base}/contact`} class="c-link">예약</a></li>
+    </ul>
+
+    <!-- Mobile toggle -->
+    <button class="qh-menu-btn" id="qhMenuBtn" type="button">Menu</button>
+  </header>
+
+  <!-- ══════════ HERO (fixed, full screen) ══════════ -->
+  <div class="qh-home" id="qhHome">
+
+    <!-- Meta info grid (QH: top center, 12-col grid) -->
+    <div class="qh-home-content">
+      <div class="qh-home-grid">
+
+        <!-- Col 1-2: From 2017 -->
+        <div class="qh-meta-from">
+          <p class="qh-meta-item">From 2017</p>
+        </div>
+
+        <!-- Col 3-4: 소개 -->
+        <div class="qh-meta-desc">
+          <p class="qh-meta-item">춘천 웨딩드레스<br/>전문샵</p>
+          <p class="qh-meta-item" style="margin-top:.4em; opacity:.6; font-size:13px;">강원도 대표 드레스샵.<br/>정성을 다한 웨딩 서비스.</p>
+        </div>
+
+        <!-- Col 6-8: Services -->
+        <div class="qh-meta-services">
+          <p class="qh-meta-item" style="opacity:.6;">드레스 대여</p>
+          <p class="qh-meta-item" style="opacity:.6;">2회 피팅 시스템</p>
+          <p class="qh-meta-item" style="opacity:.6;">헤어·메이크업</p>
+          <p class="qh-meta-item" style="opacity:.6;">원스톱 웨딩</p>
+        </div>
+
+        <!-- Col 11-12: Location -->
+        <div class="qh-meta-location">
+          <p class="qh-meta-item">춘천</p>
+          <p class="qh-meta-item" style="opacity:.6;">강원도</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BIG TITLE at bottom (QH: absolute bottom, flex-col, justify-between) -->
+    <h1 class="qh-title">
+      <span class="qh-title-line">
+        <span class="qh-title-word">
+          <span class="qh-title-word-inner">Wedding</span>
+        </span>
+        <span class="qh-title-word">
+          <span class="qh-title-word-inner">March</span>
+        </span>
+      </span>
+      <span class="qh-title-line right">
+        <span class="qh-title-word" style="font-size: 3.4vw; letter-spacing: -.01em; font-weight: 500; opacity: .5;">
+          <span class="qh-title-word-inner">춘천 웨딩드레스 전문샵</span>
+        </span>
+      </span>
+    </h1>
+
+  </div>
+
+  <!-- Spacer to allow scroll -->
+  <div class="qh-spacer"></div>
+
+  <!-- ══════════ SERVICES TABLE (QH c-table style) ══════════ -->
+  <section class="qh-section">
+
+    <div class="qh-section-header">
+      <div class="qh-section-title">
+        <h2>서비스 / Services</h2>
+      </div>
+    </div>
+
+    <ul class="qh-table">
+
+      <li class="qh-table-row">
+        <span class="qh-row-num">01</span>
+        <span class="qh-row-title">드레스 컬렉션</span>
+        <span class="qh-row-desc">국내외 120벌 이상 보유.<br/>웨딩드레스부터 턱시도까지.</span>
+        <span class="qh-row-tag">2017 —</span>
+        <span class="qh-row-thumb">
+          <img src={`${base}/images/bg/h2.jpg`} alt="드레스 컬렉션" loading="lazy" />
+        </span>
+      </li>
+
+      <li class="qh-table-row">
+        <span class="qh-row-num">02</span>
+        <span class="qh-row-title">2회 피팅 시스템</span>
+        <span class="qh-row-desc">타샵과의 차별화.<br/>충분한 시간으로 완벽한 드레스 선택.</span>
+        <span class="qh-row-tag">Signature</span>
+        <span class="qh-row-thumb">
+          <img src={`${base}/images/bg/h3.jpg`} alt="2회 피팅" loading="lazy" />
+        </span>
+      </li>
+
+      <li class="qh-table-row">
+        <span class="qh-row-num">03</span>
+        <span class="qh-row-title">헤어·메이크업</span>
+        <span class="qh-row-desc">전문 헤어·메이크업 아티스트.<br/>결혼식 당일 도우미 서비스 포함.</span>
+        <span class="qh-row-tag">All-in-One</span>
+        <span class="qh-row-thumb">
+          <img src={`${base}/images/bg/h4.jpg`} alt="헤어 메이크업" loading="lazy" />
+        </span>
+      </li>
+
+      <li class="qh-table-row">
+        <span class="qh-row-num">04</span>
+        <span class="qh-row-title">미래웨딩홀 입점</span>
+        <span class="qh-row-desc">웨딩홀과 같은 건물 1층.<br/>춘천 퇴계로 118, 104호.</span>
+        <span class="qh-row-tag">Location</span>
+        <span class="qh-row-thumb">
+          <img src={`${base}/images/bg/i1.jpg`} alt="매장 위치" loading="lazy" />
+        </span>
+      </li>
+
+      <li class="qh-table-row">
+        <span class="qh-row-num">05</span>
+        <span class="qh-row-title">원스톱 웨딩</span>
+        <span class="qh-row-desc">드레스부터 당일 도우미까지.<br/>모든 것을 한 곳에서 해결.</span>
+        <span class="qh-row-tag">Complete</span>
+        <span class="qh-row-thumb">
+          <img src={`${base}/images/bg/i2.jpg`} alt="원스톱 웨딩" loading="lazy" />
+        </span>
+      </li>
+
+      <li class="qh-table-row">
+        <span class="qh-row-num">06</span>
+        <span class="qh-row-title">갤러리 보기 ↗</span>
+        <span class="qh-row-desc">실제 웨딩 드레스 착용샷.<br/>다양한 스타일을 미리 확인하세요.</span>
+        <span class="qh-row-tag">Gallery</span>
+        <span class="qh-row-thumb">
+          <img src={`${base}/images/bg/i3.jpg`} alt="갤러리" loading="lazy" />
+        </span>
+      </li>
+
+    </ul>
+
+  </section>
+
+  <!-- ══════════ ABOUT SECTION ══════════ -->
+  <section class="qh-about">
+    <div class="qh-about-grid">
+
+      <div class="qh-about-col-label">
+        <p class="qh-about-label">About</p>
+      </div>
+
+      <div class="qh-about-col-text">
+        <p class="qh-about-text">
+          웨딩마치는 춘천 강원도를 대표하는 웨딩드레스 전문샵입니다. 2017년부터 수백 쌍의 커플과 함께해온 경험으로, 당신의 특별한 날을 더욱 완벽하게 만들어 드립니다.
+        </p>
+      </div>
+
+      <div class="qh-about-col-list">
+        <ul class="qh-about-list">
+          <li>드레스 대여</li>
+          <li>2회 피팅 시스템</li>
+          <li>헤어·메이크업</li>
+          <li>결혼식 당일 도우미</li>
+          <li>미래웨딩홀 1층 입점</li>
+          <li>춘천 · 강원도</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer class="qh-footer">
+
+    <div class="qh-footer-left">
+      <p class="qh-footer-copy">© 2017 — 웨딩마치</p>
+      <p class="qh-footer-copy" style="margin-top:4px;">춘천 퇴계로 118, 1층 104호</p>
+      <p class="qh-footer-copy" style="margin-top:4px;">033-255-5554</p>
+    </div>
+
+    <div class="qh-footer-mid">
+      <a href={`${base}/contact`} class="qh-footer-cta">예약하기 ↗</a>
+    </div>
+
+    <div class="qh-footer-right">
+      <p class="qh-footer-copy">
+        <a href="https://www.instagram.com/weddingmarch_official/" target="_blank" rel="noopener" style="color:inherit; text-decoration:none; opacity:.5;">Instagram</a>
+      </p>
+      <p class="qh-footer-copy" style="margin-top:4px; opacity:.3;">Mon–Sun 10:00–20:00</p>
+    </div>
+
+  </footer>
+
+</div>
+
+<!-- ══════════ JAVASCRIPT ══════════ -->
+<script>
+  // 1. Page load animation
+  document.addEventListener('DOMContentLoaded', () => {
+    // Stagger title words
+    const words = document.querySelectorAll('.qh-title-word-inner');
+    words.forEach((el, i) => {
+      (el as HTMLElement).style.transitionDelay = `${0.1 + i * 0.08}s`;
+    });
+
+    // Trigger is-ready
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        document.body.classList.add('is-ready');
+      }, 100);
+    });
+  });
+
+  // 2. Mobile menu toggle
+  const menuBtn = document.getElementById('qhMenuBtn');
+  const closeBtn = document.getElementById('qhMobileClose');
+  const mobileNav = document.getElementById('qhMobileNav');
+
+  menuBtn?.addEventListener('click', () => {
+    mobileNav?.classList.add('is-open');
+    if (menuBtn) menuBtn.textContent = 'Close';
+  });
+  closeBtn?.addEventListener('click', () => {
+    mobileNav?.classList.remove('is-open');
+    if (menuBtn) menuBtn.textContent = 'Menu';
+  });
+
+  // 3. Parallax bg on scroll
+  const bg = document.querySelector('.qh-bg img') as HTMLImageElement;
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (bg && scrollY < window.innerHeight * 2) {
+      bg.style.transform = `translateY(${scrollY * 0.2}px)`;
+    }
+  }, { passive: true });
+
+  // 4. Nav background on scroll
+  const nav = document.querySelector('.qh-nav') as HTMLElement;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > window.innerHeight * 0.8) {
+      nav?.style.setProperty('color', '#111');
+    } else {
+      nav?.style.setProperty('color', '#fff');
+    }
+  }, { passive: true });
+
+  // 5. Table row hover: show thumbnail (already CSS-based)
+  // 6. Title scramble effect on hover (lightweight version)
+  const titleWords = document.querySelectorAll('.qh-title-word-inner');
+  titleWords.forEach(el => {
+    const original = el.textContent || '';
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ웨딩마치춘천';
+    let interval: ReturnType<typeof setInterval> | null = null;
+    let iteration = 0;
+
+    el.closest('.qh-title-word')?.addEventListener('mouseenter', () => {
+      iteration = 0;
+      clearInterval(interval!);
+      interval = setInterval(() => {
+        (el as HTMLElement).textContent = original
+          .split('')
+          .map((letter, idx) => {
+            if (idx < iteration) return original[idx];
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join('');
+        if (iteration >= original.length) clearInterval(interval!);
+        iteration += 1 / 3;
+      }, 30);
+    });
+
+    el.closest('.qh-title-word')?.addEventListener('mouseleave', () => {
+      clearInterval(interval!);
+      (el as HTMLElement).textContent = original;
+    });
+  });
+</script>
+
+</Layout>
