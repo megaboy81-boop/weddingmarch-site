@@ -1,0 +1,1037 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const galleryItems = [
+  { src: `${base}/images/bg/i1.jpg`, label: '매장 외부 전경' },
+  { src: `${base}/images/bg/i2.jpg`, label: '드레스·턱시도 전시' },
+  { src: `${base}/images/bg/i3.jpg`, label: '매장 로비' },
+  { src: `${base}/images/bg/i4.jpg`, label: '드레스샵 내부' },
+  { src: `${base}/images/bg/i5.jpg`, label: '모던 매장 내부' },
+  { src: `${base}/images/bg/i6.jpg`, label: '웨딩마치 풍선 복도' },
+  { src: `${base}/images/instagram/1100.webp`, label: '매장 인테리어' },
+  { src: `${base}/images/instagram/1110.webp`, label: '드레스 진열' },
+  { src: `${base}/images/instagram/1140.webp`, label: '매장 전경' },
+  { src: `${base}/images/instagram/1160.webp`, label: '드레스 컬렉션' },
+  { src: `${base}/images/instagram/1170.webp`, label: '매장 내부' },
+  { src: `${base}/images/instagram/1180.webp`, label: '드레스 진열' },
+];
+
+const reviews = [
+  { text: '촬영보다 본식이 더 예뻤어요. 드레스 퀄리티가 정말 달랐고, 2회 피팅 덕분에 완벽한 드레스를 찾을 수 있었습니다.', name: '춘천 신부', date: '2025년 10월', img: `${base}/images/instagram/01.webp` },
+  { text: '미래웨딩홀 바로 아래에 있어서 결혼식 당일 너무 편리했어요. 헤어메이크업부터 도우미까지 모두 한번에 해결됐습니다.', name: '강원 신부', date: '2025년 5월', img: `${base}/images/instagram/04.webp` },
+  { text: '드레스가 너무 예뻐서 피팅하면서 눈물이 났어요. 직원분들이 너무 친절하게 도와주셨고 최고의 날이었습니다.', name: '홍천 신부', date: '2025년 11월', img: `${base}/images/instagram/07.webp` },
+];
+
+const services = [
+  { num: '01', title: '드레스 컬렉션', sub: '국내외 120벌 보유', tag: '2017 —', img: `${base}/images/bg/h2.jpg` },
+  { num: '02', title: '2회 피팅 시스템', sub: '타샵 차별화 전문 시스템', tag: 'Signature', img: `${base}/images/bg/h3.jpg` },
+  { num: '03', title: '원스톱 웨딩', sub: '헤어 · 메이크업 · 도우미', tag: 'All-in-One', img: `${base}/images/bg/h4.jpg` },
+  { num: '04', title: '미래웨딩홀 입점', sub: '춘천 퇴계로 118', tag: 'Location', img: `${base}/images/bg/i1.jpg` },
+];
+---
+
+<Layout title="웨딩마치 프리뷰 v2 | 춘천 웨딩드레스샵" description="웨딩마치 새 디자인 프리뷰. 춘천 웨딩드레스 전문샵 — 드레스 120벌, 2회 피팅, 원스톱 웨딩 서비스.">
+
+<!-- ══════════════════════════════════════════════════
+     GLOBAL DARK OVERRIDE
+══════════════════════════════════════════════════ -->
+<style is:global>
+  body { background: #000000 !important; color: #fff !important; }
+
+  /* Nav: 레이아웃의 기존 nav 숨기기 */
+  #main-nav { display: none !important; }
+</style>
+
+<!-- ══════════════════════════════════════════════════
+     CUSTOM NAV (quentinhocde 스타일)
+══════════════════════════════════════════════════ -->
+<header class="v2-nav" id="v2-nav">
+  <!-- 좌: 로고 -->
+  <a href={base} class="v2-nav-logo" id="v2-logo">
+    <span class="v2-logo-text" data-text="Wedding March">Wedding March</span>
+  </a>
+
+  <!-- 중: 링크 -->
+  <nav class="v2-nav-links" id="v2-nav-links">
+    <a href={`${base}/gallery`} class="v2-nav-link">
+      <span class="v2-link-inner">갤러리</span>
+      <span class="v2-link-inner v2-link-hover" aria-hidden="true">갤러리</span>
+    </a>
+    <a href={`${base}/packages`} class="v2-nav-link">
+      <span class="v2-link-inner">패키지</span>
+      <span class="v2-link-inner v2-link-hover" aria-hidden="true">패키지</span>
+    </a>
+    <a href={`${base}/contact`} class="v2-nav-link v2-nav-cta">
+      <span class="v2-link-inner">예약하기 ↗</span>
+      <span class="v2-link-inner v2-link-hover" aria-hidden="true">예약하기 ↗</span>
+    </a>
+  </nav>
+
+  <!-- 우: 소셜 -->
+  <div class="v2-nav-social">
+    <a href="https://www.instagram.com/weddingmarch_official/" target="_blank" rel="noopener" class="v2-social-link">IG</a>
+    <a href="tel:033-255-5554" class="v2-social-link">TEL</a>
+  </div>
+
+  <!-- 모바일 버튼 -->
+  <button class="v2-menu-btn" id="v2-menu-btn" type="button" aria-label="메뉴">
+    <span></span><span></span>
+  </button>
+</header>
+
+<!-- 모바일 메뉴 -->
+<div class="v2-mobile-menu" id="v2-mobile-menu">
+  <nav class="v2-mobile-nav">
+    <a href={`${base}/gallery`} class="v2-mobile-link">갤러리</a>
+    <a href={`${base}/packages`} class="v2-mobile-link">패키지</a>
+    <a href={`${base}/contact`} class="v2-mobile-link">예약하기 ↗</a>
+  </nav>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     HERO — 전체 화면, 타이틀 하단 고정 (quentinhocde 1:1)
+══════════════════════════════════════════════════ -->
+<section class="v2-hero">
+  <!-- 배경 이미지 (매우 어둡게) -->
+  <div class="v2-hero-bg">
+    <img src={`${base}/images/bg/h1.jpg`} alt="" loading="eager" />
+  </div>
+
+  <!-- 상단: info grid (quentinhocde의 상단 info 영역) -->
+  <div class="v2-hero-info" id="v2-hero-info">
+    <div class="v2-info-col">
+      <span class="v2-info-label">From</span>
+      <span class="v2-info-val">2017</span>
+    </div>
+    <div class="v2-info-col">
+      <span class="v2-info-label">About</span>
+      <span class="v2-info-val">춘천 웨딩드레스 전문샵</span>
+    </div>
+    <div class="v2-info-col">
+      <span class="v2-info-label">Services</span>
+      <span class="v2-info-val">드레스 · 헤어 · 메이크업 · 도우미</span>
+    </div>
+    <div class="v2-info-col">
+      <span class="v2-info-label">Location</span>
+      <span class="v2-info-val">춘천 · 강원도</span>
+    </div>
+  </div>
+
+  <!-- 하단: 대형 타이틀 (절대 위치, 화면 하단) -->
+  <h1 class="v2-hero-title" id="v2-title">
+    <!-- 각 글자를 span으로 분리, data-offset으로 translateY 애니메이션 -->
+    <span class="v2-title-line" id="v2-line1">
+      <span class="v2-letter-wrap"><span class="v2-letter" style="--o:1">W</span></span>
+      <span class="v2-letter-wrap"><span class="v2-letter" style="--o:2">e</span></span>
+      <span class="v2-letter-wrap"><span class="v2-letter" style="--o:1">d</span></span>
+      <span class="v2-letter-wrap"><span class="v2-letter" style="--o:3">d</span></span>
+      <span class="v2-letter-wrap"><span class="v2-letter" style="--o:2">i</span></span>
+      <span class="v2-letter-wrap"><span class="v2-letter" style="--o:1">n</span></span>
+      <span class="v2-letter-wrap"><span class="v2-letter" style="--o:4">g</span></span>
+    </span>
+    <span class="v2-title-line v2-title-line--right" id="v2-line2">
+      <span class="v2-letter-wrap"><span class="v2-letter v2-italic" style="--o:3">M</span></span>
+      <span class="v2-letter-wrap"><span class="v2-letter v2-italic" style="--o:1">a</span></span>
+      <span class="v2-letter-wrap"><span class="v2-letter v2-italic" style="--o:2">r</span></span>
+      <span class="v2-letter-wrap"><span class="v2-letter v2-italic" style="--o:4">c</span></span>
+      <span class="v2-letter-wrap"><span class="v2-letter v2-italic" style="--o:1">h</span></span>
+    </span>
+  </h1>
+
+  <!-- 버전 표시 (quentinhocde의 v26.0 처럼) -->
+  <p class="v2-hero-version">2017</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SERVICES LIST (quentinhocde Works 목록 스타일)
+══════════════════════════════════════════════════ -->
+<section class="v2-services">
+  <div class="v2-section-header">
+    <span class="v2-label">Services</span>
+  </div>
+
+  <div class="v2-service-list">
+    {services.map((s) => (
+      <div class="v2-service-item" data-img={s.img}>
+        <span class="v2-svc-num">{s.num}</span>
+        <span class="v2-svc-title">{s.title}</span>
+        <span class="v2-svc-sub">{s.sub}</span>
+        <span class="v2-svc-tag">{s.tag}</span>
+        <!-- 호버 시 우측 등장 이미지 -->
+        <div class="v2-svc-preview">
+          <img src={s.img} alt={s.title} loading="lazy" />
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     GALLERY — 가로 드래그 스크롤
+══════════════════════════════════════════════════ -->
+<section class="v2-gallery">
+  <div class="v2-gallery-header v2-section-header">
+    <span class="v2-label">Gallery</span>
+    <span class="v2-gallery-hint">drag to explore →</span>
+  </div>
+  <div class="v2-gal-track" id="v2-gal-track">
+    {galleryItems.map((item) => (
+      <div class="v2-gal-item">
+        <img src={item.src} alt={item.label} loading="lazy" />
+        <span class="v2-gal-caption">{item.label}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     REVIEWS
+══════════════════════════════════════════════════ -->
+<section class="v2-reviews">
+  <div class="v2-section-header">
+    <span class="v2-label">Reviews</span>
+  </div>
+  <div class="v2-reviews-grid">
+    {reviews.map((r) => (
+      <div class="v2-review-card">
+        <div class="v2-stars">★★★★★</div>
+        <p class="v2-review-text">"{r.text}"</p>
+        <div class="v2-review-footer">
+          <img src={r.img} alt={r.name} class="v2-avatar" />
+          <div>
+            <span class="v2-reviewer-name">{r.name}</span>
+            <span class="v2-reviewer-date">{r.date}</span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     CTA
+══════════════════════════════════════════════════ -->
+<section class="v2-cta">
+  <h2 class="v2-cta-title">
+    당신의 특별한 날,<br />
+    <em class="v2-cta-gold">웨딩마치와 함께</em>
+  </h2>
+  <p class="v2-cta-sub">춘천 퇴계로 118 · 미래웨딩홀 1층</p>
+  <div class="v2-cta-btns">
+    <a href="tel:033-255-5554" class="v2-btn v2-btn--primary">전화 상담</a>
+    <a href={`${base}/contact`} class="v2-btn v2-btn--outline">예약하기</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════ -->
+<footer class="v2-footer">
+  <div class="v2-footer-inner">
+    <span class="v2-footer-logo">Wedding March</span>
+    <span class="v2-footer-copy">© 2017 – 2025 웨딩마치. 춘천 퇴계로 118.</span>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════
+     ALL CSS
+══════════════════════════════════════════════════ -->
+<style>
+/* ── RESET ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── NAV ──────────────────────────────────────── */
+.v2-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 28px 5vw;
+  transition: padding 0.4s ease, background 0.4s ease;
+}
+.v2-nav.scrolled {
+  padding: 16px 5vw;
+  background: rgba(0,0,0,0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.v2-nav-logo {
+  text-decoration: none;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.v2-nav-links {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.v2-nav-link {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  flex-direction: column;
+  height: 1.2em;
+  text-decoration: none;
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  transition: color 0.3s;
+}
+.v2-nav-link:hover { color: white; }
+
+.v2-link-inner {
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+}
+.v2-link-hover {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  color: white;
+}
+.v2-nav-link:hover .v2-link-inner:first-child { transform: translateY(-100%); }
+.v2-nav-link:hover .v2-link-hover { transform: translateY(-100%); }
+
+.v2-nav-cta {
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 8px 18px;
+  color: rgba(255,255,255,0.7) !important;
+  transition: background 0.3s, color 0.3s, border-color 0.3s !important;
+}
+.v2-nav-cta:hover {
+  background: white;
+  color: #000 !important;
+  border-color: white;
+}
+.v2-nav-cta:hover .v2-link-inner:first-child { transform: translateY(-100%); }
+.v2-nav-cta:hover .v2-link-hover { transform: translateY(-100%); color: #000; }
+
+.v2-nav-social {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.v2-social-link {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  transition: color 0.3s;
+  text-transform: uppercase;
+}
+.v2-social-link:hover { color: white; }
+
+.v2-menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  grid-column: 3;
+  justify-self: end;
+}
+.v2-menu-btn span {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: white;
+  transition: transform 0.3s;
+}
+
+.v2-mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
+}
+.v2-mobile-menu.open { transform: translateX(0); }
+
+.v2-mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  text-align: center;
+}
+.v2-mobile-link {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 300;
+  color: white;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  transition: color 0.3s;
+}
+.v2-mobile-link:hover { color: #C9A870; }
+
+@media (max-width: 768px) {
+  .v2-nav { grid-template-columns: 1fr auto; }
+  .v2-nav-links, .v2-nav-social { display: none; }
+  .v2-menu-btn { display: flex; }
+}
+
+/* ── HERO ─────────────────────────────────────── */
+.v2-hero {
+  position: relative;
+  height: 100svh;
+  min-height: 600px;
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.v2-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.v2-hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.15;
+  filter: grayscale(30%);
+}
+
+/* 상단 info — quentinhocde의 중앙 info grid */
+.v2-hero-info {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 120px 5vw 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.9s ease 1.2s, transform 0.9s ease 1.2s;
+}
+.v2-hero-info.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.v2-info-col {
+  padding-right: 16px;
+}
+.v2-info-label {
+  display: block;
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 8px;
+}
+.v2-info-val {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.03em;
+}
+
+/* 하단 대형 타이틀 — quentinhocde 핵심 */
+.v2-hero-title {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  padding: 0 4vw 4vw;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.v2-title-line {
+  display: flex;
+  line-height: 0.85;
+}
+.v2-title-line--right {
+  justify-content: flex-end;
+}
+
+/* 각 글자 래퍼: overflow hidden으로 translateY 클립 */
+.v2-letter-wrap {
+  overflow: hidden;
+  display: inline-block;
+}
+
+/* 글자 자체: translateY로 아래서 올라옴, --o 값으로 오버슈트 차이 */
+.v2-letter {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(100px, 18vw, 240px);
+  font-weight: 300;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  /* 초기: 아래로 숨김 (offset * 100% + 여유) */
+  transform: translateY(calc(var(--o, 1) * 30% + 100%));
+  will-change: transform;
+}
+
+.v2-italic {
+  font-style: italic;
+  color: #C9A870;
+}
+
+.v2-hero-version {
+  position: absolute;
+  bottom: 3vw;
+  right: 5vw;
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.2);
+  z-index: 2;
+}
+
+@media (max-width: 640px) {
+  .v2-hero-info {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 20px;
+    padding-top: 90px;
+  }
+  .v2-hero-title { padding: 0 5vw 5vw; }
+}
+
+/* ── SERVICES ─────────────────────────────────── */
+.v2-services {
+  background: #000;
+  padding: 100px 5vw;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.v2-section-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+.v2-label {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+
+.v2-service-list {
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.v2-service-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr 120px;
+  align-items: center;
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  cursor: pointer;
+  overflow: hidden;
+  transition: padding-left 0.5s cubic-bezier(0.23,1,0.32,1);
+}
+.v2-service-item:hover { padding-left: 20px; }
+
+/* 호버 배경 */
+.v2-service-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.02);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.v2-service-item:hover::before { opacity: 1; }
+
+.v2-svc-num {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.25em;
+}
+
+.v2-svc-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3.8vw, 52px);
+  font-weight: 300;
+  color: white;
+  letter-spacing: -0.01em;
+  transition: color 0.3s;
+}
+.v2-service-item:hover .v2-svc-title { color: #C9A870; }
+
+.v2-svc-sub {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.1em;
+}
+
+.v2-svc-tag {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 10px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.25em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+/* 호버 시 우측 이미지 (quentinhocde 스타일) */
+.v2-svc-preview {
+  position: fixed;
+  width: 260px;
+  height: 340px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 50;
+  transition: opacity 0.3s;
+  overflow: hidden;
+}
+.v2-svc-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.9);
+}
+.v2-service-item:hover .v2-svc-preview { opacity: 1; }
+
+@media (max-width: 768px) {
+  .v2-service-item {
+    grid-template-columns: 36px 1fr;
+    gap: 8px;
+  }
+  .v2-svc-sub, .v2-svc-tag { display: none; }
+  .v2-svc-preview { display: none; }
+}
+
+/* ── GALLERY ──────────────────────────────────── */
+.v2-gallery {
+  background: #050305;
+  padding: 100px 0 80px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.v2-gallery-header {
+  padding: 0 5vw;
+  margin-bottom: 48px;
+}
+
+.v2-gallery-hint {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.18);
+  text-transform: uppercase;
+}
+
+.v2-gal-track {
+  display: flex;
+  gap: 12px;
+  padding: 0 5vw;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  user-select: none;
+}
+.v2-gal-track::-webkit-scrollbar { display: none; }
+
+.v2-gal-item {
+  flex: 0 0 auto;
+  width: 300px;
+  position: relative;
+  overflow: hidden;
+}
+.v2-gal-item img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.8);
+  transition: transform 0.7s cubic-bezier(0.23,1,0.32,1), filter 0.4s;
+}
+.v2-gal-item:hover img {
+  transform: scale(1.05);
+  filter: brightness(1);
+}
+.v2-gal-caption {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+
+@media (max-width: 640px) {
+  .v2-gal-item { width: 200px; }
+  .v2-gal-item img { height: 260px; }
+}
+
+/* ── REVIEWS ──────────────────────────────────── */
+.v2-reviews {
+  background: #000;
+  padding: 100px 5vw;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.v2-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.v2-review-card {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 40px 32px;
+  transition: border-color 0.4s;
+}
+.v2-review-card:hover { border-color: rgba(201,168,112,0.35); }
+
+.v2-stars {
+  color: #C9A870;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  margin-bottom: 20px;
+}
+
+.v2-review-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 28px;
+}
+
+.v2-review-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.v2-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: grayscale(20%) brightness(0.9);
+}
+
+.v2-reviewer-name {
+  display: block;
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 11px;
+  color: rgba(201,168,112,0.9);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.v2-reviewer-date {
+  display: block;
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 9px;
+  color: rgba(255,255,255,0.22);
+  letter-spacing: 0.15em;
+}
+
+@media (max-width: 768px) { .v2-reviews-grid { grid-template-columns: 1fr; } }
+@media (min-width: 480px) and (max-width: 768px) {
+  .v2-reviews-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── CTA ──────────────────────────────────────── */
+.v2-cta {
+  background: #000;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 140px 5vw;
+  text-align: center;
+}
+
+.v2-cta-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 7vw, 88px);
+  font-weight: 300;
+  color: white;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.v2-cta-gold {
+  font-style: italic;
+  color: #C9A870;
+}
+
+.v2-cta-sub {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.28);
+  margin-bottom: 56px;
+}
+
+.v2-cta-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.v2-btn {
+  display: inline-block;
+  padding: 16px 44px;
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.35s, color 0.35s, border-color 0.35s;
+}
+
+.v2-btn--primary {
+  border: 1px solid white;
+  color: white;
+  background: transparent;
+}
+.v2-btn--primary:hover { background: white; color: #000; }
+
+.v2-btn--outline {
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.55);
+}
+.v2-btn--outline:hover { border-color: rgba(255,255,255,0.6); color: white; }
+
+/* ── FOOTER ───────────────────────────────────── */
+.v2-footer {
+  background: #000;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 40px 5vw;
+}
+
+.v2-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.v2-footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.v2-footer-copy {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.2);
+}
+</style>
+
+<!-- ══════════════════════════════════════════════════
+     JS
+══════════════════════════════════════════════════ -->
+<script>
+// ── 1. NAV 스크롤 효과 ──────────────────────────
+const nav = document.getElementById('v2-nav');
+if (nav) {
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+}
+
+// ── 2. 모바일 메뉴 ──────────────────────────────
+const menuBtn = document.getElementById('v2-menu-btn') as HTMLButtonElement | null;
+const mobileMenu = document.getElementById('v2-mobile-menu');
+if (menuBtn && mobileMenu) {
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+}
+
+// ── 3. 히어로 타이틀 글자 reveal ────────────────
+// quentinhocde 스타일: 각 글자가 offset에 따라 다른 translateY에서 0으로
+function initHeroReveal() {
+  const letters = document.querySelectorAll<HTMLElement>('.v2-letter');
+  letters.forEach((letter, i) => {
+    const offset = parseInt(letter.style.getPropertyValue('--o') || '1');
+    // 딜레이: 각 글자마다 조금씩 다르게
+    const delay = 200 + i * 40;
+    setTimeout(() => {
+      letter.style.transition = `transform ${0.9 + offset * 0.15}s cubic-bezier(0.16,1,0.3,1)`;
+      letter.style.transform = 'translateY(0)';
+    }, delay);
+  });
+
+  // info grid 등장
+  const info = document.getElementById('v2-hero-info');
+  if (info) {
+    setTimeout(() => {
+      info.classList.add('visible');
+    }, 1200);
+  }
+}
+
+// ── 4. ScrambleText — 로드 시 타이틀에 적용 ─────
+// quentinhocde 핵심 효과: 로드 시 글자들이 랜덤 문자로 바뀌다가 수렴
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%*';
+function scrambleReveal(el: HTMLElement, finalText: string, startDelay: number) {
+  let frame = 0;
+  const total = 25;
+  setTimeout(() => {
+    const id = setInterval(() => {
+      el.textContent = finalText.split('').map((ch, idx) => {
+        if (ch === ' ') return ' ';
+        // 앞에서부터 점진적으로 확정
+        if (idx < Math.floor((frame / total) * finalText.length)) return ch;
+        return CHARS[Math.floor(Math.random() * CHARS.length)];
+      }).join('');
+      frame++;
+      if (frame > total) {
+        el.textContent = finalText;
+        clearInterval(id);
+      }
+    }, 40);
+  }, startDelay);
+}
+
+// 호버 스크램블 (nav logo, 각 글자)
+function initHoverScramble() {
+  document.querySelectorAll<HTMLElement>('[data-text]').forEach(el => {
+    const original = el.dataset.text || el.textContent || '';
+    let isAnimating = false;
+    el.addEventListener('mouseenter', () => {
+      if (isAnimating) return;
+      isAnimating = true;
+      scrambleReveal(el, original, 0);
+      setTimeout(() => { isAnimating = false; }, 1200);
+    });
+  });
+}
+
+// ── 5. Service item 호버 — 이미지 마우스 추적 ───
+function initServiceHover() {
+  const items = document.querySelectorAll<HTMLElement>('.v2-service-item');
+  items.forEach(item => {
+    const preview = item.querySelector<HTMLElement>('.v2-svc-preview');
+    if (!preview) return;
+
+    item.addEventListener('mousemove', (e) => {
+      preview.style.left = (e.clientX + 20) + 'px';
+      preview.style.top = (e.clientY - 170) + 'px';
+    });
+  });
+}
+
+// ── 6. GSAP scroll reveals ───────────────────────
+function initGSAP() {
+  const gsap = (window as any).gsap;
+  const ScrollTrigger = (window as any).ScrollTrigger;
+  if (!gsap || !ScrollTrigger) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Services 아이템
+  gsap.from('.v2-service-item', {
+    y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.v2-services', start: 'top 75%' }
+  });
+
+  // Gallery header
+  gsap.from('.v2-gallery-header', {
+    y: 24, opacity: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '.v2-gallery', start: 'top 80%' }
+  });
+
+  // Review cards
+  gsap.from('.v2-review-card', {
+    y: 32, opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power3.out',
+    scrollTrigger: { trigger: '.v2-reviews', start: 'top 78%' }
+  });
+
+  // CTA
+  gsap.from('.v2-cta-title', {
+    y: 36, opacity: 0, duration: 1.1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.v2-cta', start: 'top 75%' }
+  });
+}
+
+// ── 7. Gallery 드래그 ────────────────────────────
+function initGalleryDrag() {
+  const track = document.getElementById('v2-gal-track') as HTMLElement | null;
+  if (!track) return;
+  let isDown = false, startX = 0, scrollLeft = 0;
+
+  track.addEventListener('mousedown', e => {
+    isDown = true;
+    track.style.cursor = 'grabbing';
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+    e.preventDefault();
+  });
+  ['mouseleave', 'mouseup'].forEach(ev => {
+    track.addEventListener(ev, () => {
+      isDown = false;
+      track.style.cursor = 'grab';
+    });
+  });
+  track.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX) * 1.6;
+  });
+  track.style.cursor = 'grab';
+}
+
+// ── INIT ────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initHeroReveal();
+  initHoverScramble();
+  initServiceHover();
+  initGalleryDrag();
+  // GSAP: 짧은 딜레이 후 (CDN 로드 대기)
+  setTimeout(initGSAP, 500);
+});
+</script>
+
+</Layout>
