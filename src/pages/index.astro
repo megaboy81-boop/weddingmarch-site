@@ -109,9 +109,9 @@ const stats = [
               <span style="font-size:10px;letter-spacing:0.55em;text-transform:uppercase;color:rgba(255,255,255,0.45);opacity:0;transition:opacity 0.8s ease 0.9s;" id="eyebrow-text">{panel.eyebrow}</span>
             </div>
             <!-- 히어로 타이틀 — SplitType 애니메이션 대상 -->
-            <h1 id="hero-title" class="font-display" style="font-size:clamp(68px,12vw,148px);font-weight:300;color:white;line-height:0.88;letter-spacing:0.02em;margin-bottom:30px;">
-              <span id="title-line1" style="display:block;">Wedding</span>
-              <span id="title-line2" class="gold-gradient" style="display:block;font-style:italic;">March</span>
+            <h1 id="hero-title" class="font-display" style="font-size:clamp(68px,12vw,148px);font-weight:300;color:white;line-height:0.88;letter-spacing:0.02em;margin-bottom:30px;opacity:0;">
+              <span id="title-line1" style="display:block;overflow:hidden;">Wedding</span>
+              <span id="title-line2" class="gold-gradient" style="display:block;font-style:italic;overflow:hidden;">March</span>
             </h1>
             <!-- 서브타이틀 -->
             <p id="hero-sub" style="font-size:clamp(14px,1.8vw,19px);color:rgba(255,255,255,0.58);font-weight:300;letter-spacing:0.08em;margin-bottom:40px;opacity:0;transform:translateY(16px);">
@@ -439,7 +439,10 @@ const stats = [
     }
 
     // 제목 Split 애니메이션
+    const heroTitleEl = document.getElementById('hero-title') as HTMLElement | null;
     if (SplitType && titleLine1 && titleLine2) {
+      // flash 방지: split 직후에 h1 보이게 (chars가 y:120%에서 clip됨)
+      if (heroTitleEl) heroTitleEl.style.opacity = '1';
       const split1 = new SplitType(titleLine1, { types: 'chars' });
       const split2 = new SplitType(titleLine2, { types: 'chars' });
       gsap.from([...split1.chars, ...split2.chars], {
@@ -452,6 +455,7 @@ const stats = [
       });
     } else if (titleLine1 && titleLine2) {
       // Fallback: 블록 단위 페이드
+      if (heroTitleEl) heroTitleEl.style.opacity = '1';
       gsap.from([titleLine1, titleLine2], {
         y: 60, opacity: 0, duration: 1.1, stagger: 0.2, ease: 'power3.out', delay: 0.5,
       });
@@ -519,6 +523,8 @@ const stats = [
     document.querySelectorAll<HTMLElement>('.review-card').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
     document.querySelectorAll<HTMLElement>('#hero-sub,#hero-cta').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
     document.querySelectorAll<HTMLElement>('#eyebrow-text').forEach(el => { el.style.opacity = '1'; });
+    const htFb = document.getElementById('hero-title') as HTMLElement | null;
+    if (htFb) htFb.style.opacity = '1';
   }
 
   // ── 마그네틱 버튼 ─────────────────────────────────────────────────────
