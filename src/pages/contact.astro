@@ -180,42 +180,27 @@ const description = '춘천 웨딩마치 예약 및 문의. 카카오톡 채널 
           </div>
         </div>
 
-        <!-- 네이버 지도 임베드 탭 -->
+        <!-- 카카오 지도 임베드 -->
         <div style="border:1px solid #E8DDD5; overflow:hidden;">
-          <!-- 탭 버튼 -->
-          <div style="display:flex; border-bottom:1px solid #E8DDD5;">
-            <button id='tab-naver' onclick="showMapTab('naver')"
-              style="flex:1; padding:12px; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; border:none; cursor:pointer; font-family:inherit; background:var(--dark,#0D0608); color:var(--gold,#D4AF75); transition:all 0.2s;">
-              네이버지도
-            </button>
-            <button id='tab-kakao' onclick="showMapTab('kakao')"
-              style="flex:1; padding:12px; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; border:none; cursor:pointer; font-family:inherit; background:white; color:#888; transition:all 0.2s; border-left:1px solid #E8DDD5;">
-              카카오맵
-            </button>
-          </div>
-          <!-- 네이버 지도 -->
-          <div id='map-naver'>
-            <iframe
-              src='https://map.naver.com/p/entry/place/13354093'
-              width='100%'
-              height='320'
-              frameborder='0'
-              scrolling='no'
-              title='웨딩마치 네이버 지도'
-              style='display:block; border:none;'>
-            </iframe>
-          </div>
-          <!-- 카카오 지도 -->
-          <div id='map-kakao' style='display:none;'>
-            <iframe
-              src='https://map.kakao.com/link/embed/13354093'
-              width='100%'
-              height='320'
-              frameborder='0'
-              scrolling='no'
-              title='웨딩마치 카카오 지도'
-              style='display:block; border:none;'>
-            </iframe>
+          <iframe
+            src='https://map.kakao.com/link/embed/13354093'
+            width='100%'
+            height='360'
+            frameborder='0'
+            scrolling='no'
+            title='웨딩마치 위치'
+            style='display:block; border:none;'>
+          </iframe>
+          <!-- 지도 앱 열기 버튼 -->
+          <div style="display:flex; border-top:1px solid #E8DDD5;">
+            <a href='https://map.naver.com/p/entry/place/13354093' target='_blank' rel='noopener'
+              style="flex:1; padding:13px; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; text-align:center; text-decoration:none; background:var(--dark,#0D0608); color:var(--gold,#D4AF75); border-right:1px solid #333;">
+              네이버 지도 열기
+            </a>
+            <a href='https://map.kakao.com/link/map/웨딩마치,37.868177,127.717283' target='_blank' rel='noopener'
+              style="flex:1; padding:13px; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; text-align:center; text-decoration:none; background:#FEE500; color:#3C1E1E;">
+              카카오 지도 열기
+            </a>
           </div>
         </div>
 
