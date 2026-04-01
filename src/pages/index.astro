@@ -384,6 +384,17 @@ const stats = [
         const prog   = Math.min(Math.max((window.scrollY - top) / height, 0), 1);
         target = Math.round(prog * (FRAMES - 1));
         if (progEl) progEl.style.width = `${prog * 100}%`;
+
+        // 섹션 진입/퇴장 시 페이드 (앞 10%, 뒤 10% 구간)
+        let opacity = 1;
+        const fadeZone = 0.1;
+        if (prog < fadeZone) {
+          opacity = prog / fadeZone;                        // 페이드인
+        } else if (prog > 1 - fadeZone) {
+          opacity = (1 - prog) / fadeZone;                 // 페이드아웃
+        }
+        canvas.style.opacity = String(Math.max(0, Math.min(1, opacity)));
+
         // 섹션1 스크롤 화살표 페이드
         if (secId === 'vs1') {
           const arrow = document.getElementById('scroll-arrow');
