@@ -73,48 +73,84 @@ const stats = [
 <!-- ══════ 골드 파티클 캔버스 ════════════════════════════════════════════ -->
 <canvas id="particle-canvas" style="position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.6;"></canvas>
 
-<!-- ══════ VIDEO SCROLL HERO ══════════════════════════════════════════════ -->
-<section id="hero-scroll-section" style="height:400vh;position:relative;">
-  <div id="hero-sticky" style="position:sticky;top:0;height:100dvh;overflow:hidden;background:#070305;">
-    <!-- Canvas frame player -->
-    <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"></canvas>
-    <!-- 점진적 다크 오버레이 -->
-    <div style="position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(7,3,5,0.3) 0%,rgba(7,3,5,0.05) 40%,rgba(7,3,5,0.05) 60%,rgba(7,3,5,0.75) 100%);pointer-events:none;"></div>
-    <!-- 빈 엣지 비넷 -->
+<!-- ══════ VIDEO SCROLL — 섹션 1 (frames 001~064) ════════════════════════ -->
+<section id="vs1" style="height:350vh;position:relative;">
+  <div style="position:sticky;top:0;height:100dvh;overflow:hidden;background:#070305;">
+    <canvas id="vc1" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;"></canvas>
+    <div style="position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(7,3,5,0.3) 0%,rgba(7,3,5,0.05) 50%,rgba(7,3,5,0.75) 100%);pointer-events:none;"></div>
     <div style="position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at center,transparent 50%,rgba(7,3,5,0.4) 100%);pointer-events:none;"></div>
-    <!-- 텍스트 오버레이 -->
+    <!-- 텍스트 -->
     <div style="position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8vw 12vh;pointer-events:none;">
       <div style="max-width:750px;">
-        <!-- 아이브로우 -->
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;overflow:hidden;">
           <span id="eyebrow-line" style="display:block;height:1px;width:0;background:linear-gradient(90deg,transparent,rgba(212,175,117,0.6));transition:width 1.2s ease 0.5s;"></span>
           <span id="eyebrow-text" style="font-size:10px;letter-spacing:0.55em;text-transform:uppercase;color:rgba(255,255,255,0.45);opacity:0;transition:opacity 0.8s ease 0.9s;">Chuncheon Bridal Salon · Est. 2017</span>
         </div>
-        <!-- 타이틀 -->
         <h1 class="font-display" style="font-size:clamp(68px,12vw,148px);font-weight:300;color:white;line-height:0.88;letter-spacing:0.02em;margin-bottom:30px;">
           <div style="overflow:hidden;display:block;"><span class="title-slide-up" style="display:block;animation-delay:0.4s;">Wedding</span></div>
           <div style="overflow:hidden;display:block;"><span class="gold-gradient title-slide-up" style="display:block;font-style:italic;animation-delay:0.65s;">March</span></div>
         </h1>
-        <!-- 서브타이틀 -->
         <p id="hero-sub" style="font-size:clamp(14px,1.8vw,19px);color:rgba(255,255,255,0.58);font-weight:300;letter-spacing:0.08em;margin-bottom:40px;opacity:0;transform:translateY(16px);">촬영보다 본식이 더 예뻤어요</p>
-        <!-- CTA -->
         <div id="hero-cta" style="display:flex;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(16px);pointer-events:auto;">
           <a href={`${base}/contact`} class="btn-primary magnetic">피팅 예약하기</a>
           <a href={`${base}/gallery`} class="btn-outline magnetic">드레스 보러가기</a>
         </div>
       </div>
     </div>
-    <!-- 스크롤 진행 표시 -->
+    <!-- 진행 표시 -->
     <div style="position:absolute;bottom:40px;right:8vw;z-index:3;text-align:right;">
-      <div id="hero-progress-bar" style="width:60px;height:1px;background:rgba(255,255,255,0.15);margin-bottom:8px;">
-        <div id="hero-progress-fill" style="height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width 0.1s;"></div>
+      <div style="width:60px;height:1px;background:rgba(255,255,255,0.15);margin-bottom:8px;">
+        <div id="vp1" style="height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width 0.1s;"></div>
       </div>
-      <p style="font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.2em;">스크롤</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.2em;">01 · 03</p>
     </div>
-    <!-- 스크롤 유도 화살표 -->
     <div id="scroll-arrow" style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;">
       <span style="font-size:11px;letter-spacing:0.2em;color:rgba(255,255,255,0.45);">아래로 내려보세요</span>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(212,175,117,0.7)" stroke-width="1.5" style="animation:bounce 1.8s ease-in-out infinite;"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ VIDEO SCROLL — 섹션 2 (frames 065~128) ════════════════════════ -->
+<section id="vs2" style="height:350vh;position:relative;">
+  <div style="position:sticky;top:0;height:100dvh;overflow:hidden;background:#070305;">
+    <canvas id="vc2" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;"></canvas>
+    <div style="position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(7,3,5,0.3) 0%,rgba(7,3,5,0.05) 50%,rgba(7,3,5,0.75) 100%);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at center,transparent 50%,rgba(7,3,5,0.4) 100%);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8vw 12vh;pointer-events:none;">
+      <div style="max-width:750px;">
+        <p style="font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(212,175,117,0.7);margin-bottom:16px;">Our Collection</p>
+        <h2 class="font-display" style="font-size:clamp(52px,9vw,108px);font-weight:300;color:white;line-height:0.88;letter-spacing:0.02em;margin-bottom:20px;">드레스 120벌</h2>
+        <p style="font-size:clamp(14px,1.6vw,17px);color:rgba(255,255,255,0.55);font-weight:300;max-width:480px;line-height:1.75;">국내외 최신 트렌드 웨딩드레스 120벌 보유.<br/>에이라인, 볼가운, 슬림핏, 레이스까지 모든 스타일.</p>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:40px;right:8vw;z-index:3;text-align:right;">
+      <div style="width:60px;height:1px;background:rgba(255,255,255,0.15);margin-bottom:8px;">
+        <div id="vp2" style="height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width 0.1s;"></div>
+      </div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.2em;">02 · 03</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ VIDEO SCROLL — 섹션 3 (frames 129~192) ════════════════════════ -->
+<section id="vs3" style="height:350vh;position:relative;">
+  <div style="position:sticky;top:0;height:100dvh;overflow:hidden;background:#070305;">
+    <canvas id="vc3" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;"></canvas>
+    <div style="position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(7,3,5,0.3) 0%,rgba(7,3,5,0.05) 50%,rgba(7,3,5,0.75) 100%);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at center,transparent 50%,rgba(7,3,5,0.4) 100%);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8vw 12vh;pointer-events:none;">
+      <div style="max-width:750px;">
+        <p style="font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(212,175,117,0.7);margin-bottom:16px;">Signature System</p>
+        <h2 class="font-display" style="font-size:clamp(52px,9vw,108px);font-weight:300;color:white;line-height:0.88;letter-spacing:0.02em;margin-bottom:20px;">2회 피팅</h2>
+        <p style="font-size:clamp(14px,1.6vw,17px);color:rgba(255,255,255,0.55);font-weight:300;max-width:480px;line-height:1.75;">3개월 전 1차 피팅(3벌) + 1개월 전 2차 피팅(3벌).<br/>타샵과 차별화된 전문 피팅 시스템.</p>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:40px;right:8vw;z-index:3;text-align:right;">
+      <div style="width:60px;height:1px;background:rgba(255,255,255,0.15);margin-bottom:8px;">
+        <div id="vp3" style="height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width 0.1s;"></div>
+      </div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.2em;">03 · 03</p>
     </div>
   </div>
 </section>
@@ -291,97 +327,87 @@ const stats = [
   const ScrollTrigger = (window as any).ScrollTrigger;
   const SplitType = (window as any).SplitType;
 
-  // ── 히어로 Canvas Scroll Frame Player ──────────────────────────────────────
-  (function initHeroScroll() {
-    const TOTAL_FRAMES = 192;
+  // ── 비디오 스크롤 플레이어 팩토리 ──────────────────────────────────────────
+  (function initVideoScrollPlayers() {
     const base = (document.querySelector('meta[name="site-base"]') as HTMLMetaElement)?.content
       || (window.location.pathname.includes('/weddingmarch-site') ? '/weddingmarch-site' : '');
 
-    const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement | null;
-    const heroSection = document.getElementById('hero-scroll-section') as HTMLElement | null;
-    const progressFill = document.getElementById('hero-progress-fill') as HTMLElement | null;
-    const scrollArrow = document.getElementById('scroll-arrow') as HTMLElement | null;
+    // [섹션ID, 캔버스ID, 진행바ID, 시작프레임(1-based), 끝프레임(1-based)]
+    const sections: [string, string, string, number, number][] = [
+      ['vs1', 'vc1', 'vp1', 1,   64],
+      ['vs2', 'vc2', 'vp2', 65,  128],
+      ['vs3', 'vc3', 'vp3', 129, 192],
+    ];
 
-    if (!canvas || !heroSection) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    sections.forEach(([secId, canvasId, progressId, startFrame, endFrame]) => {
+      const section = document.getElementById(secId) as HTMLElement | null;
+      const canvas  = document.getElementById(canvasId) as HTMLCanvasElement | null;
+      const progEl  = document.getElementById(progressId) as HTMLElement | null;
+      if (!section || !canvas) return;
 
-    // 캔버스 크기 설정
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas, { passive: true });
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    // 프레임 프리로드
-    const frames: HTMLImageElement[] = new Array(TOTAL_FRAMES);
-    let loadedCount = 0;
-    let currentFrameIndex = 0;
-    let rafId: number | null = null;
+      const FRAMES = endFrame - startFrame + 1;
 
-    function loadFrames() {
-      for (let i = 0; i < TOTAL_FRAMES; i++) {
+      function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+
+      // 프레임 프리로드
+      const imgs: HTMLImageElement[] = [];
+      for (let i = 0; i < FRAMES; i++) {
         const img = new Image();
-        const num = String(i + 1).padStart(3, '0');
-        img.src = `${base}/images/hero/frame_${num}.webp`;
-        img.onload = () => {
-          loadedCount++;
-          if (i === 0) {
-            drawFrame(0);
-          }
-        };
-        frames[i] = img;
+        img.src = `${base}/images/hero/frame_${String(startFrame + i).padStart(3,'0')}.webp`;
+        if (i === 0) img.onload = () => draw(0);
+        imgs.push(img);
       }
-    }
-    loadFrames();
 
-    // 프레임 그리기 (cover 방식)
-    function drawFrame(index: number) {
-      const img = frames[index];
-      if (!img || !img.complete || img.naturalWidth === 0) return;
-      const cw = canvas.width, ch = canvas.height;
-      const iw = img.naturalWidth, ih = img.naturalHeight;
-      const scale = Math.max(cw / iw, ch / ih);
-      const dw = iw * scale, dh = ih * scale;
-      const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
-      ctx.clearRect(0, 0, cw, ch);
-      ctx.drawImage(img, dx, dy, dw, dh);
-    }
-
-    // 스크롤 → 프레임 인덱스 계산
-    let targetFrameIndex = 0;
-    let displayFrameIndex = 0;
-
-    function onScroll() {
-      const scrollTop = window.scrollY;
-      const heroHeight = heroSection.offsetHeight - window.innerHeight;
-      const progress = Math.min(Math.max(scrollTop / heroHeight, 0), 1);
-      targetFrameIndex = Math.round(progress * (TOTAL_FRAMES - 1));
-
-      if (progressFill) progressFill.style.width = `${progress * 100}%`;
-      if (scrollArrow) scrollArrow.style.opacity = String(Math.max(0, 1 - progress * 8));
-
-      if (rafId === null) {
-        rafId = requestAnimationFrame(renderLoop);
+      function draw(idx: number) {
+        const img = imgs[idx];
+        if (!img?.complete || !img.naturalWidth) return;
+        const cw = canvas.width, ch = canvas.height;
+        const sc = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+        const dw = img.naturalWidth * sc, dh = img.naturalHeight * sc;
+        ctx.clearRect(0, 0, cw, ch);
+        ctx.drawImage(img, (cw-dw)/2, (ch-dh)/2, dw, dh);
       }
-    }
 
-    function renderLoop() {
-      rafId = null;
-      const diff = targetFrameIndex - displayFrameIndex;
-      if (Math.abs(diff) > 0.5) {
-        displayFrameIndex += diff * 0.25;
-        drawFrame(Math.round(displayFrameIndex));
-        rafId = requestAnimationFrame(renderLoop);
-      } else {
-        displayFrameIndex = targetFrameIndex;
-        drawFrame(targetFrameIndex);
+      let target = 0, display = 0, raf: number | null = null;
+
+      function onScroll() {
+        const top    = section.getBoundingClientRect().top + window.scrollY;
+        const height = section.offsetHeight - window.innerHeight;
+        const prog   = Math.min(Math.max((window.scrollY - top) / height, 0), 1);
+        target = Math.round(prog * (FRAMES - 1));
+        if (progEl) progEl.style.width = `${prog * 100}%`;
+        // 섹션1 스크롤 화살표 페이드
+        if (secId === 'vs1') {
+          const arrow = document.getElementById('scroll-arrow');
+          if (arrow) arrow.style.opacity = String(Math.max(0, 1 - prog * 8));
+        }
+        if (raf === null) raf = requestAnimationFrame(loop);
       }
-    }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    drawFrame(0);
+      function loop() {
+        raf = null;
+        const diff = target - display;
+        if (Math.abs(diff) > 0.5) {
+          display += diff * 0.25;
+          draw(Math.round(display));
+          raf = requestAnimationFrame(loop);
+        } else {
+          display = target;
+          draw(target);
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      draw(0);
+    });
   })();
 
   // ── GSAP 초기화 ─────────────────────────────────────────────────────────
