@@ -1,0 +1,620 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+interface Feature {
+  img: string;
+  title: string;
+  sub: string;
+  desc: string;
+}
+
+interface Review {
+  text: string;
+  author: string;
+  date: string;
+  img: string;
+}
+
+const features: Feature[] = [
+  {
+    img: `${base}/images/bg/h2.jpg`,
+    title: 'Our Collection',
+    sub: '드레스 120벌',
+    desc: '국내외 최신 웨딩드레스 120벌. 에이라인, 볼가운, 슬림핏, 레이스까지.',
+  },
+  {
+    img: `${base}/images/bg/h3.jpg`,
+    title: 'Signature System',
+    sub: '2회 피팅',
+    desc: '3개월 전 1차 + 1개월 전 2차. 타샵과 차별화된 전문 피팅.',
+  },
+  {
+    img: `${base}/images/bg/h4.jpg`,
+    title: 'All-in-One',
+    sub: '원스톱 웨딩',
+    desc: '드레스 + 헤어·메이크업 + 도우미. 미래웨딩홀 1층 입점.',
+  },
+];
+
+const galleryImgs: string[] = [
+  `${base}/images/bg/h1.jpg`,
+  `${base}/images/bg/h2.jpg`,
+  `${base}/images/bg/h3.jpg`,
+  `${base}/images/bg/h4.jpg`,
+  `${base}/images/bg/i1.jpg`,
+  `${base}/images/bg/i2.jpg`,
+];
+
+const reviews: Review[] = [
+  {
+    text: '촬영보다 본식이 더 예뻤어요. 드레스 핏이 완벽해서 자꾸 거울을 보게 됐어요.',
+    author: '춘천 신부',
+    date: '2025.10',
+    img: `${base}/images/instagram/01.webp`,
+  },
+  {
+    text: '미래웨딩홀 바로 아래에 있어서 동선이 너무 편했어요. 헤어·메이크업도 같이 해결했습니다.',
+    author: '강원 신부',
+    date: '2025.05',
+    img: `${base}/images/instagram/04.webp`,
+  },
+  {
+    text: '드레스가 너무 예뻐서 반납하기가 싫었어요. 2회 피팅 덕분에 핏이 완벽했습니다.',
+    author: '홍천 신부',
+    date: '2025.11',
+    img: `${base}/images/instagram/07.webp`,
+  },
+];
+---
+
+<Layout title="웨딩마치 프리뷰 | 춘천 웨딩드레스샵" description="웨딩마치 새 디자인 프리뷰. 춘천 웨딩드레스 전문샵 — 드레스 120벌, 2회 피팅, 원스톱 웨딩 서비스.">
+
+<!-- ===== NAV OVERRIDE ===== -->
+<style is:global>
+  body { background: #FAF7F2 !important; }
+  #main-nav { background: transparent !important; border-bottom: none !important; }
+  #main-nav.scrolled { background: rgba(250,247,242,0.96) !important; backdrop-filter: blur(16px) !important; border-bottom: 1px solid rgba(201,168,112,0.2) !important; }
+  .nav-logo { color: #1A0A08 !important; }
+  .nav-links a { color: rgba(26,10,8,0.5) !important; }
+  .nav-links a:hover { color: #C9A870 !important; }
+  .nav-cta { color: #1A0A08 !important; border-color: rgba(26,10,8,0.3) !important; }
+  .nav-cta:hover { background: #1A0A08 !important; color: #FAF7F2 !important; }
+  .nav-mobile-btn span { background: #1A0A08 !important; }
+</style>
+
+<!-- ===== HERO ===== -->
+<section class="prev-hero">
+  <img
+    src={`${base}/images/bg/h1.jpg`}
+    alt=""
+    class="prev-hero-bg"
+    loading="eager"
+    aria-hidden="true"
+  />
+  <div class="prev-hero-content">
+    <h1 class="prev-hero-title">
+      <div class="prev-line-wrap"><span class="prev-line">WEDDING</span></div>
+      <div class="prev-line-wrap"><span class="prev-line prev-italic">March</span></div>
+    </h1>
+    <div class="prev-info-grid">
+      <div class="prev-info-col">
+        <span class="prev-info-label">Established</span>
+        <span class="prev-info-val">2017년</span>
+      </div>
+      <div class="prev-info-col">
+        <span class="prev-info-label">Collection</span>
+        <span class="prev-info-val">드레스 120벌</span>
+      </div>
+      <div class="prev-info-col">
+        <span class="prev-info-label">Fitting</span>
+        <span class="prev-info-val">2회 피팅</span>
+      </div>
+      <div class="prev-info-col">
+        <span class="prev-info-label">Location</span>
+        <span class="prev-info-val">춘천 · 강원도</span>
+      </div>
+    </div>
+    <div class="prev-hero-cta">
+      <a href={`${base}/contact`} class="prev-cta-link">피팅 예약하기</a>
+      <span class="prev-cta-divider">—</span>
+      <a href={`${base}/gallery`} class="prev-cta-link">드레스 갤러리</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="prev-features">
+  {features.map((f: Feature, i: number) => (
+    <div class={`prev-feat ${i % 2 === 1 ? 'prev-feat--rev' : ''} reveal-up`}>
+      <div class="prev-feat-img-wrap">
+        <img src={f.img} alt={f.title} loading="lazy" />
+      </div>
+      <div class="prev-feat-body">
+        <span class="prev-feat-eyebrow">0{i + 1}</span>
+        <h2 class="prev-feat-title">{f.title}</h2>
+        <p class="prev-feat-sub">{f.sub}</p>
+        <p class="prev-feat-desc">{f.desc}</p>
+      </div>
+    </div>
+  ))}
+</section>
+
+<!-- ===== GALLERY ===== -->
+<section class="prev-gallery">
+  <div class="prev-gal-header reveal-up">
+    <span class="prev-gal-eyebrow">Our Collection</span>
+    <h2 class="prev-gal-title">갤러리</h2>
+  </div>
+  <div class="prev-gal-track" id="prev-gal-track">
+    {galleryImgs.map((src: string, i: number) => (
+      <div class="prev-gal-item">
+        <img src={src} alt={`갤러리 ${i + 1}`} loading="lazy" />
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ===== REVIEWS ===== -->
+<section class="prev-reviews">
+  <div class="prev-rev-header reveal-up">
+    <span class="prev-rev-eyebrow">Real Brides</span>
+    <h2 class="prev-rev-title">신부들의 이야기</h2>
+  </div>
+  <div class="prev-rev-grid">
+    {reviews.map((r: Review) => (
+      <div class="prev-rev-card reveal-up">
+        <div class="prev-rev-img-wrap">
+          <img src={r.img} alt={r.author} loading="lazy" />
+        </div>
+        <p class="prev-rev-text">"{r.text}"</p>
+        <div class="prev-rev-meta">
+          <span class="prev-rev-author">{r.author}</span>
+          <span class="prev-rev-date">{r.date}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ===== FINAL CTA ===== -->
+<section class="prev-final-cta">
+  <h2 class="prev-final-title reveal-up">
+    <span class="prev-final-line1">당신의 특별한 날,</span><br />
+    <em class="prev-final-line2">웨딩마치와 함께</em>
+  </h2>
+  <a href={`${base}/contact`} class="prev-final-btn reveal-up">피팅 예약하기</a>
+</section>
+
+<!-- ===== STYLES ===== -->
+<style>
+  :root {
+    --p-bg: #FAF7F2;
+    --p-fg: #1A0A08;
+    --p-gold: #C9A870;
+    --p-muted: rgba(26,10,8,0.40);
+    --p-line: rgba(201,168,112,0.25);
+  }
+
+  /* HERO */
+  .prev-hero {
+    position: relative;
+    height: 100dvh;
+    background: var(--p-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 6vw 6vh;
+    overflow: hidden;
+  }
+  .prev-hero-bg {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 55%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.12;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  .prev-hero-content {
+    position: relative;
+    z-index: 1;
+  }
+  .prev-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 13vw, 160px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    color: var(--p-fg);
+    margin-bottom: 48px;
+  }
+  .prev-italic {
+    font-style: italic;
+    color: var(--p-gold);
+  }
+  .prev-line-wrap {
+    overflow: hidden;
+  }
+  .prev-line {
+    display: block;
+    transform: translateY(110%);
+  }
+
+  /* INFO GRID */
+  .prev-info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(201,168,112,0.3);
+    padding-top: 24px;
+    margin-bottom: 36px;
+    gap: 0;
+  }
+  .prev-info-col {
+    padding-right: 20px;
+    border-right: 1px solid rgba(201,168,112,0.2);
+  }
+  .prev-info-col:last-child { border-right: none; }
+  .prev-info-label {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(26,10,8,0.4);
+    margin-bottom: 6px;
+  }
+  .prev-info-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--p-fg);
+    letter-spacing: 0.03em;
+  }
+
+  /* HERO CTA */
+  .prev-hero-cta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .prev-cta-link {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--p-fg);
+    text-decoration: none;
+    position: relative;
+  }
+  .prev-cta-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0; right: 100%;
+    height: 1px;
+    background: var(--p-gold);
+    transition: right 0.4s cubic-bezier(0.23,1,0.32,1);
+  }
+  .prev-cta-link:hover::after { right: 0; }
+  .prev-cta-divider {
+    color: rgba(26,10,8,0.25);
+    font-size: 12px;
+  }
+
+  /* FEATURES */
+  .prev-features {
+    background: var(--p-bg);
+    padding: 120px 6vw;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .prev-feat {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6vw;
+    align-items: center;
+    padding: 80px 0;
+    border-top: 1px solid var(--p-line);
+  }
+  .prev-feat--rev .prev-feat-img-wrap { order: 2; }
+  .prev-feat--rev .prev-feat-body { order: 1; }
+  .prev-feat-img-wrap {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+  .prev-feat-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+    display: block;
+  }
+  .prev-feat-img-wrap:hover img { transform: scale(1.04); }
+  .prev-feat-eyebrow {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--p-gold);
+    margin-bottom: 20px;
+  }
+  .prev-feat-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: var(--p-fg);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .prev-feat-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--p-gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+  }
+  .prev-feat-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--p-muted);
+    max-width: 380px;
+  }
+
+  /* GALLERY */
+  .prev-gallery {
+    background: #F2EDE6;
+    padding: 100px 0 80px;
+  }
+  .prev-gal-header {
+    padding: 0 6vw;
+    margin-bottom: 48px;
+  }
+  .prev-gal-eyebrow {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--p-gold);
+    margin-bottom: 12px;
+  }
+  .prev-gal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--p-fg);
+    line-height: 1;
+  }
+  .prev-gal-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 0 6vw 20px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .prev-gal-track::-webkit-scrollbar { display: none; }
+  .prev-gal-item {
+    flex: 0 0 38vw;
+    height: 58vh;
+    overflow: hidden;
+    scroll-snap-align: start;
+  }
+  .prev-gal-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+    pointer-events: none;
+  }
+  .prev-gal-item:hover img { transform: scale(1.03); }
+
+  /* REVIEWS */
+  .prev-reviews {
+    background: var(--p-bg);
+    padding: 120px 6vw;
+  }
+  .prev-rev-header {
+    margin-bottom: 60px;
+  }
+  .prev-rev-eyebrow {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--p-gold);
+    margin-bottom: 12px;
+  }
+  .prev-rev-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--p-fg);
+    line-height: 1;
+  }
+  .prev-rev-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .prev-rev-card {
+    border: 1px solid rgba(201,168,112,0.25);
+    padding: 32px;
+    background: #FDF9F4;
+  }
+  .prev-rev-img-wrap {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .prev-rev-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .prev-rev-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--p-fg);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .prev-rev-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--p-line);
+    padding-top: 16px;
+  }
+  .prev-rev-author {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--p-fg);
+  }
+  .prev-rev-date {
+    font-size: 11px;
+    color: var(--p-muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* FINAL CTA */
+  .prev-final-cta {
+    background: #1A0A08;
+    padding: 140px 6vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+  }
+  .prev-final-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 8vw, 100px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #FAF7F2;
+  }
+  .prev-final-line2 {
+    color: #C9A870;
+    font-style: italic;
+  }
+  .prev-final-btn {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #C9A870;
+    text-decoration: none;
+    border: 1px solid #C9A870;
+    padding: 18px 40px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .prev-final-btn:hover {
+    background: #C9A870;
+    color: #1A0A08;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .prev-feat {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .prev-feat--rev .prev-feat-img-wrap { order: 0; }
+    .prev-feat--rev .prev-feat-body { order: 0; }
+    .prev-rev-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .prev-info-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .prev-info-col { border-right: none; padding-right: 0; }
+    .prev-gal-item { flex: 0 0 80vw; height: 50vw; }
+  }
+</style>
+
+<!-- ===== ANIMATIONS ===== -->
+<script>
+window.addEventListener('load', () => {
+  // 히어로 타이틀 라인 reveal
+  const lines = document.querySelectorAll<HTMLElement>('.prev-line');
+  lines.forEach((line, i) => {
+    setTimeout(() => {
+      line.style.transition = 'transform 1.1s cubic-bezier(0.16,1,0.3,1)';
+      line.style.transform = 'translateY(0)';
+    }, 400 + i * 180);
+  });
+
+  // info grid fade in
+  const infoCols = document.querySelectorAll<HTMLElement>('.prev-info-col');
+  infoCols.forEach((col, i) => {
+    col.style.opacity = '0';
+    col.style.transform = 'translateY(12px)';
+    setTimeout(() => {
+      col.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      col.style.opacity = '1';
+      col.style.transform = 'translateY(0)';
+    }, 900 + i * 100);
+  });
+
+  // CTA fade in
+  const cta = document.querySelector<HTMLElement>('.prev-hero-cta');
+  if (cta) {
+    cta.style.opacity = '0';
+    setTimeout(() => {
+      cta.style.transition = 'opacity 0.7s ease';
+      cta.style.opacity = '1';
+    }, 1300);
+  }
+
+  // GSAP scroll reveals
+  const gsap = (window as any).gsap;
+  const ScrollTrigger = (window as any).ScrollTrigger;
+  if (gsap && ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll<HTMLElement>('.reveal-up').forEach(el => {
+      gsap.from(el, {
+        y: 40, opacity: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 82%' }
+      });
+    });
+  }
+
+  // 갤러리 드래그
+  const track = document.getElementById('prev-gal-track') as HTMLElement | null;
+  if (track) {
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    track.addEventListener('mousedown', (e: MouseEvent) => {
+      isDown = true;
+      track.style.cursor = 'grabbing';
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    });
+    (['mouseleave', 'mouseup'] as const).forEach(ev => {
+      track.addEventListener(ev, () => { isDown = false; track.style.cursor = 'grab'; });
+    });
+    track.addEventListener('mousemove', (e: MouseEvent) => {
+      if (!isDown) return;
+      e.preventDefault();
+      track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX) * 1.5;
+    });
+    track.style.cursor = 'grab';
+  }
+});
+</script>
+
+</Layout>
