@@ -41,18 +41,18 @@ const storyPanels = [
 ];
 
 const galleryItems = [
-  { src: `${base}/images/bg-new/gal1.webp`, label: '드레스 컬렉션' },
-  { src: `${base}/images/bg-new/gal2.webp`, label: '웨딩 드레스' },
-  { src: `${base}/images/bg-new/gal3.webp`, label: '브라이덜 룩' },
-  { src: `${base}/images/bg-new/gal4.webp`, label: '드레스 라인' },
-  { src: `${base}/images/bg-new/gal5.webp`, label: '에이라인' },
-  { src: `${base}/images/bg-new/gal6.webp`, label: '볼가운' },
-  { src: `${base}/images/bg-new/gal7.webp`, label: '슬림핏' },
-  { src: `${base}/images/bg-new/gal8.webp`, label: '레이스 드레스' },
-  { src: `${base}/images/bg-new/gal9.webp`, label: '미니멀 드레스' },
-  { src: `${base}/images/bg-new/gal10.webp`, label: '트렌디 컬렉션' },
-  { src: `${base}/images/bg-new/gal11.webp`, label: '신상 드레스' },
-  { src: `${base}/images/bg-new/gal12.webp`, label: '프리미엄 컬렉션' },
+  { src: `${base}/images/instagram/630.webp`, label: '매장 인테리어' },
+  { src: `${base}/images/instagram/790.webp`, label: '드레스 컬렉션' },
+  { src: `${base}/images/instagram/815.webp`, label: '매장 전경' },
+  { src: `${base}/images/instagram/860.webp`, label: '드레스 진열' },
+  { src: `${base}/images/instagram/920.webp`, label: '매장 내부' },
+  { src: `${base}/images/instagram/1080.webp`, label: '드레스 컬렉션' },
+  { src: `${base}/images/instagram/1100.webp`, label: '매장 인테리어' },
+  { src: `${base}/images/instagram/1110.webp`, label: '드레스 진열' },
+  { src: `${base}/images/instagram/1140.webp`, label: '매장 전경' },
+  { src: `${base}/images/instagram/1160.webp`, label: '드레스 컬렉션' },
+  { src: `${base}/images/instagram/1170.webp`, label: '매장 내부' },
+  { src: `${base}/images/instagram/1180.webp`, label: '드레스 진열' },
 ];
 
 const reviews = [
@@ -216,11 +216,11 @@ const stats = [
   </div>
   <!-- 6 photos 그리드 -->
   <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:2px;">
-    {['ins1','ins2','ins3','ins4','ins5','ins6'].map(n => (
+    {['155','165','270','465','1450','1465'].map(n => (
       <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
          class="insta-tile"
          style="display:block;aspect-ratio:1;overflow:hidden;position:relative;">
-        <img src={`${base}/images/bg-new/${n}.webp`} alt='웨딩마치 인스타그램'
+        <img src={`${base}/images/instagram/${n}.webp`} alt='웨딩마치 인스타그램'
              style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(0.23,1,0.32,1);"
              loading='lazy' />
         <div class="insta-hover" style="position:absolute;inset:0;background:rgba(7,3,5,0.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.4s;">
