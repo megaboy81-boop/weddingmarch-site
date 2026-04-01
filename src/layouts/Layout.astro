@@ -10,7 +10,7 @@ const {
   ogImage = '/images/instagram/00.webp'
 } = Astro.props;
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <!DOCTYPE html>
 <html lang='ko'>
@@ -25,13 +25,13 @@ const base = import.meta.env.BASE_URL;
   <meta property='og:type' content='website' />
   <meta property='og:title' content={title} />
   <meta property='og:description' content={description} />
-  <meta property='og:image' content={`${base}images/instagram/00.webp`} />
+  <meta property='og:image' content={`${base}/images/instagram/00.webp`} />
   <meta property='og:locale' content='ko_KR' />
   <meta property='og:site_name' content='웨딩마치' />
   <meta name='twitter:card' content='summary_large_image' />
   <meta name='twitter:title' content={title} />
   <meta name='twitter:description' content={description} />
-  <meta name='twitter:image' content={`${base}images/instagram/00.webp`} />
+  <meta name='twitter:image' content={`${base}/images/instagram/00.webp`} />
   <script type='application/ld+json' set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": ["LocalBusiness","BeautySalon"],
@@ -205,21 +205,21 @@ const base = import.meta.env.BASE_URL;
   <nav id='main-nav'>
     <a href={base} class='nav-logo'>Wedding March</a>
     <ul class='nav-links'>
-      <li><a href={`${base}gallery`}>갤러리</a></li>
-      <li><a href={`${base}packages`}>패키지</a></li>
-      <li><a href={`${base}contact`}>오시는 길</a></li>
+      <li><a href={`${base}/gallery`}>갤러리</a></li>
+      <li><a href={`${base}/packages`}>패키지</a></li>
+      <li><a href={`${base}/contact`}>오시는 길</a></li>
     </ul>
-    <a href={`${base}contact`} class='nav-cta'>예약하기</a>
+    <a href={`${base}/contact`} class='nav-cta'>예약하기</a>
     <button class='nav-mobile-btn' id='mobileBtn' aria-label='메뉴'><span></span><span></span><span></span></button>
   </nav>
 
   <!-- 모바일 메뉴 -->
   <div id='mobileMenu' style='display:none;position:fixed;inset:0;background:rgba(7,3,5,0.97);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:36px;'>
     <a href={base} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>홈</a>
-    <a href={`${base}gallery`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>갤러리</a>
-    <a href={`${base}packages`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>패키지</a>
-    <a href={`${base}contact`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>오시는 길</a>
-    <a href={`${base}contact`} style='margin-top:12px;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold,#D4AF75);border:1px solid rgba(212,175,117,0.5);padding:14px 32px;text-decoration:none;'>예약하기</a>
+    <a href={`${base}/gallery`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>갤러리</a>
+    <a href={`${base}/packages`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>패키지</a>
+    <a href={`${base}/contact`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>오시는 길</a>
+    <a href={`${base}/contact`} style='margin-top:12px;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold,#D4AF75);border:1px solid rgba(212,175,117,0.5);padding:14px 32px;text-decoration:none;'>예약하기</a>
   </div>
 
   <slot />
@@ -237,7 +237,7 @@ const base = import.meta.env.BASE_URL;
         </div>
         <div>
           <p style='font-size:10px;letter-spacing:0.4em;text-transform:uppercase;color:rgba(212,175,117,0.7);margin-bottom:14px;'>Menu</p>
-          <p style='font-size:12px;line-height:2;'><a href={`${base}gallery`}>드레스 갤러리</a><br/><a href={`${base}packages`}>웨딩 패키지</a><br/><a href={`${base}contact`}>예약 & 문의</a></p>
+          <p style='font-size:12px;line-height:2;'><a href={`${base}/gallery`}>드레스 갤러리</a><br/><a href={`${base}/packages`}>웨딩 패키지</a><br/><a href={`${base}/contact`}>예약 & 문의</a></p>
         </div>
       </div>
       <div style='border-top:1px solid rgba(255,255,255,0.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;'>
