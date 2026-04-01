@@ -111,48 +111,35 @@ const stats = [
   </div>
 </section>
 
-<!-- ══════ 스토리 배경 (데스크탑 고정 bg, 이미지 페이드 전환) ════════════ -->
-<div id="story-fixed-bg" style="position:fixed;inset:0;z-index:0;pointer-events:none;display:none;">
-  {storyPanels.slice(1).map((panel, i) => (
-    <div
-      class="story-bg-slide"
-      data-index={i}
-      style={`position:absolute;inset:0;background-image:url('${panel.bg}');background-size:cover;background-position:center top;opacity:${i===0?1:0};transition:opacity 1s ease;`}
-    ></div>
-  ))}
-  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,3,5,0.4) 0%,rgba(7,3,5,0.05) 40%,rgba(7,3,5,0.05) 60%,rgba(7,3,5,0.9) 100%);"></div>
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(7,3,5,0.5) 100%);"></div>
-</div>
-
 <!-- ══════ 스토리 패널 (이미지 섹션 2~4) ════════════════════════════════ -->
-<div id="story-container">
-  {storyPanels.slice(1).map((panel, i) => (
-    <section
-      class="story-panel"
-      data-index={i}
-      style="position:relative;height:100dvh;min-height:600px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8vw 12vh;z-index:2;"
-    >
-      <div class="mobile-bg" style={`display:none;position:absolute;inset:0;background-image:url('${panel.bg}');background-size:cover;background-position:center top;z-index:0;`}></div>
-      <div class="mobile-bg" style="display:none;position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,3,5,0.35) 0%,rgba(7,3,5,0.0) 35%,rgba(7,3,5,0.75) 85%,rgba(7,3,5,0.92) 100%);z-index:1;"></div>
-      <div class="story-content" style="position:relative;z-index:3;max-width:750px;">
-        <p style="font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(212,175,117,0.75);margin-bottom:16px;">{panel.eyebrow}</p>
-        <div style="display:flex;align-items:flex-end;gap:28px;margin-bottom:20px;flex-wrap:wrap;">
-          <h2 class="font-display" style="font-size:clamp(52px,9vw,108px);font-weight:300;color:white;line-height:0.88;letter-spacing:0.02em;">{panel.title}</h2>
-          {panel.stat && (
-            <div style="padding-bottom:8px;">
-              <span class="font-display" style="font-size:clamp(38px,5.5vw,64px);font-weight:300;background:linear-gradient(90deg,#D4AF75,#F0D9A8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;display:block;">{panel.stat}</span>
-              <p style="font-size:9px;letter-spacing:0.45em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:5px;">{panel.statLabel}</p>
-            </div>
-          )}
-        </div>
-        <p style="font-size:clamp(14px,1.6vw,17px);color:rgba(255,255,255,0.55);font-weight:300;max-width:480px;line-height:1.75;">{panel.desc}</p>
+{storyPanels.slice(1).map((panel, i) => (
+  <section
+    class="story-panel"
+    style={`position:relative;height:100dvh;min-height:600px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8vw 12vh;overflow:hidden;`}
+  >
+    <!-- 배경 이미지 -->
+    <div style={`position:absolute;inset:0;background-image:url('${panel.bg}');background-size:cover;background-position:center top;background-attachment:fixed;`}></div>
+    <!-- 오버레이 -->
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,3,5,0.35) 0%,rgba(7,3,5,0.0) 35%,rgba(7,3,5,0.75) 85%,rgba(7,3,5,0.95) 100%);"></div>
+    <!-- 콘텐츠 -->
+    <div style="position:relative;z-index:1;max-width:750px;">
+      <p style="font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(212,175,117,0.75);margin-bottom:16px;">{panel.eyebrow}</p>
+      <div style="display:flex;align-items:flex-end;gap:28px;margin-bottom:20px;flex-wrap:wrap;">
+        <h2 class="font-display" style="font-size:clamp(52px,9vw,108px);font-weight:300;color:white;line-height:0.88;letter-spacing:0.02em;">{panel.title}</h2>
+        {panel.stat && (
+          <div style="padding-bottom:8px;">
+            <span class="font-display" style="font-size:clamp(38px,5.5vw,64px);font-weight:300;background:linear-gradient(90deg,#D4AF75,#F0D9A8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;display:block;">{panel.stat}</span>
+            <p style="font-size:9px;letter-spacing:0.45em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:5px;">{panel.statLabel}</p>
+          </div>
+        )}
       </div>
-      <div style="position:absolute;bottom:40px;right:8vw;z-index:3;text-align:right;">
-        <p style="font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.2em;">{String(i+1).padStart(2,'0')} / 03</p>
-      </div>
-    </section>
-  ))}
-</div>
+      <p style="font-size:clamp(14px,1.6vw,17px);color:rgba(255,255,255,0.55);font-weight:300;max-width:480px;line-height:1.75;">{panel.desc}</p>
+    </div>
+    <div style="position:absolute;bottom:40px;right:8vw;z-index:1;text-align:right;">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.2em;">{String(i+1).padStart(2,'0')} / 03</p>
+    </div>
+  </section>
+))}
 
 <!-- ══════ STATS 섹션 ══════════════════════════════════════════════════════ -->
 <section id="stats-section" style="background:var(--dark);position:relative;z-index:2;overflow:hidden;">
@@ -419,37 +406,6 @@ const stats = [
   if (gsap && ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // ── 스토리 배경 이미지 전환 ───────────────────────────────────────────
-    const isDesktop = window.innerWidth >= 768;
-    const fixedBg = document.getElementById('story-fixed-bg') as HTMLElement | null;
-
-    if (isDesktop && fixedBg) {
-      fixedBg.style.display = 'block';
-      const bgSlides = fixedBg.querySelectorAll<HTMLElement>('.story-bg-slide');
-      const panels = document.querySelectorAll<HTMLElement>('.story-panel');
-
-      function switchBg(index: number) {
-        bgSlides.forEach((slide, j) => {
-          gsap.to(slide, { opacity: j === index ? 1 : 0, duration: 1.0, ease: 'power2.inOut' });
-        });
-      }
-      panels.forEach((panel, i) => {
-        ScrollTrigger.create({
-          trigger: panel, start: 'top 50%', end: 'bottom 50%',
-          onEnter: () => switchBg(i),
-          onEnterBack: () => switchBg(i),
-        });
-      });
-      bgSlides.forEach((slide) => {
-        gsap.to(slide, {
-          scale: 1.08, ease: 'none',
-          scrollTrigger: { trigger: '#story-container', start: 'top top', end: 'bottom bottom', scrub: 1.5 },
-        });
-      });
-    } else {
-      document.querySelectorAll<HTMLElement>('.mobile-bg').forEach(el => { el.style.display = 'block'; });
-    }
-
     // ── 히어로 진입 애니메이션 ──────────────────────────────────────────
     const eyebrowLine = document.getElementById('eyebrow-line') as HTMLElement | null;
     const eyebrowText = document.getElementById('eyebrow-text') as HTMLElement | null;
@@ -525,7 +481,6 @@ const stats = [
 
   } else {
     // GSAP 없을 때 fallback
-    document.querySelectorAll<HTMLElement>('.mobile-bg').forEach(el => { el.style.display = 'block'; });
     document.querySelectorAll<HTMLElement>('.gsap-fade').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
     document.querySelectorAll<HTMLElement>('.review-card').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
     document.querySelectorAll<HTMLElement>('#hero-sub,#hero-cta').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
