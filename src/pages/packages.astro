@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
 
 const title = '패키지 · 가격 | 웨딩마치 춘천 웨딩드레스';
 const description = '춘천 웨딩마치 웨딩 패키지 가격표. 드레스 대여, 헤어·메이크업, 도우미 서비스. 강원도 춘천 웨딩 원스톱 서비스.';
@@ -75,7 +76,7 @@ const faqs = [
 
   <!-- 페이지 히어로 -->
   <section class='relative h-56 md:h-72 overflow-hidden'>
-    <img src='/images/instagram/08.webp' alt='패키지 헤더' class='w-full h-full object-cover object-center' />
+    <img src={`${base}images/instagram/08.webp`} alt='패키지 헤더' class='w-full h-full object-cover object-center' />
     <div class='absolute inset-0' style='background: linear-gradient(to bottom, rgba(26,16,8,0.5), rgba(26,16,8,0.75));'></div>
     <div class='absolute inset-0 flex flex-col items-center justify-center text-center px-6'>
       <p class='text-white/60 text-xs tracking-[0.5em] uppercase font-light mb-3'>Services & Pricing</p>

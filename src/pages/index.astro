@@ -1,427 +1,347 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
 
 const title = '춘천웨딩드레스 웨딩마치 | 2회 피팅 · 드레스 120벌 · 미래웨딩홀 입점';
 const description = '강원도 춘천 웨딩드레스 전문샵 웨딩마치. 드레스 대여부터 헤어·메이크업·도우미까지 원스톱 웨딩 서비스. 미래웨딩홀 1층 입점, 2회 피팅 시스템.';
 
-const heroSlides = [
-  '/images/instagram/00.webp',
-  '/images/instagram/08.webp',
-  '/images/instagram/16.webp',
-  '/images/instagram/24.webp',
+// 스크롤 스토리텔링 섹션 — 각 섹션마다 다른 배경 이미지
+const storyPanels = [
+  {
+    bg: `${base}images/instagram/00.webp`,
+    eyebrow: 'Chuncheon Bridal Salon · Est. 2017',
+    title: 'Wedding\nMarch',
+    titleItalic: true,
+    desc: '촬영보다 본식이 더 예뻤어요',
+    isHero: true,
+  },
+  {
+    bg: `${base}images/instagram/08.webp`,
+    eyebrow: 'Our Collection',
+    title: '드레스 120벌',
+    desc: '국내외 최신 트렌드 웨딩드레스 120벌 보유. 에이라인, 볼가운, 슬림핏, 레이스까지 모든 스타일.',
+    stat: '120+',
+    statLabel: '드레스',
+  },
+  {
+    bg: `${base}images/instagram/16.webp`,
+    eyebrow: 'Signature System',
+    title: '2회 피팅',
+    desc: '3개월 전 1차 피팅(3벌) + 1개월 전 2차 피팅(3벌). 타샵과 차별화된 전문 피팅 시스템.',
+    stat: '2회',
+    statLabel: '피팅',
+  },
+  {
+    bg: `${base}images/instagram/24.webp`,
+    eyebrow: 'All-in-One Wedding',
+    title: '원스톱 웨딩',
+    desc: '드레스 대여 + 헤어·메이크업 + 도우미까지. 미래웨딩홀 1층 입점으로 이동 없이 모든 준비를.',
+    stat: '7년+',
+    statLabel: '춘천 No.1',
+  },
 ];
 
 const galleryItems = [
-  { src: '/images/instagram/02.webp', label: '에이라인' },
-  { src: '/images/instagram/05.webp', label: '슬림핏' },
-  { src: '/images/instagram/09.webp', label: '볼가운' },
-  { src: '/images/instagram/12.webp', label: '레이스' },
-  { src: '/images/instagram/15.webp', label: '미니멀' },
-  { src: '/images/instagram/18.webp', label: '에이라인' },
-  { src: '/images/instagram/21.webp', label: '볼가운' },
-  { src: '/images/instagram/25.webp', label: '슬림핏' },
-  { src: '/images/instagram/28.webp', label: '레이스' },
-  { src: '/images/instagram/31.webp', label: '미니멀' },
-  { src: '/images/instagram/34.webp', label: '에이라인' },
-  { src: '/images/instagram/37.webp', label: '볼가운' },
+  { src: `${base}images/instagram/02.webp`, label: '에이라인' },
+  { src: `${base}images/instagram/05.webp`, label: '슬림핏' },
+  { src: `${base}images/instagram/09.webp`, label: '볼가운' },
+  { src: `${base}images/instagram/12.webp`, label: '레이스' },
+  { src: `${base}images/instagram/15.webp`, label: '미니멀' },
+  { src: `${base}images/instagram/18.webp`, label: '에이라인' },
+  { src: `${base}images/instagram/21.webp`, label: '볼가운' },
+  { src: `${base}images/instagram/25.webp`, label: '슬림핏' },
+  { src: `${base}images/instagram/28.webp`, label: '레이스' },
+  { src: `${base}images/instagram/31.webp`, label: '에이라인' },
+  { src: `${base}images/instagram/34.webp`, label: '미니멀' },
+  { src: `${base}images/instagram/37.webp`, label: '볼가운' },
+];
+
+const reviews = [
+  { text: '촬영보다 본식이 더 예뻤어요. 드레스 퀄리티가 정말 달랐고, 2회 피팅 덕분에 완벽한 드레스를 찾을 수 있었습니다.', name: '춘천 신부', date: '2025년 10월', img: `${base}images/instagram/01.webp` },
+  { text: '미래웨딩홀 바로 아래에 있어서 결혼식 당일 너무 편리했어요. 헤어메이크업부터 도우미까지 모두 한번에 해결됐습니다.', name: '강원 신부', date: '2025년 5월', img: `${base}images/instagram/04.webp` },
+  { text: '드레스가 너무 예뻐서 피팅하면서 눈물이 났어요. 직원분들이 너무 친절하게 도와주셨고 최고의 날이었습니다.', name: '홍천 신부', date: '2025년 11월', img: `${base}images/instagram/07.webp` },
 ];
 ---
 <Layout title={title} description={description}>
 
-  <!-- ═══ HERO ═══════════════════════════════════════════════════════════ -->
-  <section id="hero-section" style="position:relative; height:100dvh; min-height:600px; background:var(--dark,#0D0608); overflow:hidden;">
+<!-- ══════════════════════════════════════════════════════════
+     스크롤 스토리텔링 — 배경 고정 + 스크롤 시 이미지 변환
+     ══════════════════════════════════════════════════════════ -->
 
-    <!-- 배경 슬라이드 -->
-    {heroSlides.map((src, i) => (
-      <div class={`hero-slide${i===0?' active':''}`}
-           style={`background-image:url('${src}');`}>
+<!-- 데스크탑: 고정 배경 컨테이너 -->
+<div id="story-fixed-bg" style="position:fixed;inset:0;z-index:0;pointer-events:none;display:none;">
+  {storyPanels.map((panel, i) => (
+    <div
+      class="story-bg-slide"
+      data-index={i}
+      style={`position:absolute;inset:0;background-image:url('${panel.bg}');background-size:cover;background-position:center;opacity:${i===0?1:0};transition:opacity 0.9s ease;`}
+    ></div>
+  ))}
+  <!-- 그라데이션 오버레이 -->
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(7,3,5,0.35) 0%, rgba(7,3,5,0.1) 35%, rgba(7,3,5,0.1) 65%, rgba(7,3,5,0.85) 100%);"></div>
+</div>
+
+<!-- 스크롤 스토리텔링 섹션들 -->
+<div id="story-container">
+  {storyPanels.map((panel, i) => (
+    <section
+      class="story-panel"
+      data-index={i}
+      style={`position:relative;height:100dvh;min-height:500px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8vw 12vh;z-index:1;`}
+    >
+      <!-- 모바일용 배경 (데스크탑에서는 hidden) -->
+      <div class="mobile-bg" style={`display:none;position:absolute;inset:0;background-image:url('${panel.bg}');background-size:cover;background-position:center;z-index:0;`}></div>
+      <div class="mobile-bg" style="display:none;position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,3,5,0.3) 0%,rgba(7,3,5,0.0) 40%,rgba(7,3,5,0.8) 100%);z-index:0;"></div>
+
+      <!-- 콘텐츠 -->
+      <div class="story-content" style="position:relative;z-index:2;max-width:700px;">
+        {i === 0 ? (
+          <>
+            <p class="gsap-fade" style="font-size:10px;letter-spacing:0.6em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:24px;">{panel.eyebrow}</p>
+            <h1 class="font-display gsap-fade" style="font-size:clamp(64px,11vw,140px);font-weight:300;color:white;line-height:0.9;letter-spacing:0.02em;margin-bottom:28px;">
+              <span style="display:block;">Wedding</span>
+              <span class="gold-gradient" style="display:block;font-style:italic;">March</span>
+            </h1>
+            <p class="gsap-fade" style="font-size:clamp(15px,2vw,20px);color:rgba(255,255,255,0.65);font-weight:300;letter-spacing:0.1em;margin-bottom:36px;">{panel.desc}</p>
+            <div class="gsap-fade" style="display:flex;gap:14px;flex-wrap:wrap;">
+              <a href={`${base}contact`} class="btn-primary">피팅 예약하기</a>
+              <a href={`${base}gallery`} class="btn-outline">드레스 보러가기</a>
+            </div>
+          </>
+        ) : (
+          <>
+            <p style="font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(212,175,117,0.8);margin-bottom:16px;">{panel.eyebrow}</p>
+            <div style="display:flex;align-items:flex-end;gap:24px;margin-bottom:20px;flex-wrap:wrap;">
+              <h2 class="font-display" style="font-size:clamp(48px,8vw,100px);font-weight:300;color:white;line-height:0.9;letter-spacing:0.02em;">{panel.title}</h2>
+              {panel.stat && (
+                <div style="padding-bottom:8px;">
+                  <p class="font-display" style="font-size:clamp(36px,5vw,60px);font-weight:300;background:linear-gradient(90deg,#D4AF75,#F0D9A8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">{panel.stat}</p>
+                  <p style="font-size:9px;letter-spacing:0.4em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:4px;">{panel.statLabel}</p>
+                </div>
+              )}
+            </div>
+            <p style="font-size:clamp(14px,1.6vw,18px);color:rgba(255,255,255,0.6);font-weight:300;max-width:500px;line-height:1.7;">{panel.desc}</p>
+          </>
+        )}
       </div>
-    ))}
-    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(7,3,5,0.3) 0%, rgba(7,3,5,0.0) 30%, rgba(7,3,5,0.0) 60%, rgba(7,3,5,0.85) 100%); z-index:1;"></div>
 
-    <!-- 텍스트 콘텐츠 -->
-    <div style="position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; z-index:2; padding:0 8vw 12vh;">
-      <p id="hero-eyebrow" style="font-size:10px; letter-spacing:0.6em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:28px; font-weight:400; opacity:0;">
-        Chuncheon Bridal Salon · Est. 2017
-      </p>
-      <h1 style="line-height:0.9; margin-bottom:32px;">
-        <span id="hero-word-1" class="font-display" style="display:block; font-size:clamp(72px,12vw,160px); font-weight:300; color:white; letter-spacing:0.02em; opacity:0; transform:translateY(60px);">Wedding</span>
-        <span id="hero-word-2" class="font-display" style="display:block; font-size:clamp(72px,12vw,160px); font-weight:300; font-style:italic; letter-spacing:0.02em; opacity:0; transform:translateY(60px); background:linear-gradient(90deg,#D4AF75,#F0D9A8,#D4AF75); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">March</span>
-      </h1>
-      <p id="hero-desc" style="font-size:clamp(14px,2vw,20px); color:rgba(255,255,255,0.65); font-weight:300; letter-spacing:0.1em; margin-bottom:40px; max-width:480px; opacity:0;">
-        촬영보다 본식이 더 예뻤어요
-      </p>
-      <div id="hero-btns" style="display:flex; gap:16px; flex-wrap:wrap; opacity:0;">
-        <a href='/contact' class='btn-primary'>피팅 예약하기</a>
-        <a href='/gallery' class='btn-outline'>드레스 보러가기</a>
+      <!-- 패널 번호 (우하단) -->
+      <div style="position:absolute;bottom:40px;right:8vw;z-index:2;text-align:right;">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.2em;">{String(i+1).padStart(2,'0')} / {String(storyPanels.length).padStart(2,'0')}</p>
       </div>
-    </div>
 
-    <!-- 슬라이드 인디케이터 -->
-    <div style="position:absolute; bottom:40px; right:8vw; display:flex; gap:10px; z-index:2;" id="slide-dots">
-      {heroSlides.map((_, i) => (
-        <button
-          class={`sdot`}
-          data-slide={i}
-          aria-label={`슬라이드 ${i+1}`}
-          style={`width:${i===0?'28px':'8px'}; height:2px; background:${i===0?'#D4AF75':'rgba(255,255,255,0.3)'}; border:none; padding:0; cursor:pointer; transition:all 0.4s;`}>
-        </button>
-      ))}
-    </div>
+      <!-- 첫 패널 스크롤 유도 화살표 -->
+      {i === 0 && (
+        <div id="scroll-arrow" style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bounce 2s ease-in-out infinite;">
+          <span style="font-size:9px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(255,255,255,0.4);">Scroll</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(212,175,117,0.6)" stroke-width="1.5">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+          </svg>
+        </div>
+      )}
+    </section>
+  ))}
+</div>
 
-    <!-- 스크롤 표시 -->
-    <div id="scroll-ind" style="position:absolute; bottom:40px; left:8vw; z-index:2; display:flex; flex-direction:column; align-items:center; gap:10px; opacity:0;">
-      <span style="font-size:9px; letter-spacing:0.5em; text-transform:uppercase; color:rgba(255,255,255,0.4); writing-mode:vertical-rl;">Scroll</span>
-      <div style="width:1px; height:50px; background:linear-gradient(to bottom, rgba(212,175,117,0.6), transparent); animation:scrollLine 2s ease-in-out infinite;"></div>
-    </div>
-  </section>
-
-  <style>
-    @keyframes scrollLine {
-      0% { transform: scaleY(0); transform-origin: top; }
-      50% { transform: scaleY(1); transform-origin: top; }
-      51% { transform: scaleY(1); transform-origin: bottom; }
-      100% { transform: scaleY(0); transform-origin: bottom; }
-    }
+<style>
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
 </style>
 
-  <!-- ═══ MARQUEE ══════════════════════════════════════════════════════════ -->
-  <div class='marquee-outer' style='padding:2px 0;'>
-    <div class='marquee-track'>
-      {[1,2].map(() => (
-        ['WEDDING MARCH', '춘천 웨딩드레스', 'SINCE 2017', '드레스 120벌', '2회 피팅 시스템', '원스톱 웨딩 서비스', 'CHUNCHEON BRIDAL', '미래웨딩홀 입점'].map(t => (
-          <span class='marquee-item'>{t} ·</span>
-        ))
-      ))}
-    </div>
+<!-- ══════ MARQUEE ══════════════════════════════════════════ -->
+<div class='marquee-outer' style='position:relative;z-index:2;'>
+  <div class='marquee-track'>
+    {[1,2].map(() => (
+      ['WEDDING MARCH','춘천 웨딩드레스','SINCE 2017','드레스 120벌','2회 피팅 시스템','원스톱 웨딩','CHUNCHEON BRIDAL','미래웨딩홀 입점'].map(t => (
+        <span class='marquee-item'>{t} ·</span>
+      ))
+    ))}
   </div>
+</div>
 
-  <!-- ═══ STATS ════════════════════════════════════════════════════════════ -->
-  <section id="stats-section" style="background:var(--dark,#0D0608); padding:80px 8vw; border-bottom:1px solid rgba(212,175,117,0.15);">
-    <div style="max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:40px; text-align:center;">
-      {[
-        { n:120, s:'+', label:'드레스 보유', sub:'National Collection' },
-        { n:2,   s:'회', label:'피팅 시스템', sub:'3개월 전 + 1개월 전' },
-        { n:7,   s:'년+', label:'춘천 No.1',  sub:'Since 2017' },
-        { n:98,  s:'%', label:'신부 만족도',  sub:'5Star Reviews' },
-      ].map((stat, i) => (
-        <div class="stat-item" data-i={i} style="opacity:0; transform:translateY(30px);">
-          <p class="font-display" style="font-size:clamp(40px,6vw,72px); font-weight:300; color:white; line-height:1; margin-bottom:8px;">
-            <span class='cnt' data-target={stat.n} data-suffix={stat.s}>0</span>
-          </p>
-          <p style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold,#D4AF75); margin-bottom:6px;">{stat.label}</p>
-          <p style="font-size:10px; color:rgba(255,255,255,0.3); letter-spacing:0.1em;">{stat.sub}</p>
+<!-- ══════ 가로 갤러리 ════════════════════════════════════════ -->
+<section style="background:var(--dark,#0D0608);padding:80px 0;position:relative;z-index:2;">
+  <div style="max-width:1100px;margin:0 auto;padding:0 8vw;margin-bottom:36px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;">
+    <div>
+      <span class='section-label' style="color:rgba(212,175,117,0.7);">Our Collection</span>
+      <h2 class='font-display gsap-fade' style="font-size:clamp(32px,5vw,56px);font-weight:300;color:white;letter-spacing:0.04em;">드레스 갤러리</h2>
+    </div>
+    <a href={`${base}gallery`} style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold,#D4AF75);text-decoration:none;border-bottom:1px solid rgba(212,175,117,0.4);padding-bottom:3px;transition:all 0.3s;white-space:nowrap;"
+       onmouseover="this.style.borderBottomColor='#D4AF75'" onmouseout="this.style.borderBottomColor='rgba(212,175,117,0.4)'">
+      전체 갤러리 →
+    </a>
+  </div>
+  <div id="hgal-track" class="hgal-track" style="padding:0 8vw;">
+    {galleryItems.map((item) => (
+      <div class="hgal-item">
+        <img src={item.src} alt={`웨딩마치 ${item.label}`} loading='lazy' />
+        <div class="hgal-label">{item.label}</div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ══════ 리뷰 ══════════════════════════════════════════════ -->
+<section style="background:var(--dark,#0D0608);padding:80px 8vw 100px;position:relative;z-index:2;border-top:1px solid rgba(255,255,255,0.05);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:60px;">
+      <span class='section-label' style="color:rgba(212,175,117,0.7);">Bride Reviews</span>
+      <h2 class='font-display gsap-fade' style="font-size:clamp(30px,4vw,52px);font-weight:300;color:white;letter-spacing:0.04em;">신부들의 이야기</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;">
+      {reviews.map((rv) => (
+        <div class="gsap-fade" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:36px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:56px;line-height:1;color:rgba(212,175,117,0.12);margin-bottom:14px;font-weight:300;">"</div>
+          <div style="display:flex;gap:2px;margin-bottom:18px;">{'★★★★★'.split('').map(s => <span style="color:var(--gold,#D4AF75);font-size:12px;">{s}</span>)}</div>
+          <p style="font-size:14px;line-height:1.85;color:rgba(255,255,255,0.58);font-weight:300;font-style:italic;margin-bottom:24px;">"{rv.text}"</p>
+          <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.07);padding-top:18px;">
+            <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;border:1px solid rgba(212,175,117,0.3);">
+              <img src={rv.img} alt="신부" style="width:100%;height:100%;object-fit:cover;" loading='lazy' />
+            </div>
+            <div>
+              <p style="font-size:11px;color:var(--gold,#D4AF75);letter-spacing:0.15em;">{rv.name}</p>
+              <p style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:2px;">{rv.date}</p>
+            </div>
+          </div>
         </div>
       ))}
     </div>
-  </section>
-
-  <!-- ═══ HORIZONTAL GALLERY ══════════════════════════════════════════════ -->
-  <div style="background:var(--dark,#0D0608); padding:80px 0 20px; overflow:hidden;">
-    <div style="max-width:1100px; margin:0 auto; padding:0 8vw; display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:36px;">
-      <div>
-        <span class='section-label'>Our Collection</span>
-        <h2 class='font-display' style="font-size:clamp(36px,5vw,60px); font-weight:300; color:white; letter-spacing:0.05em; line-height:1;">드레스 갤러리</h2>
-      </div>
-      <a href='/gallery' style="font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold,#D4AF75); text-decoration:none; border-bottom:1px solid rgba(212,175,117,0.4); padding-bottom:4px; transition:all 0.3s; white-space:nowrap; display:none;" class="gallery-more-link">전체 보기 →</a>
-    </div>
   </div>
-  <section id="h-gallery-section" class="h-gallery-section" style="background:var(--dark,#0D0608); padding-bottom:80px;">
-    <div id="h-gallery-track" class="h-gallery-track" style="padding:0 8vw; gap:2px;">
-      {galleryItems.map((item, i) => (
-        <div class="h-gallery-item" style={`width:${i===0?'45vw':'30vw'};`}>
-          <img src={item.src} alt={`웨딩마치 ${item.label} 드레스`} loading='lazy' />
-          <div class="h-gallery-item-label">{item.label}</div>
-        </div>
-      ))}
-    </div>
-  </section>
+</section>
 
-  <!-- ═══ FEATURES ════════════════════════════════════════════════════════ -->
-  <section id="features-section" style="background:var(--cream,#FEFCF9); padding:120px 8vw;">
-    <div style="max-width:1100px; margin:0 auto;">
-      <div style="text-align:center; margin-bottom:80px;">
-        <span class='section-label' id="feat-label" style="opacity:0;">Why Wedding March</span>
-        <h2 class='font-display' id="feat-title" style="font-size:clamp(36px,5vw,60px); font-weight:300; color:#1a1a1a; letter-spacing:0.05em; margin-bottom:20px; opacity:0;">왜 웨딩마치인가요?</h2>
-        <div class='section-divider' id="feat-div" style="opacity:0;"></div>
-      </div>
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px;">
-        {[
-          { n:'01', title:'드레스 120벌', desc:'국내외 다양한 스타일의 웨딩드레스 120벌 보유. 신상 정기 업데이트로 항상 최신 트렌드를 만나보세요.', badge:'Collection', bg:'/images/instagram/02.webp' },
-          { n:'02', title:'2회 피팅', desc:'3개월 전 1차 피팅(3벌) + 1개월 전 2차 피팅(3벌). 타샵과 차별화된 전문 피팅 서비스로 완벽한 드레스를 찾아드립니다.', badge:'Signature', bg:'/images/instagram/05.webp' },
-          { n:'03', title:'원스톱 웨딩', desc:'드레스 대여 + 헤어·메이크업 + 도우미까지. 미래웨딩홀 1층 입점으로 결혼식 당일 이동 없이 모든 준비를.', badge:'All-in-One', bg:'/images/instagram/09.webp' },
-        ].map((feat, i) => (
-          <div class="feat-card" data-i={i}
-               style="position:relative; overflow:hidden; height:480px; opacity:0; transform:translateY(50px);">
-            <div style={`position:absolute; inset:0; background-image:url('${feat.bg}'); background-size:cover; background-position:center; transition:transform 0.7s ease;`} class="feat-bg"></div>
-            <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(7,3,5,0.92) 0%, rgba(7,3,5,0.5) 50%, rgba(7,3,5,0.1) 100%);"></div>
-            <div style="position:absolute; inset:0; padding:32px; display:flex; flex-direction:column; justify-content:flex-end;">
-              <span style="font-size:10px; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold,#D4AF75); margin-bottom:12px;">{feat.badge}</span>
-              <h3 class='font-display' style="font-size:28px; font-weight:300; color:white; margin-bottom:14px; letter-spacing:0.05em;">{feat.title}</h3>
-              <p style="font-size:13px; line-height:1.7; color:rgba(255,255,255,0.65); font-weight:300;">{feat.desc}</p>
-            </div>
-            <div style="position:absolute; top:20px; right:20px; font-family:'Cormorant Garamond',serif; font-size:72px; font-weight:300; color:rgba(212,175,117,0.12); line-height:1;">{feat.n}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+<!-- ══════ 인스타 스트립 ════════════════════════════════════ -->
+<section style="background:var(--dark,#0D0608);padding-bottom:80px;overflow:hidden;position:relative;z-index:2;">
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:2px;">
+    {['10','11','12','13','14','15'].map(n => (
+      <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
+         style="display:block;aspect-ratio:1;overflow:hidden;">
+        <img src={`${base}images/instagram/${n}.webp`} alt='웨딩마치 인스타그램'
+             style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;"
+             loading='lazy'
+             onmouseover="this.style.transform='scale(1.07)'"
+             onmouseout="this.style.transform='scale(1)'" />
+      </a>
+    ))}
+  </div>
+</section>
 
-  <!-- ═══ PARALLAX CTA ════════════════════════════════════════════════════ -->
-  <section class='parallax-section' id="parallax-section">
-    <div class='parallax-bg' id="parallax-bg"
-         style="background-image:url('/images/instagram/06.webp');"></div>
-    <div class='parallax-overlay'></div>
-    <div style="position:relative; z-index:2; max-width:700px; margin:0 auto; padding:120px 8vw; text-align:center;">
-      <p id="par-label" style="font-size:10px; letter-spacing:0.5em; text-transform:uppercase; color:var(--gold,#D4AF75); margin-bottom:24px; opacity:0;">2026 Spring Season</p>
-      <h2 id="par-title" class='font-display' style="font-size:clamp(36px,6vw,72px); font-weight:300; color:white; line-height:1.1; margin-bottom:28px; letter-spacing:0.03em; opacity:0;">
-        당신의 드레스,<br/>
-        <span style="font-style:italic; background:linear-gradient(90deg,#D4AF75,#F0D9A8,#D4AF75); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">완벽하게</span>
-      </h2>
-      <div style="width:40px; height:1px; background:rgba(255,255,255,0.3); margin:0 auto 28px;"></div>
-      <p id="par-desc" style="font-size:16px; line-height:1.8; color:rgba(255,255,255,0.7); font-weight:300; margin-bottom:40px; opacity:0;">
-        4~6월 성수기 피팅 예약이 빠르게 마감됩니다.<br/>
-        지금 바로 원하는 날짜를 확보하세요.
-      </p>
-      <a href='/contact' id="par-btn" class='btn-gold' style="opacity:0;">지금 예약하기</a>
-    </div>
-  </section>
-
-  <!-- ═══ REVIEWS ══════════════════════════════════════════════════════════ -->
-  <section style="background:var(--dark,#0D0608); padding:120px 8vw;">
-    <div style="max-width:1100px; margin:0 auto;">
-      <div style="text-align:center; margin-bottom:70px;">
-        <span class='section-label' style="color:rgba(212,175,117,0.7);">Bride Reviews</span>
-        <h2 class='font-display' style="font-size:clamp(36px,5vw,60px); font-weight:300; color:white; letter-spacing:0.05em;">신부들의 이야기</h2>
-      </div>
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px;">
-        {[
-          { text:'촬영보다 본식이 더 예뻤어요. 드레스 퀄리티가 정말 달랐고, 2회 피팅 덕분에 완벽한 드레스를 찾을 수 있었습니다.', name:'춘천 신부', date:'2025년 10월', img:'/images/instagram/01.webp' },
-          { text:'미래웨딩홀 바로 아래에 있어서 결혼식 당일 너무 편리했어요. 헤어메이크업부터 도우미까지 모두 한번에 해결됐습니다.', name:'강원 신부', date:'2025년 5월', img:'/images/instagram/04.webp' },
-          { text:'드레스가 너무 예뻐서 피팅하면서 눈물이 났어요. 직원분들이 너무 친절하게 도와주셨고 최고의 날이었습니다.', name:'홍천 신부', date:'2025년 11월', img:'/images/instagram/07.webp' },
-        ].map((rv, i) => (
-          <div class="review-card" data-i={i}
-               style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); padding:40px; opacity:0; transform:translateY(30px);">
-            <div style="font-family:'Cormorant Garamond',serif; font-size:60px; line-height:1; color:rgba(212,175,117,0.15); margin-bottom:16px; font-weight:300;">"</div>
-            <div style="display:flex; gap:2px; margin-bottom:20px;">
-              {'★★★★★'.split('').map(s => <span style="color:var(--gold,#D4AF75); font-size:13px;">{s}</span>)}
-            </div>
-            <p style="font-size:14px; line-height:1.8; color:rgba(255,255,255,0.6); font-weight:300; font-style:italic; margin-bottom:28px;">"{rv.text}"</p>
-            <div style="display:flex; align-items:center; gap:14px; border-top:1px solid rgba(255,255,255,0.07); padding-top:20px;">
-              <div style="width:44px; height:44px; border-radius:50%; overflow:hidden; flex-shrink:0; border:1px solid rgba(212,175,117,0.3);">
-                <img src={rv.img} alt="신부 후기" style="width:100%; height:100%; object-fit:cover;" loading='lazy' />
-              </div>
-              <div>
-                <p style="font-size:12px; color:var(--gold,#D4AF75); letter-spacing:0.15em;">{rv.name}</p>
-                <p style="font-size:11px; color:rgba(255,255,255,0.3); margin-top:2px;">{rv.date}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ INSTAGRAM STRIP ════════════════════════════════════════════════ -->
-  <section style="background:var(--dark,#0D0608); padding:0 0 80px; overflow:hidden;">
-    <div style="display:flex; gap:2px;">
-      {['10','11','12','13','14','15','16','17','18','19','20'].map(n => (
-        <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
-           style="flex-shrink:0; width:calc(100vw/7); aspect-ratio:1; overflow:hidden; display:block; position:relative; group:true;">
-          <img src={`/images/instagram/${n}.webp`} alt='웨딩마치 인스타그램'
-               style="width:100%; height:100%; object-fit:cover; transition:transform 0.5s; display:block;"
-               loading='lazy'
-               onmouseover="this.style.transform='scale(1.08)'"
-               onmouseout="this.style.transform='scale(1)'" />
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <!-- ═══ FINAL CTA ════════════════════════════════════════════════════════ -->
-  <section style="background:var(--cream,#FEFCF9); padding:160px 8vw; text-align:center; position:relative; overflow:hidden;">
-    <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(183,110,121,0.06) 0%, transparent 60%); pointer-events:none;"></div>
-    <div style="position:relative; z-index:1; max-width:700px; margin:0 auto;">
-      <span class='section-label' id="cta-label" style="opacity:0;">Start Your Journey</span>
-      <h2 class='font-display' id="cta-title" style="font-size:clamp(40px,7vw,80px); font-weight:300; color:#1a1a1a; line-height:1.05; margin-bottom:24px; letter-spacing:0.02em; opacity:0;">
-        당신의 특별한 날,<br/>
-        <span class='gold-gradient' style="font-style:italic;">웨딩마치와 함께</span>
-      </h2>
-      <div style="width:40px; height:1px; background:linear-gradient(90deg,var(--rose,#B76E79),var(--gold,#D4AF75)); margin:0 auto 32px;"></div>
-      <p id="cta-desc" style="font-size:17px; color:#888; font-weight:300; line-height:1.8; margin-bottom:48px; opacity:0;">
-        춘천 최고의 웨딩드레스 전문샵에서<br/>평생 기억될 드레스를 만나보세요.
-      </p>
-      <a href='/contact' id="cta-btn" class='btn-primary' style="opacity:0; padding:20px 60px; font-size:12px;">무료 상담 예약하기</a>
-    </div>
-  </section>
+<!-- ══════ 최종 CTA ══════════════════════════════════════════ -->
+<section style="background:var(--cream,#FEFCF9);padding:120px 8vw;text-align:center;position:relative;z-index:2;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(183,110,121,0.07) 0%,transparent 65%);pointer-events:none;"></div>
+  <div style="max-width:640px;margin:0 auto;position:relative;">
+    <span class='section-label gsap-fade'>Start Your Journey</span>
+    <h2 class='font-display gsap-fade' style="font-size:clamp(36px,6vw,72px);font-weight:300;color:#1a1a1a;line-height:1.05;margin-bottom:20px;letter-spacing:0.02em;">
+      당신의 특별한 날,<br/>
+      <span class='gold-gradient' style="font-style:italic;">웨딩마치와 함께</span>
+    </h2>
+    <div class='section-divider'></div>
+    <p class='gsap-fade' style="font-size:16px;color:#888;font-weight:300;line-height:1.8;margin-bottom:40px;">
+      춘천 최고의 웨딩드레스 전문샵에서<br/>평생 기억될 드레스를 만나보세요.
+    </p>
+    <a href={`${base}contact`} class='btn-primary gsap-fade' style="padding:18px 56px;font-size:12px;">무료 상담 예약하기</a>
+  </div>
+</section>
 
 </Layout>
 
 <script>
   const gsap = (window as any).gsap;
   const ScrollTrigger = (window as any).ScrollTrigger;
-  if (!gsap || !ScrollTrigger) { console.warn('GSAP 로드 실패'); }
-  else gsap.registerPlugin(ScrollTrigger);
 
-  // ── 히어로 진입 애니메이션 ────────────────────────────────────────────
-  const tl = gsap.timeline({ delay: 0.3 });
-  tl.to('#hero-eyebrow', { opacity:1, y:0, duration:0.9, ease:'power3.out' })
-    .to('#hero-word-1', { opacity:1, y:0, duration:1.0, ease:'power4.out' }, '-=0.5')
-    .to('#hero-word-2', { opacity:1, y:0, duration:1.0, ease:'power4.out' }, '-=0.7')
-    .to('#hero-desc',   { opacity:1, y:0, duration:0.8, ease:'power3.out' }, '-=0.5')
-    .to('#hero-btns',   { opacity:1, y:0, duration:0.7, ease:'power3.out' }, '-=0.4')
-    .to('#scroll-ind',  { opacity:1, duration:0.6 }, '-=0.2');
-
-  // ── 히어로 슬라이더 ───────────────────────────────────────────────────
-  const slides = document.querySelectorAll<HTMLElement>('.hero-slide');
-  const dots = document.querySelectorAll<HTMLElement>('.sdot');
-  let cur = 0;
-  function goSlide(n: number) {
-    slides[cur].classList.remove('active');
-    (dots[cur] as HTMLElement).style.width = '8px';
-    (dots[cur] as HTMLElement).style.background = 'rgba(255,255,255,0.3)';
-    cur = n;
-    slides[cur].classList.add('active');
-    (dots[cur] as HTMLElement).style.width = '28px';
-    (dots[cur] as HTMLElement).style.background = '#D4AF75';
-  }
-  let slideTimer = setInterval(() => goSlide((cur+1) % slides.length), 5500);
-  dots.forEach((d, i) => {
-    d.addEventListener('click', () => {
-      clearInterval(slideTimer);
-      goSlide(i);
-      slideTimer = setInterval(() => goSlide((cur+1) % slides.length), 5500);
-    });
-  });
-
-  // ── 패럴랙스 히어로 ───────────────────────────────────────────────────
   if (gsap && ScrollTrigger) {
-    const heroBg = document.querySelector('.hero-slide.active') as HTMLElement | null;
-    // hero slides parallax handled by opacity transitions
+    gsap.registerPlugin(ScrollTrigger);
 
-    // ── 스탯 카운터 ─────────────────────────────────────────────────────
-    document.querySelectorAll('.stat-item').forEach((el, i) => {
-      gsap.to(el, {
-        opacity:1, y:0, duration:0.8, ease:'power3.out',
-        delay: i * 0.12,
-        scrollTrigger: { trigger: '#stats-section', start:'top 75%' }
-      });
-    });
-    document.querySelectorAll('.cnt').forEach(el => {
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 80%',
-        onEnter: () => {
-          const target = parseInt((el as HTMLElement).dataset.target || '0');
-          const suffix = (el as HTMLElement).dataset.suffix || '';
-          const start = performance.now();
-          function upd(now: number) {
-            const t = Math.min((now-start)/1800, 1);
-            const e = 1 - Math.pow(1-t, 3);
-            el.textContent = Math.round(e*target) + suffix;
-            if (t < 1) requestAnimationFrame(upd);
-          }
-          requestAnimationFrame(upd);
-        }
-      });
-    });
+    // ── 디바이스 감지 ──────────────────────────────────────────────────
+    const isDesktop = window.innerWidth >= 768;
+    const fixedBg = document.getElementById('story-fixed-bg') as HTMLElement | null;
+    const mobileBgs = document.querySelectorAll<HTMLElement>('.mobile-bg');
 
-    // ── 피처 카드 ────────────────────────────────────────────────────────
-    gsap.to('#feat-label', { opacity:1, y:0, duration:0.7, scrollTrigger:{ trigger:'#features-section', start:'top 70%' }});
-    gsap.to('#feat-title', { opacity:1, y:0, duration:0.8, delay:0.1, scrollTrigger:{ trigger:'#features-section', start:'top 70%' }});
-    gsap.to('#feat-div',   { opacity:1, y:0, duration:0.6, delay:0.2, scrollTrigger:{ trigger:'#features-section', start:'top 70%' }});
-    document.querySelectorAll('.feat-card').forEach((el, i) => {
-      gsap.to(el, {
-        opacity:1, y:0, duration:0.9, ease:'power3.out',
-        delay: i * 0.15,
-        scrollTrigger: { trigger: '#features-section', start:'top 60%' }
-      });
-      el.addEventListener('mouseenter', () => {
-        const bg = el.querySelector('.feat-bg') as HTMLElement | null;
-        if (bg) bg.style.transform = 'scale(1.08)';
-      });
-      el.addEventListener('mouseleave', () => {
-        const bg = el.querySelector('.feat-bg') as HTMLElement | null;
-        if (bg) bg.style.transform = 'scale(1)';
-      });
-    });
-
-    // ── 패럴랙스 섹션 ────────────────────────────────────────────────────
-    const parBg = document.getElementById('parallax-bg');
-    if (parBg) {
-      gsap.to(parBg, {
-        yPercent: -25,
-        ease: 'none',
-        scrollTrigger: { trigger:'#parallax-section', scrub: true }
-      });
-    }
-    ['#par-label','#par-title','#par-desc','#par-btn'].forEach((sel, i) => {
-      const el = document.querySelector(sel);
-      if (el) {
-        gsap.to(el, {
-          opacity:1, y:0, duration:0.8, delay: i*0.12,
-          scrollTrigger: { trigger:'#parallax-section', start:'top 60%' }
-        });
-      }
-    });
-
-    // ── 리뷰 카드 ────────────────────────────────────────────────────────
-    document.querySelectorAll('.review-card').forEach((el, i) => {
-      gsap.to(el, {
-        opacity:1, y:0, duration:0.8, delay: i*0.15,
-        scrollTrigger: { trigger: el, start:'top 80%' }
-      });
-    });
-
-    // ── 최종 CTA ─────────────────────────────────────────────────────────
-    ['#cta-label','#cta-title','#cta-desc','#cta-btn'].forEach((sel, i) => {
-      const el = document.querySelector(sel);
-      if (el) {
-        gsap.to(el, {
-          opacity:1, y:0, duration:0.8, delay: i*0.12,
-          scrollTrigger: { trigger:'#cta-title', start:'top 75%' }
-        });
-      }
-    });
-
-    // ── 가로 갤러리 드래그 스크롤 ────────────────────────────────────────
-    const track = document.getElementById('h-gallery-track');
-    if (track) {
-      let isDown = false, startX = 0, scrollLeft = 0;
-      track.addEventListener('mousedown', e => {
-        isDown = true;
-        track.style.cursor = 'grabbing';
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
-      });
-      track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = 'grab'; });
-      track.addEventListener('mouseup', () => { isDown = false; track.style.cursor = 'grab'; });
-      track.addEventListener('mousemove', e => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - track.offsetLeft;
-        track.scrollLeft = scrollLeft - (x - startX) * 1.5;
-      });
-      // touch scroll
-      let touchStart = 0;
-      track.addEventListener('touchstart', e => { touchStart = e.touches[0].clientX; }, { passive: true });
-      track.addEventListener('touchmove', e => {
-        const diff = touchStart - e.touches[0].clientX;
-        track.scrollLeft += diff;
-        touchStart = e.touches[0].clientX;
-      }, { passive: true });
-      // make it scrollable
-      track.style.overflowX = 'auto';
-      track.style.scrollBehavior = 'smooth';
-      track.style.cursor = 'grab';
-      // hide scrollbar
-      const style = document.createElement('style');
-      style.textContent = '#h-gallery-track::-webkit-scrollbar { display: none; } #h-gallery-track { -ms-overflow-style: none; scrollbar-width: none; }';
-      document.head.appendChild(style);
+    if (isDesktop && fixedBg) {
+      // 데스크탑: 고정 배경 활성화
+      fixedBg.style.display = 'block';
+    } else {
+      // 모바일: 각 섹션 배경 표시
+      mobileBgs.forEach(el => { el.style.display = 'block'; });
     }
 
-    // ── 갤러리 더보기 링크 ───────────────────────────────────────────────
-    const moreLink = document.querySelector('.gallery-more-link') as HTMLElement | null;
-    if (moreLink) moreLink.style.display = 'inline-block';
+    // ── 스크롤 트리거로 배경 이미지 변환 ──────────────────────────────
+    if (isDesktop && fixedBg) {
+      const bgSlides = fixedBg.querySelectorAll<HTMLElement>('.story-bg-slide');
+      const panels = document.querySelectorAll<HTMLElement>('.story-panel');
+
+      panels.forEach((panel, i) => {
+        ScrollTrigger.create({
+          trigger: panel,
+          start: 'top 50%',
+          end: 'bottom 50%',
+          onEnter: () => switchBg(i),
+          onEnterBack: () => switchBg(i),
+        });
+      });
+
+      function switchBg(index: number) {
+        bgSlides.forEach((slide, j) => {
+          gsap.to(slide, {
+            opacity: j === index ? 1 : 0,
+            duration: 0.8,
+            ease: 'power2.inOut',
+          });
+        });
+      }
+    }
+
+    // ── 히어로 진입 애니메이션 ──────────────────────────────────────────
+    const heroContent = document.querySelector('#story-container .story-panel:first-child .story-content');
+    if (heroContent) {
+      const elements = heroContent.querySelectorAll('.gsap-fade');
+      gsap.from(elements, {
+        y: 50, opacity: 0, duration: 1.0, stagger: 0.15,
+        ease: 'power3.out', delay: 0.4,
+      });
+    }
+
+    // ── 일반 GSAP 페이드 (갤러리, 리뷰, CTA) ───────────────────────────
+    document.querySelectorAll('.gsap-fade').forEach(el => {
+      // 이미 히어로에서 처리한 것은 스킵
+      if (el.closest('#story-container')) return;
+      gsap.from(el, {
+        y: 30, opacity: 0, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 82%' },
+      });
+    });
+  } else {
+    // GSAP 없을 때 fallback
+    const mobileBgs = document.querySelectorAll<HTMLElement>('.mobile-bg');
+    mobileBgs.forEach(el => { el.style.display = 'block'; });
+    document.querySelectorAll<HTMLElement>('.gsap-fade').forEach(el => {
+      el.style.opacity = '1'; el.style.transform = 'none';
+    });
+  }
+
+  // ── 가로 갤러리 드래그 ─────────────────────────────────────────────
+  const track = document.getElementById('hgal-track') as HTMLElement | null;
+  if (track) {
+    let isDown = false, startX = 0, scrollLeft = 0;
+    track.addEventListener('mousedown', e => {
+      isDown = true; track.style.cursor = 'grabbing';
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    });
+    ['mouseleave','mouseup'].forEach(evt => track.addEventListener(evt, () => { isDown = false; track.style.cursor = 'grab'; }));
+    track.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX) * 1.5;
+    });
+    track.style.cursor = 'grab';
+    // 터치
+    let tx = 0;
+    track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchmove', e => {
+      track.scrollLeft += tx - e.touches[0].clientX;
+      tx = e.touches[0].clientX;
+    }, { passive: true });
   }
 </script>

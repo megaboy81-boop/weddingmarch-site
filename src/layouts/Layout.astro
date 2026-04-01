@@ -10,6 +10,7 @@ const {
   ogImage = '/images/instagram/00.webp'
 } = Astro.props;
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
+const base = import.meta.env.BASE_URL;
 ---
 <!DOCTYPE html>
 <html lang='ko'>
@@ -24,450 +25,209 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null
   <meta property='og:type' content='website' />
   <meta property='og:title' content={title} />
   <meta property='og:description' content={description} />
-  <meta property='og:image' content={ogImage} />
+  <meta property='og:image' content={`${base}images/instagram/00.webp`} />
   <meta property='og:locale' content='ko_KR' />
   <meta property='og:site_name' content='웨딩마치' />
   <meta name='twitter:card' content='summary_large_image' />
   <meta name='twitter:title' content={title} />
   <meta name='twitter:description' content={description} />
-  <meta name='twitter:image' content={ogImage} />
+  <meta name='twitter:image' content={`${base}images/instagram/00.webp`} />
   <script type='application/ld+json' set:html={JSON.stringify({
     "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "BeautySalon"],
+    "@type": ["LocalBusiness","BeautySalon"],
     "name": "웨딩마치",
-    "description": "춘천 웨딩드레스 전문샵. 2회 피팅 시스템, 드레스 120벌 보유, 헤어·메이크업·도우미 원스톱 서비스",
-    "url": "https://megaboy81-boop.github.io/weddingmarch-site/",
+    "description": "춘천 웨딩드레스 전문샵",
     "telephone": "0507-1377-3536",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "퇴계로 118, 1층 104호 (미래타워)",
-      "addressLocality": "춘천시",
-      "addressRegion": "강원도",
-      "addressCountry": "KR"
-    },
-    "openingHours": "Mo-Su 10:00-20:00",
-    "priceRange": "₩₩"
+    "address": { "@type": "PostalAddress", "streetAddress": "퇴계로 118, 1층 104호", "addressLocality": "춘천시", "addressRegion": "강원도", "addressCountry": "KR" },
+    "openingHours": "Mo-Su 10:00-20:00", "priceRange": "₩₩"
   })} />
 
-  <!-- Fonts -->
   <link rel='preconnect' href='https://fonts.googleapis.com' />
   <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
   <link href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap' rel='stylesheet' />
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css' />
-
-  <!-- GSAP CDN -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js'></script>
-  <!-- VanillaTilt -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js'></script>
 
   <style is:global>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --black: #070305;
       --dark: #0D0608;
       --rose: #B76E79;
       --rose-deep: #8B3A47;
       --gold: #D4AF75;
-      --gold-light: #F0D9A8;
       --cream: #FEFCF9;
       --cream-warm: #F7E7CE;
-      --text-muted: #9B8B8E;
     }
-
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-family: 'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
       background: var(--cream);
       color: #1a1a1a;
       overflow-x: hidden;
-      cursor: none;
     }
-
-    /* ── 커스텀 커서 ─────────────────────────────────── */
-    #cursor-dot {
-      position: fixed;
-      width: 8px; height: 8px;
-      background: var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 99999;
-      transform: translate(-50%, -50%);
-      transition: width 0.2s, height 0.2s, background 0.2s;
+    .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .gold-gradient {
+      background: linear-gradient(90deg, var(--gold), #F0D9A8, var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    #cursor-ring {
-      position: fixed;
-      width: 36px; height: 36px;
-      border: 1.5px solid rgba(212,175,117,0.6);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 99998;
-      transform: translate(-50%, -50%);
-      transition: border-color 0.3s;
-    }
-    body:hover #cursor-dot { opacity: 1; }
-    a:hover ~ #cursor-dot,
-    button:hover ~ #cursor-dot { width: 20px; height: 20px; }
-    @media (max-width: 768px) {
-      body { cursor: auto; }
-      #cursor-dot, #cursor-ring { display: none; }
-    }
-
-    /* ── 폰트 ─────────────────────────────────────────── */
-    .font-display { font-family: "Cormorant Garamond", Georgia, serif; }
-
-    /* ── 네비게이션 ───────────────────────────────────── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      padding: 24px 40px;
-      display: flex; align-items: center; justify-content: space-between;
-      transition: background 0.5s, padding 0.5s;
-    }
-    nav.scrolled {
-      background: rgba(7,3,5,0.95);
-      backdrop-filter: blur(12px);
-      padding: 16px 40px;
-    }
-    .nav-logo {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 22px;
-      font-weight: 300;
-      color: white;
-      text-decoration: none;
-      letter-spacing: 0.15em;
-    }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a {
-      color: rgba(255,255,255,0.75);
-      text-decoration: none;
-      font-size: 11px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      font-weight: 400;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-cta {
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      text-decoration: none;
-      border: 1px solid rgba(212,175,117,0.5);
-      padding: 10px 24px;
-      transition: all 0.3s;
-    }
-    .nav-cta:hover { background: var(--gold); color: var(--dark); }
-    .nav-mobile-btn {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px;
-    }
-    .nav-mobile-btn span {
-      display: block; width: 24px; height: 1px;
-      background: white; transition: all 0.3s;
-    }
-    @media (max-width: 768px) {
-      nav { padding: 20px 24px; }
-      nav.scrolled { padding: 14px 24px; }
-      .nav-links, .nav-cta { display: none; }
-      .nav-mobile-btn { display: flex; }
-    }
-
-    /* ── 히어로 슬라이드 ──────────────────────────────── */
-    .hero-slide {
-      position: absolute; inset: 0;
-      background-size: cover; background-position: center;
-      opacity: 0; transition: opacity 1.5s ease;
-    }
-    .hero-slide.active { opacity: 1; }
-
-    /* ── 마키 ─────────────────────────────────────────── */
-    .marquee-outer {
-      overflow: hidden;
-      background: var(--dark);
-      border-top: 1px solid rgba(212,175,117,0.2);
-      border-bottom: 1px solid rgba(212,175,117,0.2);
-    }
-    .marquee-track {
-      display: flex; white-space: nowrap;
-      animation: marquee 25s linear infinite;
-    }
-    .marquee-item {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 14px; font-style: italic;
-      letter-spacing: 0.3em;
-      color: var(--gold);
-      padding: 14px 40px;
-    }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    /* ── 섹션 공통 ────────────────────────────────────── */
     .section-label {
-      font-size: 10px;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: var(--rose);
-      font-weight: 400;
-      display: block;
-      margin-bottom: 16px;
+      display: block; font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase;
+      color: var(--rose); margin-bottom: 16px;
     }
     .section-divider {
       width: 40px; height: 1px;
       background: linear-gradient(90deg, var(--rose), var(--gold));
-      margin: 0 auto;
+      margin: 20px auto;
     }
-    .gold-text { color: var(--gold); }
-    .gold-gradient {
-      background: linear-gradient(90deg, var(--gold), #F0D9A8, var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* ── 가로 갤러리 ──────────────────────────────────── */
-    .h-gallery-section {
-      overflow: hidden;
-      position: relative;
-      background: var(--dark);
-    }
-    .h-gallery-track {
-      display: flex;
-      will-change: transform;
-    }
-    .h-gallery-item {
-      flex-shrink: 0;
-      width: 35vw; height: 70vh;
-      overflow: hidden;
-      position: relative;
-      margin-right: 2px;
-    }
-    .h-gallery-item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-    .h-gallery-item:hover img { transform: scale(1.05); }
-    .h-gallery-item-label {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 20px;
-      background: linear-gradient(to top, rgba(7,3,5,0.8), transparent);
-      color: rgba(255,255,255,0.7);
-      font-size: 11px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      opacity: 0; transition: opacity 0.4s;
-    }
-    .h-gallery-item:hover .h-gallery-item-label { opacity: 1; }
-    @media (max-width: 768px) {
-      .h-gallery-item { width: 75vw; height: 55vw; }
-    }
-
-    /* ── 패럴랙스 섹션 ────────────────────────────────── */
-    .parallax-section {
-      position: relative;
-      min-height: 70vh;
-      display: flex; align-items: center;
-      overflow: hidden;
-    }
-    .parallax-bg {
-      position: absolute;
-      inset: -20%;
-      background-size: cover;
-      background-position: center;
-      will-change: transform;
-    }
-    .parallax-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(7,3,5,0.85), rgba(139,58,71,0.6));
-    }
-
-    /* ── 버튼 ─────────────────────────────────────────── */
     .btn-primary {
       display: inline-block;
       background: linear-gradient(135deg, var(--rose), var(--rose-deep));
-      color: white;
-      padding: 16px 40px;
-      font-size: 11px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all 0.3s;
-      font-weight: 400;
+      color: white; padding: 16px 40px;
+      font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.3s; border: none; cursor: pointer;
+      font-family: inherit;
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(183,110,121,0.4); }
     .btn-outline {
-      display: inline-block;
-      border: 1px solid rgba(255,255,255,0.4);
-      color: rgba(255,255,255,0.8);
-      padding: 16px 40px;
-      font-size: 11px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all 0.3s;
-      font-weight: 400;
+      display: inline-block; border: 1px solid rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.85); padding: 16px 40px;
+      font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.3s;
     }
-    .btn-outline:hover { border-color: white; color: white; transform: translateY(-2px); }
+    .btn-outline:hover { border-color: white; color: white; }
     .btn-gold {
-      display: inline-block;
-      background: transparent;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      padding: 16px 40px;
-      font-size: 11px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all 0.3s;
+      display: inline-block; border: 1px solid var(--gold); color: var(--gold);
+      padding: 16px 40px; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.3s; background: transparent;
     }
     .btn-gold:hover { background: var(--gold); color: var(--dark); }
 
-    /* ── 푸터 ─────────────────────────────────────────── */
-    footer {
-      background: var(--dark);
-      color: rgba(255,255,255,0.5);
-      padding: 60px 40px 40px;
+    /* ── 마키 ── */
+    .marquee-outer { overflow: hidden; background: var(--dark); border-top: 1px solid rgba(212,175,117,0.15); border-bottom: 1px solid rgba(212,175,117,0.15); }
+    .marquee-track { display: flex; white-space: nowrap; animation: marqueeAnim 28s linear infinite; }
+    .marquee-item { font-family: 'Cormorant Garamond',serif; font-size: 13px; font-style: italic; letter-spacing: 0.3em; color: var(--gold); padding: 13px 36px; flex-shrink: 0; }
+    @keyframes marqueeAnim { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── 네비 ── */
+    #main-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 22px 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.5s, padding 0.4s;
     }
+    #main-nav.scrolled { background: rgba(7,3,5,0.94); backdrop-filter: blur(12px); padding: 14px 5vw; }
+    .nav-logo { font-family: 'Cormorant Garamond',serif; font-size: 21px; font-weight: 300; color: white; text-decoration: none; letter-spacing: 0.12em; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); text-decoration: none; border: 1px solid rgba(212,175,117,0.5); padding: 10px 22px; transition: all 0.3s; }
+    .nav-cta:hover { background: var(--gold); color: var(--dark); }
+    .nav-mobile-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-mobile-btn span { display: block; width: 24px; height: 1px; background: white; transition: all 0.3s; }
+    @media (max-width: 768px) {
+      #main-nav { padding: 18px 5vw; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-mobile-btn { display: flex; }
+    }
+
+    /* ── 가로 갤러리 ── */
+    .hgal-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 2px; -ms-overflow-style: none; scrollbar-width: none; cursor: grab; }
+    .hgal-track::-webkit-scrollbar { display: none; }
+    .hgal-item { flex-shrink: 0; width: 38vw; height: 60vh; overflow: hidden; scroll-snap-align: start; position: relative; }
+    .hgal-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
+    .hgal-item:hover img { transform: scale(1.05); }
+    .hgal-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px; background: linear-gradient(to top, rgba(7,3,5,0.8), transparent); color: rgba(255,255,255,0.7); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; transform: translateY(4px); opacity: 0; transition: all 0.3s; }
+    .hgal-item:hover .hgal-label { opacity: 1; transform: translateY(0); }
+    @media (max-width: 768px) { .hgal-item { width: 78vw; height: 52vw; } }
+
+    /* ── 푸터 ── */
+    footer { background: var(--dark); color: rgba(255,255,255,0.5); padding: 60px 5vw 40px; }
     footer a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.3s; }
     footer a:hover { color: var(--gold); }
-    @media (max-width: 768px) {
-      footer { padding: 50px 24px 30px; }
-    }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+    @media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+
+    /* ── GSAP 초기 숨김 ── */
+    .gsap-fade { opacity: 0; transform: translateY(30px); }
+    .gsap-fade-left { opacity: 0; transform: translateX(-30px); }
   </style>
 </head>
 <body>
-  <!-- 커스텀 커서 -->
-  <div id='cursor-dot'></div>
-  <div id='cursor-ring'></div>
-
-  <!-- 네비게이션 -->
   <nav id='main-nav'>
-    <a href='/' class='nav-logo'>Wedding March</a>
+    <a href={base} class='nav-logo'>Wedding March</a>
     <ul class='nav-links'>
-      <li><a href='/gallery'>갤러리</a></li>
-      <li><a href='/packages'>패키지</a></li>
-      <li><a href='/contact'>오시는 길</a></li>
+      <li><a href={`${base}gallery`}>갤러리</a></li>
+      <li><a href={`${base}packages`}>패키지</a></li>
+      <li><a href={`${base}contact`}>오시는 길</a></li>
     </ul>
-    <a href='/contact' class='nav-cta'>예약하기</a>
-    <button class='nav-mobile-btn' id='mobileMenuBtn' aria-label='메뉴'>
-      <span></span><span></span><span></span>
-    </button>
+    <a href={`${base}contact`} class='nav-cta'>예약하기</a>
+    <button class='nav-mobile-btn' id='mobileBtn' aria-label='메뉴'><span></span><span></span><span></span></button>
   </nav>
 
   <!-- 모바일 메뉴 -->
-  <div id='mobileMenu' style='display:none; position:fixed; inset:0; background:rgba(7,3,5,0.97); z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:40px;'>
-    <a href='/' style='font-family:"Cormorant Garamond",serif; font-size:28px; font-weight:300; color:white; text-decoration:none;'>홈</a>
-    <a href='/gallery' style='font-family:"Cormorant Garamond",serif; font-size:28px; font-weight:300; color:white; text-decoration:none;'>갤러리</a>
-    <a href='/packages' style='font-family:"Cormorant Garamond",serif; font-size:28px; font-weight:300; color:white; text-decoration:none;'>패키지</a>
-    <a href='/contact' style='font-family:"Cormorant Garamond",serif; font-size:28px; font-weight:300; color:white; text-decoration:none;'>오시는 길</a>
-    <a href='/contact' style='font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold,#D4AF75); border:1px solid rgba(212,175,117,0.5); padding:14px 32px; text-decoration:none; margin-top:16px;'>예약하기</a>
+  <div id='mobileMenu' style='display:none;position:fixed;inset:0;background:rgba(7,3,5,0.97);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:36px;'>
+    <a href={base} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>홈</a>
+    <a href={`${base}gallery`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>갤러리</a>
+    <a href={`${base}packages`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>패키지</a>
+    <a href={`${base}contact`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>오시는 길</a>
+    <a href={`${base}contact`} style='margin-top:12px;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold,#D4AF75);border:1px solid rgba(212,175,117,0.5);padding:14px 32px;text-decoration:none;'>예약하기</a>
   </div>
 
   <slot />
 
-  <!-- 푸터 -->
   <footer>
-    <div style='max-width:1100px; margin:0 auto;'>
-      <div style='display:grid; grid-template-columns:1fr 1fr 1fr; gap:40px; margin-bottom:50px;'>
+    <div style='max-width:1100px;margin:0 auto;'>
+      <div class='footer-grid'>
         <div>
-          <p style='font-family:"Cormorant Garamond",serif; font-size:24px; font-weight:300; color:white; letter-spacing:0.1em; margin-bottom:16px;'>Wedding March</p>
-          <p style='font-size:12px; line-height:1.9; letter-spacing:0.05em;'>강원도 춘천시 퇴계로 118<br/>1층 104호 (미래타워)<br/>춘천 웨딩드레스 전문샵</p>
+          <p style='font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:300;color:white;letter-spacing:0.1em;margin-bottom:14px;'>Wedding March</p>
+          <p style='font-size:12px;line-height:1.9;'>강원도 춘천시 퇴계로 118<br/>1층 104호 (미래타워)<br/>미래컨벤션 웨딩홀 1층</p>
         </div>
         <div>
-          <p style='font-size:10px; letter-spacing:0.4em; text-transform:uppercase; color:rgba(212,175,117,0.7); margin-bottom:16px;'>Contact</p>
-          <p style='font-size:12px; line-height:2;'><a href='tel:0507-1377-3536'>0507-1377-3536</a><br/><a href='https://www.instagram.com/ch_weddingmarch/' target='_blank'>@ch_weddingmarch</a><br/>매일 10:00 – 20:00</p>
+          <p style='font-size:10px;letter-spacing:0.4em;text-transform:uppercase;color:rgba(212,175,117,0.7);margin-bottom:14px;'>Contact</p>
+          <p style='font-size:12px;line-height:2;'><a href='tel:0507-1377-3536'>0507-1377-3536</a><br/><a href='https://www.instagram.com/ch_weddingmarch/' target='_blank'>@ch_weddingmarch</a><br/>매일 10:00 – 20:00</p>
         </div>
         <div>
-          <p style='font-size:10px; letter-spacing:0.4em; text-transform:uppercase; color:rgba(212,175,117,0.7); margin-bottom:16px;'>Quick Links</p>
-          <p style='font-size:12px; line-height:2;'><a href='/gallery'>드레스 갤러리</a><br/><a href='/packages'>웨딩 패키지</a><br/><a href='/contact'>예약 & 문의</a></p>
+          <p style='font-size:10px;letter-spacing:0.4em;text-transform:uppercase;color:rgba(212,175,117,0.7);margin-bottom:14px;'>Menu</p>
+          <p style='font-size:12px;line-height:2;'><a href={`${base}gallery`}>드레스 갤러리</a><br/><a href={`${base}packages`}>웨딩 패키지</a><br/><a href={`${base}contact`}>예약 & 문의</a></p>
         </div>
       </div>
-      <div style='border-top:1px solid rgba(255,255,255,0.1); padding-top:30px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;'>
-        <p style='font-size:11px; letter-spacing:0.1em;'>© 2017–2026 웨딩마치. All rights reserved.</p>
-        <p style='font-size:11px; letter-spacing:0.05em; color:rgba(212,175,117,0.5);'>춘천 웨딩드레스 · 강원 웨딩</p>
+      <div style='border-top:1px solid rgba(255,255,255,0.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;'>
+        <p style='font-size:11px;'>© 2017–2026 웨딩마치. All rights reserved.</p>
+        <p style='font-size:11px;color:rgba(212,175,117,0.5);'>춘천 웨딩드레스 · 강원 웨딩</p>
       </div>
     </div>
   </footer>
 
   <script>
-    const gsap = (window as any).gsap;
-    const ScrollTrigger = (window as any).ScrollTrigger;
+    // 네비 스크롤
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => nav?.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
 
-    // ── 커서 ─────────────────────────────────────────────
-    const dot = document.getElementById('cursor-dot')!;
-    const ring = document.getElementById('cursor-ring')!;
-    let rx = 0, ry = 0, mx = 0, my = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animCursor() {
-      dot.style.left = mx + 'px';
-      dot.style.top = my + 'px';
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.left = rx + 'px';
-      ring.style.top = ry + 'px';
-      requestAnimationFrame(animCursor);
-    }
-    animCursor();
-    document.querySelectorAll('a, button, [data-tilt]').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        dot.style.width = '16px'; dot.style.height = '16px';
-        ring.style.width = '56px'; ring.style.height = '56px';
-        ring.style.borderColor = 'rgba(212,175,117,1)';
-      });
-      el.addEventListener('mouseleave', () => {
-        dot.style.width = '8px'; dot.style.height = '8px';
-        ring.style.width = '36px'; ring.style.height = '36px';
-        ring.style.borderColor = 'rgba(212,175,117,0.6)';
-      });
-    });
-
-    // ── 네비게이션 스크롤 ─────────────────────────────────
-    const nav = document.getElementById('main-nav')!;
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
-
-    // ── 모바일 메뉴 ───────────────────────────────────────
-    const menuBtn = document.getElementById('mobileMenuBtn')!;
-    const mobileMenu = document.getElementById('mobileMenu')!;
-    let menuOpen = false;
-    menuBtn.addEventListener('click', () => {
-      menuOpen = !menuOpen;
-      mobileMenu.style.display = menuOpen ? 'flex' : 'none';
-      const spans = menuBtn.querySelectorAll('span');
-      if (menuOpen) {
+    // 모바일 메뉴
+    const mobileBtn = document.getElementById('mobileBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    let mOpen = false;
+    mobileBtn?.addEventListener('click', () => {
+      mOpen = !mOpen;
+      if (mobileMenu) mobileMenu.style.display = mOpen ? 'flex' : 'none';
+      const spans = mobileBtn.querySelectorAll('span');
+      if (mOpen) {
         (spans[0] as HTMLElement).style.transform = 'rotate(45deg) translate(4px,4px)';
         (spans[1] as HTMLElement).style.opacity = '0';
         (spans[2] as HTMLElement).style.transform = 'rotate(-45deg) translate(4px,-4px)';
       } else {
-        spans.forEach((s:any) => { s.style.transform=''; s.style.opacity=''; });
+        spans.forEach((s: any) => { s.style.transform = ''; s.style.opacity = ''; });
       }
     });
-    mobileMenu.querySelectorAll('a').forEach(a => {
+    mobileMenu?.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
-        menuOpen = false; mobileMenu.style.display = 'none';
-        const spans = menuBtn.querySelectorAll('span');
-        spans.forEach((s:any) => { s.style.transform=''; s.style.opacity=''; });
+        mOpen = false;
+        if (mobileMenu) mobileMenu.style.display = 'none';
+        mobileBtn?.querySelectorAll('span').forEach((s: any) => { s.style.transform = ''; s.style.opacity = ''; });
       });
     });
-
-    // ── VanillaTilt ───────────────────────────────────────
-    const VT = (window as any).VanillaTilt;
-    if (VT) {
-      VT.init(document.querySelectorAll('[data-tilt]'), {
-        max: 8, speed: 400, glare: true, 'max-glare': 0.12
-      });
-    }
   </script>
 </body>
 </html>
