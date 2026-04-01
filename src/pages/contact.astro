@@ -1,239 +1,231 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
 const title = '예약 · 문의 | 웨딩마치 춘천 웨딩드레스';
 const description = '춘천 웨딩마치 예약 및 문의. 카카오톡 채널 또는 인스타그램 DM으로 연락주세요. 강원도 춘천 웨딩드레스 전문샵.';
 ---
 <Layout title={title} description={description}>
 
   <!-- 페이지 히어로 -->
-  <section class='relative h-56 md:h-72 overflow-hidden'>
-    <img src='/images/instagram/09.webp' alt='문의 헤더' class='w-full h-full object-cover object-center' />
-    <div class='absolute inset-0' style='background: linear-gradient(to bottom, rgba(26,16,8,0.5), rgba(26,16,8,0.75));'></div>
-    <div class='absolute inset-0 flex flex-col items-center justify-center text-center px-6'>
-      <p class='text-white/60 text-xs tracking-[0.5em] uppercase font-light mb-3'>Get in Touch</p>
-      <h1 class='font-display text-4xl md:text-6xl font-light text-white tracking-wider mb-3'>Reservation</h1>
-      <div class='w-10 h-px bg-white/40'></div>
-      <p class='text-white/70 text-sm font-light mt-3'>피팅 예약 및 서비스 문의</p>
+  <section style="position:relative; height:50vh; min-height:300px; overflow:hidden;">
+    <img src='/images/instagram/10.webp' alt='문의 헤더'
+         style="width:100%; height:100%; object-fit:cover; object-position:center;" />
+    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(7,3,5,0.5), rgba(7,3,5,0.75));"></div>
+    <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 24px;">
+      <p style="color:rgba(255,255,255,0.5); font-size:10px; letter-spacing:0.6em; text-transform:uppercase; margin-bottom:16px;">Get in Touch</p>
+      <h1 class='font-display' style="font-size:clamp(40px,8vw,80px); font-weight:300; color:white; letter-spacing:0.05em; margin-bottom:16px;">Reservation</h1>
+      <div style="width:40px; height:1px; background:rgba(212,175,117,0.5);"></div>
+      <p style="color:rgba(255,255,255,0.6); font-size:14px; font-weight:300; margin-top:16px; letter-spacing:0.1em;">피팅 예약 및 서비스 문의</p>
     </div>
   </section>
 
   <!-- 빠른 연락 채널 -->
-  <section class='py-14 px-6' style='background: #F7E7CE;'>
-    <div class='max-w-4xl mx-auto'>
-      <div class='text-center mb-10'>
-        <p class='text-xs tracking-[0.5em] text-[#8B3A47] uppercase font-light mb-3'>Quick Contact</p>
-        <h2 class='font-display text-3xl font-light text-gray-900'>바로 연락하기</h2>
-        <p class='text-gray-500 text-sm font-light mt-2'>가장 빠른 답변 채널을 이용해주세요</p>
+  <section style="padding:80px 8vw; background:var(--cream-warm,#F7E7CE);">
+    <div style="max-width:1000px; margin:0 auto;">
+      <div style="text-align:center; margin-bottom:50px;">
+        <span class='section-label'>Quick Contact</span>
+        <h2 class='font-display' style="font-size:clamp(28px,4vw,44px); font-weight:300; color:#1a1a1a; letter-spacing:0.05em;">바로 연락하기</h2>
       </div>
-
-      <div class='grid grid-cols-1 md:grid-cols-3 gap-4'>
-        <!-- 카카오톡 채널 -->
-        <!-- [PLACEHOLDER] 카카오 채널 ID 교체 필요: _PLACEHOLDER_ID → 실제 채널 ID -->
-        <a href='http://pf.kakao.com/_PLACEHOLDER_ID/chat' target='_blank' rel='noopener'
-           class='flex flex-col items-center gap-4 p-7 bg-white border border-[#E8DDD5] hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-center group'>
-          <div class='w-14 h-14 rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300' style='background: #FEE500;'>
-            <svg viewBox='0 0 24 24' class='w-7 h-7' fill='#3C1E1E'>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+        <a href='http://pf.kakao.com/_placeholder/chat' target='_blank' rel='noopener'
+           style="display:flex; flex-direction:column; align-items:center; gap:16px; padding:36px 24px; background:white; border:1px solid #E8DDD5; text-decoration:none; transition:all 0.3s; text-align:center;"
+           onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.08)'"
+           onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div style="width:56px; height:56px; border-radius:50%; background:#FEE500; display:flex; align-items:center; justify-content:center;">
+            <svg viewBox='0 0 24 24' style="width:28px; height:28px;" fill='#3C1E1E'>
               <path d='M12 3C6.477 3 2 6.582 2 11c0 2.75 1.55 5.19 3.93 6.72l-1.01 3.73c-.09.33.27.59.55.39L9.7 19.1A11.2 11.2 0 0012 19c5.523 0 10-3.582 10-8s-4.477-8-10-8z'/>
             </svg>
           </div>
           <div>
-            <p class='font-light text-gray-900 text-sm tracking-wide mb-1'>카카오톡 채널</p>
-            <p class='text-[#B76E79] text-xs font-light tracking-wider'>웨딩마치</p>
-            <p class='text-gray-400 text-xs mt-1 font-light'>평균 30분 내 답변</p>
+            <p style="font-size:13px; color:#1a1a1a; font-weight:400; letter-spacing:0.05em; margin-bottom:4px;">카카오톡 채널</p>
+            <p style="font-size:11px; color:var(--rose,#B76E79); letter-spacing:0.1em;">웨딩마치</p>
+            <p style="font-size:11px; color:#aaa; margin-top:4px;">평균 30분 내 답변</p>
           </div>
         </a>
-
-        <!-- 인스타그램 DM -->
         <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
-           class='flex flex-col items-center gap-4 p-7 bg-white border border-[#E8DDD5] hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-center group'>
-          <div class='w-14 h-14 rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300' style='background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);'>
-            <svg class='w-7 h-7 text-white' fill='currentColor' viewBox='0 0 24 24'>
+           style="display:flex; flex-direction:column; align-items:center; gap:16px; padding:36px 24px; background:white; border:1px solid #E8DDD5; text-decoration:none; transition:all 0.3s; text-align:center;"
+           onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.08)'"
+           onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); display:flex; align-items:center; justify-content:center;">
+            <svg style="width:28px; height:28px;" fill='white' viewBox='0 0 24 24'>
               <path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'/>
             </svg>
           </div>
           <div>
-            <p class='font-light text-gray-900 text-sm tracking-wide mb-1'>인스타그램 DM</p>
-            <p class='text-pink-500 text-xs font-light tracking-wider'>@ch_weddingmarch</p>
-            <p class='text-gray-400 text-xs mt-1 font-light'>가장 빠른 채널</p>
+            <p style="font-size:13px; color:#1a1a1a; font-weight:400; letter-spacing:0.05em; margin-bottom:4px;">인스타그램 DM</p>
+            <p style="font-size:11px; color:#E1306C; letter-spacing:0.1em;">@ch_weddingmarch</p>
+            <p style="font-size:11px; color:#aaa; margin-top:4px;">가장 빠른 채널</p>
           </div>
         </a>
-
-        <!-- 전화 -->
         <a href='tel:0507-1377-3536'
-           class='flex flex-col items-center gap-4 p-7 bg-white border border-[#E8DDD5] hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-center group'>
-          <div class='w-14 h-14 rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300 bg-[#B76E79]'>
-            <svg class='w-7 h-7 text-white' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'/>
+           style="display:flex; flex-direction:column; align-items:center; gap:16px; padding:36px 24px; background:white; border:1px solid #E8DDD5; text-decoration:none; transition:all 0.3s; text-align:center;"
+           onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.08)'"
+           onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div style="width:56px; height:56px; border-radius:50%; background:var(--rose,#B76E79); display:flex; align-items:center; justify-content:center;">
+            <svg style="width:28px; height:28px;" fill='none' viewBox='0 0 24 24' stroke='white' stroke-width='1.5'>
+              <path stroke-linecap='round' stroke-linejoin='round' d='M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'/>
             </svg>
           </div>
           <div>
-            <p class='font-light text-gray-900 text-sm tracking-wide mb-1'>전화 문의</p>
-            <p class='text-[#B76E79] text-xs font-light tracking-wider'>0507-1377-3536</p>
-            <p class='text-gray-400 text-xs mt-1 font-light'>매일 10:00 – 20:00</p>
+            <p style="font-size:13px; color:#1a1a1a; font-weight:400; letter-spacing:0.05em; margin-bottom:4px;">전화 문의</p>
+            <p style="font-size:11px; color:var(--rose,#B76E79); letter-spacing:0.1em;">0507-1377-3536</p>
+            <p style="font-size:11px; color:#aaa; margin-top:4px;">매일 10:00 – 20:00</p>
           </div>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- 메인 컨텐츠: 폼 + 지도 -->
-  <section class='py-16 px-6' style='background: #FAF8F5;'>
-    <div class='max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12'>
+  <!-- 폼 + 지도 섹션 -->
+  <section style="padding:80px 8vw; background:var(--cream,#FEFCF9);">
+    <div style="max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;">
 
       <!-- 문의 폼 -->
       <div>
-        <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-3'>Inquiry Form</p>
-        <h2 class='font-display text-3xl font-light text-gray-900 mb-8'>예약 문의서</h2>
-
-        <form name='wedding-inquiry' method='POST' class='space-y-5' id='inquiry-form'>
-
-          <div class='grid grid-cols-2 gap-4'>
+        <span class='section-label'>Inquiry Form</span>
+        <h2 class='font-display' style="font-size:clamp(28px,4vw,44px); font-weight:300; color:#1a1a1a; margin-bottom:40px; letter-spacing:0.05em;">예약 문의서</h2>
+        <form name='wedding-inquiry' method='POST' style="display:flex; flex-direction:column; gap:20px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
             <div>
-              <label for='name' class='block text-xs tracking-[0.2em] text-gray-500 uppercase font-light mb-2'>신부 성함 <span class='text-[#B76E79]'>*</span></label>
-              <input type='text' id='name' name='name' required placeholder='홍길동'
-                class='w-full px-4 py-3 border border-[#E8DDD5] bg-white focus:border-[#B76E79] focus:ring-1 focus:ring-[#B76E79] outline-none transition-all text-sm font-light' />
+              <label style="display:block; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:#888; margin-bottom:8px;">신부 성함 <span style="color:var(--rose,#B76E79);">*</span></label>
+              <input type='text' name='name' required placeholder='홍길동'
+                style="width:100%; padding:14px 16px; border:1px solid #E8DDD5; background:white; font-size:14px; font-weight:300; outline:none; font-family:inherit; transition:border 0.2s;"
+                onfocus="this.style.borderColor='#B76E79'"
+                onblur="this.style.borderColor='#E8DDD5'" />
             </div>
             <div>
-              <label for='phone' class='block text-xs tracking-[0.2em] text-gray-500 uppercase font-light mb-2'>연락처 <span class='text-[#B76E79]'>*</span></label>
-              <input type='tel' id='phone' name='phone' required placeholder='0507-1377-3536'
-                class='w-full px-4 py-3 border border-[#E8DDD5] bg-white focus:border-[#B76E79] focus:ring-1 focus:ring-[#B76E79] outline-none transition-all text-sm font-light' />
+              <label style="display:block; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:#888; margin-bottom:8px;">연락처 <span style="color:var(--rose,#B76E79);">*</span></label>
+              <input type='tel' name='phone' required placeholder='010-0000-0000'
+                style="width:100%; padding:14px 16px; border:1px solid #E8DDD5; background:white; font-size:14px; font-weight:300; outline:none; font-family:inherit; transition:border 0.2s;"
+                onfocus="this.style.borderColor='#B76E79'"
+                onblur="this.style.borderColor='#E8DDD5'" />
             </div>
           </div>
-
           <div>
-            <label for='wedding-date' class='block text-xs tracking-[0.2em] text-gray-500 uppercase font-light mb-2'>결혼 예정일</label>
-            <input type='date' id='wedding-date' name='wedding-date'
-              class='w-full px-4 py-3 border border-[#E8DDD5] bg-white focus:border-[#B76E79] focus:ring-1 focus:ring-[#B76E79] outline-none transition-all text-sm font-light' />
+            <label style="display:block; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:#888; margin-bottom:8px;">결혼 예정일 <span style="color:var(--rose,#B76E79);">*</span></label>
+            <input type='date' name='wedding_date' required
+              style="width:100%; padding:14px 16px; border:1px solid #E8DDD5; background:white; font-size:14px; font-weight:300; outline:none; font-family:inherit; transition:border 0.2s;"
+              onfocus="this.style.borderColor='#B76E79'"
+              onblur="this.style.borderColor='#E8DDD5'" />
           </div>
-
           <div>
-            <label for='venue' class='block text-xs tracking-[0.2em] text-gray-500 uppercase font-light mb-2'>예식장</label>
-            <input type='text' id='venue' name='venue' placeholder='미래웨딩홀, 춘천그랜드호텔 등'
-              class='w-full px-4 py-3 border border-[#E8DDD5] bg-white focus:border-[#B76E79] focus:ring-1 focus:ring-[#B76E79] outline-none transition-all text-sm font-light' />
+            <label style="display:block; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:#888; margin-bottom:8px;">원하는 드레스 스타일</label>
+            <select name='style'
+              style="width:100%; padding:14px 16px; border:1px solid #E8DDD5; background:white; font-size:14px; font-weight:300; outline:none; font-family:inherit; -webkit-appearance:none; transition:border 0.2s;"
+              onfocus="this.style.borderColor='#B76E79'"
+              onblur="this.style.borderColor='#E8DDD5'">
+              <option value=''>선택해주세요</option>
+              <option>에이라인</option>
+              <option>볼가운</option>
+              <option>슬림핏</option>
+              <option>미니멀</option>
+              <option>레이스</option>
+              <option>아직 모르겠어요</option>
+            </select>
           </div>
-
           <div>
-            <p class='text-xs tracking-[0.2em] text-gray-500 uppercase font-light mb-3'>원하시는 서비스</p>
-            <div class='grid grid-cols-2 gap-3'>
-              {['드레스 대여', '헤어메이크업', '도우미', '올인원 패키지'].map((svc) => (
-                <label class='flex items-center gap-2.5 cursor-pointer group'>
-                  <input type='checkbox' name='service' value={svc}
-                    class='w-4 h-4 accent-[#B76E79] border-[#E8DDD5]' />
-                  <span class='text-sm text-gray-600 font-light group-hover:text-[#B76E79] transition-colors'>{svc}</span>
-                </label>
-              ))}
-            </div>
+            <label style="display:block; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:#888; margin-bottom:8px;">문의 내용</label>
+            <textarea name='message' rows='4' placeholder='궁금하신 점이나 요청사항을 자유롭게 작성해주세요.'
+              style="width:100%; padding:14px 16px; border:1px solid #E8DDD5; background:white; font-size:14px; font-weight:300; outline:none; font-family:inherit; resize:vertical; transition:border 0.2s;"
+              onfocus="this.style.borderColor='#B76E79'"
+              onblur="this.style.borderColor='#E8DDD5'"></textarea>
           </div>
-
-          <div>
-            <label for='message' class='block text-xs tracking-[0.2em] text-gray-500 uppercase font-light mb-2'>문의 내용</label>
-            <textarea id='message' name='message' rows={4}
-              placeholder='드레스 스타일, 궁금한 점 등을 자유롭게 남겨주세요'
-              class='w-full px-4 py-3 border border-[#E8DDD5] bg-white focus:border-[#B76E79] focus:ring-1 focus:ring-[#B76E79] outline-none transition-all text-sm font-light resize-none'></textarea>
-          </div>
-
-          <button type='submit'
-            class='w-full bg-[#B76E79] text-white py-4 text-xs tracking-[0.3em] uppercase font-light hover:bg-[#8B3A47] transition-colors shadow-lg hover:shadow-xl'>
+          <button type='submit' class='btn-primary'
+            style="padding:18px 40px; border:none; cursor:pointer; font-family:inherit; width:100%;">
             문의 보내기
           </button>
-
-          <p class='text-xs text-gray-400 text-center font-light'>
-            개인정보는 예약 상담 목적으로만 사용됩니다
-          </p>
         </form>
       </div>
 
-      <!-- 위치 & 지도 -->
-      <div class='space-y-8'>
-        <div>
-          <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-3'>Location</p>
-          <h2 class='font-display text-3xl font-light text-gray-900 mb-6'>오시는 길</h2>
+      <!-- 지도 + 정보 -->
+      <div>
+        <span class='section-label'>Location</span>
+        <h2 class='font-display' style="font-size:clamp(28px,4vw,44px); font-weight:300; color:#1a1a1a; margin-bottom:32px; letter-spacing:0.05em;">오시는 길</h2>
 
-          <!-- 네이버 플레이스 지도 embed -->
-          <!-- [PLACEHOLDER] 네이버 플레이스 ID 교체 필요: 13354093 → 실제 플레이스 ID -->
-          <div class='w-full overflow-hidden border border-[#E8DDD5] mb-5' style='height: 240px;'>
-            <iframe
-              src='https://map.naver.com/v5/embed/place/13354093'
-              width='100%'
-              height='240'
-              frameborder='0'
-              allowfullscreen
-              title='웨딩마치 위치'
-              class='w-full h-full'
-              loading='lazy'>
-            </iframe>
-          </div>
-          <!-- 지도 로드 실패 시 대체 표시 -->
-          <noscript>
-            <div class='w-full h-60 bg-[#F7E7CE] flex items-center justify-center border border-[#E8DDD5]'>
-              <a href='https://naver.me/weddingmarch' target='_blank' class='text-[#B76E79] text-sm'>네이버 지도에서 보기</a>
-            </div>
-          </noscript>
-
-          <address class='not-italic space-y-3 text-sm text-gray-500 font-light'>
-            <div class='flex items-start gap-3'>
-              <span class='text-[#B76E79] mt-0.5 flex-shrink-0'>📍</span>
-              <span>강원도 춘천시 퇴계로 118, 미래타워 1층 104호</span>
-            </div>
-            <div class='flex items-start gap-3'>
-              <span class='text-[#B76E79] mt-0.5 flex-shrink-0'>🅿</span>
-              <span>미래웨딩홀 주차장 이용 가능 (무료)</span>
-            </div>
-            <div class='flex items-start gap-3'>
-              <span class='text-[#B76E79] mt-0.5 flex-shrink-0'>⏰</span>
-              <span>영업시간: 매일 10:00 – 20:00</span>
-            </div>
-          </address>
-
-          <a href='https://naver.me/weddingmarch' target='_blank' rel='noopener'
-             class='mt-5 flex items-center justify-center gap-2 border border-[#03C75A] text-[#03C75A] py-3 text-xs tracking-[0.2em] uppercase font-light hover:bg-[#03C75A] hover:text-white transition-all duration-300'>
-            <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4' viewBox='0 0 24 24' fill='currentColor'>
-              <path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/>
-            </svg>
-            네이버 지도에서 길찾기
-          </a>
-        </div>
-
-        <!-- 봄 시즌 안내 -->
-        <div class='border-l-2 border-[#B76E79] pl-5 py-3'>
-          <p class='text-[#B76E79] text-xs tracking-widest uppercase font-light mb-2'>Spring Season 2026</p>
-          <p class='text-gray-700 text-sm font-light leading-relaxed'>
-            4~6월 성수기 피팅 날짜가 빠르게 마감되고 있습니다.<br/>
-            원하는 날짜를 확보하려면 지금 바로 연락해 주세요.
+        <!-- 주소 정보 -->
+        <div style="background:var(--dark,#0D0608); padding:28px 32px; margin-bottom:16px;">
+          <p style="font-size:10px; letter-spacing:0.4em; text-transform:uppercase; color:rgba(212,175,117,0.7); margin-bottom:16px;">Address</p>
+          <p style="font-size:15px; color:white; font-weight:300; line-height:1.8; margin-bottom:20px;">
+            강원도 춘천시 퇴계로 118<br/>
+            1층 104호 (미래타워)<br/>
+            <span style="color:rgba(255,255,255,0.4); font-size:13px;">미래컨벤션 웨딩홀 1층</span>
           </p>
-        </div>
-
-        <!-- 네이버 블로그 -->
-        <!-- [PLACEHOLDER] 네이버 블로그 ID 교체 필요: BLOG_ID_HERE → 실제 블로그 ID -->
-        <div class='border border-[#E8DDD5] p-5'>
-          <div class='flex items-center justify-between mb-4'>
-            <div class='flex items-center gap-2'>
-              <div class='w-6 h-6 rounded flex items-center justify-center' style='background: #03C75A;'>
-                <span class='text-white text-xs font-bold'>N</span>
-              </div>
-              <p class='text-sm font-light text-gray-700 tracking-wide'>웨딩마치 블로그</p>
-            </div>
-            <a href='https://blog.naver.com/BLOG_ID_HERE' target='_blank' rel='noopener'
-               class='text-xs text-[#B76E79] tracking-wider hover:underline font-light'>더보기 →</a>
-          </div>
-          <!-- 블로그 위젯 placeholder (실제 연동 시 iframe으로 교체) -->
-          <div class='space-y-3'>
-            <a href='https://blog.naver.com/BLOG_ID_HERE' target='_blank' rel='noopener'
-               class='flex items-start gap-3 group'>
-              <div class='w-12 h-12 bg-[#F7E7CE] flex-shrink-0 overflow-hidden'>
-                <img src='/images/instagram/02.webp' alt='블로그' class='w-full h-full object-cover' />
-              </div>
-              <div>
-                <p class='text-xs text-gray-700 font-light group-hover:text-[#B76E79] transition-colors line-clamp-2'>최신 웨딩마치 신상 드레스 소개 · 봄 시즌 신작</p>
-                <p class='text-[10px] text-gray-400 mt-1'>네이버 블로그에서 보기 →</p>
-              </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a href='https://map.kakao.com/link/map/웨딩마치,37.868177,127.717283'
+               target='_blank' rel='noopener'
+               style="display:inline-flex; align-items:center; gap:6px; padding:10px 18px; background:#FEE500; color:#3C1E1E; font-size:11px; letter-spacing:0.1em; text-decoration:none; font-weight:500; transition:opacity 0.2s;"
+               onmouseover="this.style.opacity='0.85'"
+               onmouseout="this.style.opacity='1'">
+              <svg viewBox='0 0 24 24' style="width:14px;height:14px;" fill='#3C1E1E'>
+                <path d='M12 3C6.477 3 2 6.582 2 11c0 2.75 1.55 5.19 3.93 6.72l-1.01 3.73c-.09.33.27.59.55.39L9.7 19.1A11.2 11.2 0 0012 19c5.523 0 10-3.582 10-8s-4.477-8-10-8z'/>
+              </svg>
+              카카오맵
+            </a>
+            <a href='https://map.naver.com/p/entry/place/13354093'
+               target='_blank' rel='noopener'
+               style="display:inline-flex; align-items:center; gap:6px; padding:10px 18px; background:#03C75A; color:white; font-size:11px; letter-spacing:0.1em; text-decoration:none; font-weight:500; transition:opacity 0.2s;"
+               onmouseover="this.style.opacity='0.85'"
+               onmouseout="this.style.opacity='1'">
+              <svg viewBox='0 0 24 24' style="width:14px;height:14px;" fill='white'>
+                <path d='M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z'/>
+              </svg>
+              네이버 플레이스
+            </a>
+            <a href='tel:0507-1377-3536'
+               style="display:inline-flex; align-items:center; gap:6px; padding:10px 18px; border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.7); font-size:11px; letter-spacing:0.1em; text-decoration:none; transition:all 0.2s;"
+               onmouseover="this.style.borderColor='rgba(255,255,255,0.5)';this.style.color='white'"
+               onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.7)'">
+              📞 0507-1377-3536
             </a>
           </div>
-          <!-- [PLACEHOLDER] 실제 블로그 위젯 연동 시 아래 주석 해제 후 ID 교체
-          <iframe src='https://blog.naver.com/widget/blogWidget.nhn?blogId=BLOG_ID_HERE&widgetId=1'
-                  width='100%' height='200' frameborder='0' loading='lazy'></iframe>
-          -->
+        </div>
+
+        <!-- 네이버 지도 임베드 탭 -->
+        <div style="border:1px solid #E8DDD5; overflow:hidden;">
+          <!-- 탭 버튼 -->
+          <div style="display:flex; border-bottom:1px solid #E8DDD5;">
+            <button id='tab-naver' onclick="showMapTab('naver')"
+              style="flex:1; padding:12px; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; border:none; cursor:pointer; font-family:inherit; background:var(--dark,#0D0608); color:var(--gold,#D4AF75); transition:all 0.2s;">
+              네이버지도
+            </button>
+            <button id='tab-kakao' onclick="showMapTab('kakao')"
+              style="flex:1; padding:12px; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; border:none; cursor:pointer; font-family:inherit; background:white; color:#888; transition:all 0.2s; border-left:1px solid #E8DDD5;">
+              카카오맵
+            </button>
+          </div>
+          <!-- 네이버 지도 -->
+          <div id='map-naver'>
+            <iframe
+              src='https://map.naver.com/p/entry/place/13354093'
+              width='100%'
+              height='320'
+              frameborder='0'
+              scrolling='no'
+              title='웨딩마치 네이버 지도'
+              style='display:block; border:none;'>
+            </iframe>
+          </div>
+          <!-- 카카오 지도 -->
+          <div id='map-kakao' style='display:none;'>
+            <iframe
+              src='https://map.kakao.com/link/embed/13354093'
+              width='100%'
+              height='320'
+              frameborder='0'
+              scrolling='no'
+              title='웨딩마치 카카오 지도'
+              style='display:block; border:none;'>
+            </iframe>
+          </div>
+        </div>
+
+        <!-- 교통 안내 -->
+        <div style="margin-top:16px; padding:20px 24px; background:rgba(183,110,121,0.06); border-left:3px solid var(--rose,#B76E79);">
+          <p style="font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:var(--rose,#B76E79); margin-bottom:12px;">교통 안내</p>
+          <p style="font-size:13px; color:#555; line-height:1.9; font-weight:300;">
+            🚗 주차: 미래타워 건물 내 주차장 이용<br/>
+            🚌 버스: 퇴계동 정류장 하차 후 도보 2분<br/>
+            🚉 기차: 춘천역에서 택시 약 10분
+          </p>
         </div>
       </div>
     </div>
@@ -242,20 +234,27 @@ const description = '춘천 웨딩마치 예약 및 문의. 카카오톡 채널 
 </Layout>
 
 <script>
-  const form = document.getElementById('inquiry-form');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      // 제출 버튼 처리
-      const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-      if (btn) {
-        btn.textContent = '접수 완료!';
-        btn.style.background = '#8B3A47';
-        btn.disabled = true;
-      }
-      setTimeout(() => {
-        alert('문의가 접수되었습니다. 빠르게 연락드리겠습니다!\n\n더 빠른 답변은 카카오톡 채널 또는 인스타그램 @ch_weddingmarch로 연락주세요.');
-      }, 100);
-    });
+  function showMapTab(tab: string) {
+    const naver = document.getElementById('map-naver');
+    const kakao = document.getElementById('map-kakao');
+    const tabN = document.getElementById('tab-naver');
+    const tabK = document.getElementById('tab-kakao');
+    if (!naver || !kakao || !tabN || !tabK) return;
+    if (tab === 'naver') {
+      naver.style.display = '';
+      kakao.style.display = 'none';
+      (tabN as HTMLElement).style.background = 'var(--dark,#0D0608)';
+      (tabN as HTMLElement).style.color = 'var(--gold,#D4AF75)';
+      (tabK as HTMLElement).style.background = 'white';
+      (tabK as HTMLElement).style.color = '#888';
+    } else {
+      naver.style.display = 'none';
+      kakao.style.display = '';
+      (tabK as HTMLElement).style.background = 'var(--dark,#0D0608)';
+      (tabK as HTMLElement).style.color = 'var(--gold,#D4AF75)';
+      (tabN as HTMLElement).style.background = 'white';
+      (tabN as HTMLElement).style.color = '#888';
+    }
   }
+  (window as any).showMapTab = showMapTab;
 </script>

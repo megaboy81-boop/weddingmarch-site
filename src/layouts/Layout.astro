@@ -4,13 +4,11 @@ export interface Props {
   description?: string;
   ogImage?: string;
 }
-
 const {
   title = '웨딩마치 | 춘천 웨딩드레스샵',
   description = '강원도 춘천 웨딩드레스 전문샵 웨딩마치. 드레스 대여부터 헤어·메이크업·도우미까지 원스톱 웨딩 서비스. 미래웨딩홀 1층 입점, 2회 피팅 시스템.',
   ogImage = '/images/instagram/00.webp'
 } = Astro.props;
-
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
 ---
 <!DOCTYPE html>
@@ -23,27 +21,23 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null
   <meta name='keywords' content='춘천웨딩드레스, 춘천드레스샵, 강원웨딩드레스, 춘천웨딩, 웨딩마치, 춘천웨딩스드메, 미래웨딩홀드레스, 춘천2회피팅' />
   <meta name='robots' content='index, follow' />
   <link rel='canonical' href={canonicalURL?.toString() ?? Astro.url.href} />
-
-  <!-- OG Tags -->
   <meta property='og:type' content='website' />
   <meta property='og:title' content={title} />
   <meta property='og:description' content={description} />
   <meta property='og:image' content={ogImage} />
   <meta property='og:locale' content='ko_KR' />
   <meta property='og:site_name' content='웨딩마치' />
-
-  <!-- Twitter Card -->
   <meta name='twitter:card' content='summary_large_image' />
   <meta name='twitter:title' content={title} />
   <meta name='twitter:description' content={description} />
   <meta name='twitter:image' content={ogImage} />
-
-  <!-- 구조화 데이터 (LocalBusiness) -->
   <script type='application/ld+json' set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "BeautySalon"],
     "name": "웨딩마치",
     "description": "춘천 웨딩드레스 전문샵. 2회 피팅 시스템, 드레스 120벌 보유, 헤어·메이크업·도우미 원스톱 서비스",
+    "url": "https://megaboy81-boop.github.io/weddingmarch-site/",
+    "telephone": "0507-1377-3536",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "퇴계로 118, 1층 104호 (미래타워)",
@@ -51,299 +45,429 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null
       "addressRegion": "강원도",
       "addressCountry": "KR"
     },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 37.8813,
-      "longitude": 127.7298
-    },
     "openingHours": "Mo-Su 10:00-20:00",
-    "priceRange": "₩₩",
-    "image": "/images/instagram/00.webp",
-    "sameAs": ["https://www.instagram.com/ch_weddingmarch/"]
+    "priceRange": "₩₩"
   })} />
 
-  <!-- 폰트: Cormorant Garamond + Pretendard -->
+  <!-- Fonts -->
   <link rel='preconnect' href='https://fonts.googleapis.com' />
   <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
   <link href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap' rel='stylesheet' />
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css' />
 
-  <!-- Three.js CDN -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'></script>
-  <!-- VanillaTilt CDN -->
+  <!-- GSAP CDN -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js'></script>
+  <!-- VanillaTilt -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js'></script>
 
-  <style>
+  <style is:global>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #070305;
+      --dark: #0D0608;
+      --rose: #B76E79;
+      --rose-deep: #8B3A47;
+      --gold: #D4AF75;
+      --gold-light: #F0D9A8;
+      --cream: #FEFCF9;
+      --cream-warm: #F7E7CE;
+      --text-muted: #9B8B8E;
+    }
+
     html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      background: #FEFCF9;
-      color: #2a1a1f;
+      font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--cream);
+      color: #1a1a1a;
       overflow-x: hidden;
+      cursor: none;
     }
-    .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
 
-    /* Three.js 파티클 캔버스 */
-    #particle-canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+    /* ── 커스텀 커서 ─────────────────────────────────── */
+    #cursor-dot {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
       pointer-events: none;
-      z-index: 2;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(212,175,117,0.6);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99998;
+      transform: translate(-50%, -50%);
+      transition: border-color 0.3s;
+    }
+    body:hover #cursor-dot { opacity: 1; }
+    a:hover ~ #cursor-dot,
+    button:hover ~ #cursor-dot { width: 20px; height: 20px; }
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      #cursor-dot, #cursor-ring { display: none; }
     }
 
-    /* 히어로 슬라이더 */
-    .hero-slide { opacity: 0; transition: opacity 1.5s ease-in-out; position: absolute; inset: 0; }
+    /* ── 폰트 ─────────────────────────────────────────── */
+    .font-display { font-family: "Cormorant Garamond", Georgia, serif; }
+
+    /* ── 네비게이션 ───────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 24px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.5s, padding 0.5s;
+    }
+    nav.scrolled {
+      background: rgba(7,3,5,0.95);
+      backdrop-filter: blur(12px);
+      padding: 16px 40px;
+    }
+    .nav-logo {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 22px;
+      font-weight: 300;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.15em;
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border: 1px solid rgba(212,175,117,0.5);
+      padding: 10px 24px;
+      transition: all 0.3s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--dark); }
+    .nav-mobile-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-mobile-btn span {
+      display: block; width: 24px; height: 1px;
+      background: white; transition: all 0.3s;
+    }
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav.scrolled { padding: 14px 24px; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-mobile-btn { display: flex; }
+    }
+
+    /* ── 히어로 슬라이드 ──────────────────────────────── */
+    .hero-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0; transition: opacity 1.5s ease;
+    }
     .hero-slide.active { opacity: 1; }
 
-    /* 카카오 플로팅 버튼 펄스 */
-    @keyframes kakao-pulse {
-      0%, 100% { box-shadow: 0 4px 20px rgba(254,229,0,0.4); }
-      50% { box-shadow: 0 4px 30px rgba(254,229,0,0.8), 0 0 0 8px rgba(254,229,0,0.1); }
+    /* ── 마키 ─────────────────────────────────────────── */
+    .marquee-outer {
+      overflow: hidden;
+      background: var(--dark);
+      border-top: 1px solid rgba(212,175,117,0.2);
+      border-bottom: 1px solid rgba(212,175,117,0.2);
     }
-    .kakao-pulse { animation: kakao-pulse 2.5s ease-in-out infinite; }
-
-    /* 스크롤바 숨김 */
-    .scrollbar-hide::-webkit-scrollbar { display: none; }
-    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-    /* 네비 스크롤 효과 */
-    .nav-scrolled {
-      box-shadow: 0 2px 20px rgba(183,110,121,0.15) !important;
-      background: rgba(254,252,249,0.98) !important;
+    .marquee-track {
+      display: flex; white-space: nowrap;
+      animation: marquee 25s linear infinite;
+    }
+    .marquee-item {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 14px; font-style: italic;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      padding: 14px 40px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
 
-    /* 스크롤 페이드인 애니메이션 */
-    .fade-in-up {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    /* ── 섹션 공통 ────────────────────────────────────── */
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--rose);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 16px;
     }
-    .fade-in-up.visible { opacity: 1; transform: translateY(0); }
-
-    .fade-in-left {
-      opacity: 0;
-      transform: translateX(-50px);
-      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    .section-divider {
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, var(--rose), var(--gold));
+      margin: 0 auto;
     }
-    .fade-in-left.visible { opacity: 1; transform: translateX(0); }
-
-    .fade-in-right {
-      opacity: 0;
-      transform: translateX(50px);
-      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .fade-in-right.visible { opacity: 1; transform: translateX(0); }
-
-    .fade-in-scale {
-      opacity: 0;
-      transform: scale(0.92);
-      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .fade-in-scale.visible { opacity: 1; transform: scale(1); }
-
-    /* 딜레이 유틸 */
-    .delay-100 { transition-delay: 0.1s; }
-    .delay-200 { transition-delay: 0.2s; }
-    .delay-300 { transition-delay: 0.3s; }
-    .delay-400 { transition-delay: 0.4s; }
-    .delay-500 { transition-delay: 0.5s; }
-    .delay-600 { transition-delay: 0.6s; }
-
-    /* 골드 그라디언트 텍스트 */
-    @keyframes shimmer-bg {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+    .gold-text { color: var(--gold); }
     .gold-gradient {
-      background: linear-gradient(135deg, #D4AF75, #B76E79, #D4AF75);
-      background-size: 200% 200%;
+      background: linear-gradient(90deg, var(--gold), #F0D9A8, var(--gold));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: shimmer-bg 4s ease infinite;
     }
 
-    /* 히어로 텍스트 애니메이션 */
-    @keyframes hero-fade-in {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* ── 가로 갤러리 ──────────────────────────────────── */
+    .h-gallery-section {
+      overflow: hidden;
+      position: relative;
+      background: var(--dark);
     }
-    .hero-text-1 { animation: hero-fade-in 1s ease 0.3s both; }
-    .hero-text-2 { animation: hero-fade-in 1s ease 0.6s both; }
-    .hero-text-3 { animation: hero-fade-in 1s ease 0.9s both; }
-    .hero-text-4 { animation: hero-fade-in 1s ease 1.2s both; }
+    .h-gallery-track {
+      display: flex;
+      will-change: transform;
+    }
+    .h-gallery-item {
+      flex-shrink: 0;
+      width: 35vw; height: 70vh;
+      overflow: hidden;
+      position: relative;
+      margin-right: 2px;
+    }
+    .h-gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .h-gallery-item:hover img { transform: scale(1.05); }
+    .h-gallery-item-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(7,3,5,0.8), transparent);
+      color: rgba(255,255,255,0.7);
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .h-gallery-item:hover .h-gallery-item-label { opacity: 1; }
+    @media (max-width: 768px) {
+      .h-gallery-item { width: 75vw; height: 55vw; }
+    }
 
-    /* VanillaTilt 카드 */
-    .tilt-card { transform-style: preserve-3d; will-change: transform; }
+    /* ── 패럴랙스 섹션 ────────────────────────────────── */
+    .parallax-section {
+      position: relative;
+      min-height: 70vh;
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .parallax-bg {
+      position: absolute;
+      inset: -20%;
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+    }
+    .parallax-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(7,3,5,0.85), rgba(139,58,71,0.6));
+    }
 
-    /* 섹션 구분선 */
-    .section-divider {
-      width: 60px; height: 1px;
-      background: linear-gradient(90deg, transparent, #B76E79, transparent);
-      margin: 0 auto;
+    /* ── 버튼 ─────────────────────────────────────────── */
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+      color: white;
+      padding: 16px 40px;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-weight: 400;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(183,110,121,0.4); }
+    .btn-outline {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.8);
+      padding: 16px 40px;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-weight: 400;
+    }
+    .btn-outline:hover { border-color: white; color: white; transform: translateY(-2px); }
+    .btn-gold {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 16px 40px;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-gold:hover { background: var(--gold); color: var(--dark); }
+
+    /* ── 푸터 ─────────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.5);
+      padding: 60px 40px 40px;
+    }
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.3s; }
+    footer a:hover { color: var(--gold); }
+    @media (max-width: 768px) {
+      footer { padding: 50px 24px 30px; }
     }
   </style>
 </head>
 <body>
+  <!-- 커스텀 커서 -->
+  <div id='cursor-dot'></div>
+  <div id='cursor-ring'></div>
 
   <!-- 네비게이션 -->
-  <header id='main-header' class='fixed top-0 left-0 right-0 z-50 transition-all duration-500' style='background: rgba(254,252,249,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);'>
-    <!-- 상단 정보 띠 -->
-    <div class='hidden md:flex items-center justify-center gap-6 py-1.5 text-xs font-light tracking-widest' style='background: linear-gradient(90deg, #8B3A47, #B76E79, #8B3A47); color: rgba(255,255,255,0.9);'>
-      <span>WEDDING MARCH CHUNCHEON</span>
-      <span style='color: rgba(255,255,255,0.3);'>|</span>
-      <a href='tel:0507-1377-3536' class='hover:text-white transition-colors'>0507-1377-3536</a>
-      <span style='color: rgba(255,255,255,0.3);'>|</span>
-      <span>매일 10:00 – 20:00</span>
-      <span style='color: rgba(255,255,255,0.3);'>|</span>
-      <span style='color: #F7E7CE;'>봄 성수기 예약 중</span>
-    </div>
+  <nav id='main-nav'>
+    <a href='/' class='nav-logo'>Wedding March</a>
+    <ul class='nav-links'>
+      <li><a href='/gallery'>갤러리</a></li>
+      <li><a href='/packages'>패키지</a></li>
+      <li><a href='/contact'>오시는 길</a></li>
+    </ul>
+    <a href='/contact' class='nav-cta'>예약하기</a>
+    <button class='nav-mobile-btn' id='mobileMenuBtn' aria-label='메뉴'>
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
-    <nav class='max-w-6xl mx-auto px-6 py-4 flex items-center justify-between'>
-      <!-- 로고 -->
-      <a href='/' class='flex flex-col leading-none group'>
-        <span class='font-display text-[22px] font-light tracking-[0.2em] group-hover:opacity-80 transition-opacity' style='color: #8B3A47;'>WEDDING</span>
-        <span class='font-display text-[22px] font-semibold tracking-[0.3em] group-hover:opacity-80 transition-opacity' style='color: #B76E79;'>MARCH</span>
-        <span class='text-[9px] tracking-[0.35em] mt-0.5 font-light uppercase' style='color: #c0a8a8;'>Chuncheon · Since 2020</span>
-      </a>
+  <!-- 모바일 메뉴 -->
+  <div id='mobileMenu' style='display:none; position:fixed; inset:0; background:rgba(7,3,5,0.97); z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:40px;'>
+    <a href='/' style='font-family:"Cormorant Garamond",serif; font-size:28px; font-weight:300; color:white; text-decoration:none;'>홈</a>
+    <a href='/gallery' style='font-family:"Cormorant Garamond",serif; font-size:28px; font-weight:300; color:white; text-decoration:none;'>갤러리</a>
+    <a href='/packages' style='font-family:"Cormorant Garamond",serif; font-size:28px; font-weight:300; color:white; text-decoration:none;'>패키지</a>
+    <a href='/contact' style='font-family:"Cormorant Garamond",serif; font-size:28px; font-weight:300; color:white; text-decoration:none;'>오시는 길</a>
+    <a href='/contact' style='font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold,#D4AF75); border:1px solid rgba(212,175,117,0.5); padding:14px 32px; text-decoration:none; margin-top:16px;'>예약하기</a>
+  </div>
 
-      <!-- 데스크탑 메뉴 -->
-      <div class='hidden md:flex items-center gap-8'>
-        <a href='/' class='text-xs tracking-widest text-gray-600 hover:text-[#B76E79] transition-colors uppercase font-light relative group'>
-          Home
-          <span class='absolute -bottom-0.5 left-0 w-0 h-px bg-[#B76E79] transition-all duration-300 group-hover:w-full'></span>
-        </a>
-        <a href='/gallery' class='text-xs tracking-widest text-gray-600 hover:text-[#B76E79] transition-colors uppercase font-light relative group'>
-          Gallery
-          <span class='absolute -bottom-0.5 left-0 w-0 h-px bg-[#B76E79] transition-all duration-300 group-hover:w-full'></span>
-        </a>
-        <a href='/packages' class='text-xs tracking-widest text-gray-600 hover:text-[#B76E79] transition-colors uppercase font-light relative group'>
-          Packages
-          <span class='absolute -bottom-0.5 left-0 w-0 h-px bg-[#B76E79] transition-all duration-300 group-hover:w-full'></span>
-        </a>
-        <a href='/contact' class='text-xs tracking-widest text-gray-600 hover:text-[#B76E79] transition-colors uppercase font-light relative group'>
-          Contact
-          <span class='absolute -bottom-0.5 left-0 w-0 h-px bg-[#B76E79] transition-all duration-300 group-hover:w-full'></span>
-        </a>
-        <a href='/contact'
-           class='ml-4 text-white px-7 py-2.5 text-xs tracking-[0.2em] uppercase font-light hover:opacity-90 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5'
-           style='background: linear-gradient(135deg, #B76E79, #8B3A47);'>
-          예약 상담
-        </a>
-      </div>
-
-      <!-- 모바일 -->
-      <div class='md:hidden flex items-center gap-3'>
-        <a href='tel:0507-1377-3536' style='color: #B76E79;'>
-          <svg xmlns='http://www.w3.org/2000/svg' class='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'/>
-          </svg>
-        </a>
-        <a href='/contact' class='text-white px-4 py-2 text-xs tracking-wider uppercase' style='background: linear-gradient(135deg, #B76E79, #8B3A47);'>예약</a>
-      </div>
-    </nav>
-  </header>
-
-  <main class='pt-[72px] md:pt-[88px]'>
-    <slot />
-  </main>
+  <slot />
 
   <!-- 푸터 -->
-  <footer style='background: #1a0a0f;' class='text-gray-300 pt-16 pb-8 px-4 mt-0'>
-    <div class='max-w-6xl mx-auto'>
-      <div class='grid grid-cols-1 md:grid-cols-4 gap-10 mb-12'>
-        <div class='md:col-span-2'>
-          <p class='font-display text-3xl font-light tracking-[0.2em] mb-1' style='color: #D4A0A7;'>WEDDING MARCH</p>
-          <p class='text-xs tracking-[0.3em] mb-5 font-light uppercase' style='color: rgba(255,255,255,0.3);'>Chuncheon Bridal Salon</p>
-          <p class='text-sm leading-relaxed text-gray-400 max-w-xs font-light'>
-            춘천 유일의 2회 피팅 웨딩드레스 전문샵.<br/>
-            드레스 120벌, 헤어·메이크업·도우미 원스톱.<br/>
-            미래웨딩홀 1층 입점.
-          </p>
-          <div class='flex items-center gap-4 mt-6'>
-            <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
-               class='w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110'
-               style='border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.5);'>
-              <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
-                <path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'/>
-              </svg>
-            </a>
-          </div>
-        </div>
-
+  <footer>
+    <div style='max-width:1100px; margin:0 auto;'>
+      <div style='display:grid; grid-template-columns:1fr 1fr 1fr; gap:40px; margin-bottom:50px;'>
         <div>
-          <h4 class='text-white text-xs tracking-[0.3em] uppercase mb-5 font-light'>Quick Links</h4>
-          <ul class='space-y-3'>
-            <li><a href='/' class='text-sm text-gray-400 hover:text-[#D4A0A7] transition-colors font-light'>홈</a></li>
-            <li><a href='/gallery' class='text-sm text-gray-400 hover:text-[#D4A0A7] transition-colors font-light'>드레스 갤러리</a></li>
-            <li><a href='/packages' class='text-sm text-gray-400 hover:text-[#D4A0A7] transition-colors font-light'>패키지·가격</a></li>
-            <li><a href='/contact' class='text-sm text-gray-400 hover:text-[#D4A0A7] transition-colors font-light'>예약·문의</a></li>
-          </ul>
+          <p style='font-family:"Cormorant Garamond",serif; font-size:24px; font-weight:300; color:white; letter-spacing:0.1em; margin-bottom:16px;'>Wedding March</p>
+          <p style='font-size:12px; line-height:1.9; letter-spacing:0.05em;'>강원도 춘천시 퇴계로 118<br/>1층 104호 (미래타워)<br/>춘천 웨딩드레스 전문샵</p>
         </div>
-
         <div>
-          <h4 class='text-white text-xs tracking-[0.3em] uppercase mb-5 font-light'>Location</h4>
-          <address class='not-italic text-sm text-gray-400 leading-relaxed space-y-2 font-light'>
-            <p>강원도 춘천시 퇴계로 118</p>
-            <p>미래타워 1층 104호</p>
-            <p class='mt-1'>Tel: 0507-1377-3536</p>
-            <p>매일 10:00 – 20:00</p>
-            <a href='https://naver.me/weddingmarch' target='_blank'
-               class='inline-block mt-2 text-xs tracking-wider hover:underline transition-colors'
-               style='color: #D4A0A7;'>
-              네이버 지도 보기 →
-            </a>
-          </address>
+          <p style='font-size:10px; letter-spacing:0.4em; text-transform:uppercase; color:rgba(212,175,117,0.7); margin-bottom:16px;'>Contact</p>
+          <p style='font-size:12px; line-height:2;'><a href='tel:0507-1377-3536'>0507-1377-3536</a><br/><a href='https://www.instagram.com/ch_weddingmarch/' target='_blank'>@ch_weddingmarch</a><br/>매일 10:00 – 20:00</p>
+        </div>
+        <div>
+          <p style='font-size:10px; letter-spacing:0.4em; text-transform:uppercase; color:rgba(212,175,117,0.7); margin-bottom:16px;'>Quick Links</p>
+          <p style='font-size:12px; line-height:2;'><a href='/gallery'>드레스 갤러리</a><br/><a href='/packages'>웨딩 패키지</a><br/><a href='/contact'>예약 & 문의</a></p>
         </div>
       </div>
-
-      <div class='border-t pt-6 flex flex-col md:flex-row items-center justify-between gap-3' style='border-color: rgba(255,255,255,0.07);'>
-        <p class='text-xs text-gray-600 font-light'>© 2026 웨딩마치 · 강원도 춘천시 퇴계로 118 · All rights reserved.</p>
-        <p class='text-xs text-gray-600 font-light'>사업자등록번호: 000-00-00000</p>
+      <div style='border-top:1px solid rgba(255,255,255,0.1); padding-top:30px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;'>
+        <p style='font-size:11px; letter-spacing:0.1em;'>© 2017–2026 웨딩마치. All rights reserved.</p>
+        <p style='font-size:11px; letter-spacing:0.05em; color:rgba(212,175,117,0.5);'>춘천 웨딩드레스 · 강원 웨딩</p>
       </div>
     </div>
   </footer>
 
-  <!-- 카카오톡 플로팅 상담 버튼 -->
-  <!-- [PLACEHOLDER] 카카오 채널 ID 교체 필요: _PLACEHOLDER_ID → 실제 채널 ID -->
-  <a href='http://pf.kakao.com/_PLACEHOLDER_ID/chat' target='_blank' rel='noopener'
-     class='kakao-pulse fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform duration-200'
-     style='background-color: #FEE500;'
-     title='카카오톡 채널로 상담하기'
-     aria-label='카카오톡 상담'>
-    <svg viewBox='0 0 24 24' class='w-7 h-7' fill='#3C1E1E'>
-      <path d='M12 3C6.477 3 2 6.582 2 11c0 2.75 1.55 5.19 3.93 6.72l-1.01 3.73c-.09.33.27.59.55.39L9.7 19.1A11.2 11.2 0 0012 19c5.523 0 10-3.582 10-8s-4.477-8-10-8z'/>
-    </svg>
-  </a>
-
   <script>
-    // 네비 스크롤 효과
-    const header = document.getElementById('main-header');
-    if (header) {
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 40) {
-          header.classList.add('nav-scrolled');
-        } else {
-          header.classList.remove('nav-scrolled');
-        }
-      }, { passive: true });
+    const gsap = (window as any).gsap;
+    const ScrollTrigger = (window as any).ScrollTrigger;
+
+    // ── 커서 ─────────────────────────────────────────────
+    const dot = document.getElementById('cursor-dot')!;
+    const ring = document.getElementById('cursor-ring')!;
+    let rx = 0, ry = 0, mx = 0, my = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animCursor() {
+      dot.style.left = mx + 'px';
+      dot.style.top = my + 'px';
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animCursor);
     }
-
-    // Intersection Observer — 스크롤 페이드인
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+    animCursor();
+    document.querySelectorAll('a, button, [data-tilt]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        dot.style.width = '16px'; dot.style.height = '16px';
+        ring.style.width = '56px'; ring.style.height = '56px';
+        ring.style.borderColor = 'rgba(212,175,117,1)';
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
-
-    document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right, .fade-in-scale').forEach(el => {
-      observer.observe(el);
+      el.addEventListener('mouseleave', () => {
+        dot.style.width = '8px'; dot.style.height = '8px';
+        ring.style.width = '36px'; ring.style.height = '36px';
+        ring.style.borderColor = 'rgba(212,175,117,0.6)';
+      });
     });
+
+    // ── 네비게이션 스크롤 ─────────────────────────────────
+    const nav = document.getElementById('main-nav')!;
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ── 모바일 메뉴 ───────────────────────────────────────
+    const menuBtn = document.getElementById('mobileMenuBtn')!;
+    const mobileMenu = document.getElementById('mobileMenu')!;
+    let menuOpen = false;
+    menuBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.style.display = menuOpen ? 'flex' : 'none';
+      const spans = menuBtn.querySelectorAll('span');
+      if (menuOpen) {
+        (spans[0] as HTMLElement).style.transform = 'rotate(45deg) translate(4px,4px)';
+        (spans[1] as HTMLElement).style.opacity = '0';
+        (spans[2] as HTMLElement).style.transform = 'rotate(-45deg) translate(4px,-4px)';
+      } else {
+        spans.forEach((s:any) => { s.style.transform=''; s.style.opacity=''; });
+      }
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        menuOpen = false; mobileMenu.style.display = 'none';
+        const spans = menuBtn.querySelectorAll('span');
+        spans.forEach((s:any) => { s.style.transform=''; s.style.opacity=''; });
+      });
+    });
+
+    // ── VanillaTilt ───────────────────────────────────────
+    const VT = (window as any).VanillaTilt;
+    if (VT) {
+      VT.init(document.querySelectorAll('[data-tilt]'), {
+        max: 8, speed: 400, glare: true, 'max-glare': 0.12
+      });
+    }
   </script>
 </body>
 </html>
