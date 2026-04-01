@@ -199,6 +199,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       border-color: rgba(212,175,117,0.2);
       background: rgba(212,175,117,0.03);
     }
+
+    /* ── Supanova: word-break keep-all (Korean) ── */
+    p, h1, h2, h3, h4, li, address { word-break: keep-all; }
+
+    /* ── Supanova: btn spring transitions ── */
+    .btn-primary { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important; }
+    .btn-primary:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 14px 44px rgba(183,110,121,0.45) !important; }
+    .btn-primary:active { transform: scale(0.98) !important; }
+    .btn-outline, .btn-gold { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    /* ── Supanova: grain texture overlay ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 9999;
+      opacity: 0.022;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 128px 128px;
+    }
   </style>
 </head>
 <body>
