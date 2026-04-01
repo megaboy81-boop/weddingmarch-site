@@ -46,8 +46,13 @@ const base = import.meta.env.BASE_URL;
   <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
   <link href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap' rel='stylesheet' />
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css' />
+  <!-- GSAP 3.12 + ScrollTrigger -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js'></script>
+  <!-- Lenis smooth scroll -->
+  <script src='https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js'></script>
+  <!-- SplitType -->
+  <script src='https://unpkg.com/split-type@0.3.4/umd/index.min.js'></script>
 
   <style is:global>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,10 +62,11 @@ const base = import.meta.env.BASE_URL;
       --rose: #B76E79;
       --rose-deep: #8B3A47;
       --gold: #D4AF75;
+      --gold-light: #F0D9A8;
       --cream: #FEFCF9;
       --cream-warm: #F7E7CE;
     }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: auto; } /* Lenis handles smooth */
     body {
       font-family: 'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
       background: var(--cream);
@@ -69,7 +75,7 @@ const base = import.meta.env.BASE_URL;
     }
     .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
     .gold-gradient {
-      background: linear-gradient(90deg, var(--gold), #F0D9A8, var(--gold));
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .section-label {
@@ -86,17 +92,23 @@ const base = import.meta.env.BASE_URL;
       background: linear-gradient(135deg, var(--rose), var(--rose-deep));
       color: white; padding: 16px 40px;
       font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
-      text-decoration: none; transition: all 0.3s; border: none; cursor: pointer;
-      font-family: inherit;
+      text-decoration: none; transition: all 0.3s ease; border: none; cursor: pointer;
+      font-family: inherit; position: relative; overflow: hidden;
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(183,110,121,0.4); }
+    .btn-primary::after {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(135deg,rgba(255,255,255,0.15),transparent);
+      opacity:0; transition: opacity 0.3s;
+    }
+    .btn-primary:hover::after { opacity:1; }
+    .btn-primary:hover { box-shadow: 0 16px 40px rgba(183,110,121,0.45); }
     .btn-outline {
       display: inline-block; border: 1px solid rgba(255,255,255,0.45);
       color: rgba(255,255,255,0.85); padding: 16px 40px;
       font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
       text-decoration: none; transition: all 0.3s;
     }
-    .btn-outline:hover { border-color: white; color: white; }
+    .btn-outline:hover { border-color: white; color: white; background: rgba(255,255,255,0.06); }
     .btn-gold {
       display: inline-block; border: 1px solid var(--gold); color: var(--gold);
       padding: 16px 40px; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
@@ -149,9 +161,49 @@ const base = import.meta.env.BASE_URL;
     .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
     @media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
 
-    /* ── GSAP 초기 숨김 ── */
+    /* ── 애니메이션 초기 상태 ── */
     .gsap-fade { opacity: 0; transform: translateY(30px); }
     .gsap-fade-left { opacity: 0; transform: translateX(-30px); }
+    .clip-reveal { clip-path: inset(0 100% 0 0); }
+
+    /* ── Split text chars ── */
+    .char { display: inline-block; }
+
+    /* ── Stats counter ── */
+    .stat-item { text-align: center; padding: 40px 20px; position: relative; }
+    .stat-item + .stat-item::before {
+      content:''; position:absolute; left:0; top:50%; transform:translateY(-50%);
+      width:1px; height:40px; background:rgba(212,175,117,0.2);
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond',serif;
+      font-size: clamp(52px, 8vw, 80px);
+      font-weight: 300;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-top: 10px; display: block;
+    }
+
+    /* ── 마그네틱 버튼 ── */
+    .magnetic { transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s; }
+
+    /* ── 리뷰 카드 ── */
+    .review-card {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 36px;
+      transition: border-color 0.4s, background 0.4s;
+      opacity: 0; transform: translateY(40px);
+    }
+    .review-card:hover {
+      border-color: rgba(212,175,117,0.2);
+      background: rgba(212,175,117,0.03);
+    }
   </style>
 </head>
 <body>
@@ -201,11 +253,27 @@ const base = import.meta.env.BASE_URL;
   </footer>
 
   <script>
-    // 네비 스크롤
+    // ── Lenis smooth scroll ────────────────────────────────────────────────
+    const LenisClass = (window as any).Lenis;
+    if (LenisClass) {
+      const lenis = new LenisClass({ lerp: 0.1, smooth: true });
+      const gsapLib = (window as any).gsap;
+      const STLib = (window as any).ScrollTrigger;
+      if (gsapLib && STLib) {
+        gsapLib.ticker.add((time: number) => lenis.raf(time * 1000));
+        gsapLib.ticker.lagSmoothing(0);
+        lenis.on('scroll', STLib.update);
+      } else {
+        function raf(time: number) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+      }
+    }
+
+    // ── 네비 스크롤 ───────────────────────────────────────────────────────
     const nav = document.getElementById('main-nav');
     window.addEventListener('scroll', () => nav?.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
 
-    // 모바일 메뉴
+    // ── 모바일 메뉴 ───────────────────────────────────────────────────────
     const mobileBtn = document.getElementById('mobileBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     let mOpen = false;

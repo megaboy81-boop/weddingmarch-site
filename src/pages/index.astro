@@ -5,7 +5,6 @@ const base = import.meta.env.BASE_URL;
 const title = '춘천웨딩드레스 웨딩마치 | 2회 피팅 · 드레스 120벌 · 미래웨딩홀 입점';
 const description = '강원도 춘천 웨딩드레스 전문샵 웨딩마치. 드레스 대여부터 헤어·메이크업·도우미까지 원스톱 웨딩 서비스. 미래웨딩홀 1층 입점, 2회 피팅 시스템.';
 
-// 스크롤 스토리텔링 섹션 — 각 섹션마다 다른 배경 이미지
 const storyPanels = [
   {
     bg: `${base}images/instagram/00.webp`,
@@ -61,96 +60,120 @@ const reviews = [
   { text: '미래웨딩홀 바로 아래에 있어서 결혼식 당일 너무 편리했어요. 헤어메이크업부터 도우미까지 모두 한번에 해결됐습니다.', name: '강원 신부', date: '2025년 5월', img: `${base}images/instagram/04.webp` },
   { text: '드레스가 너무 예뻐서 피팅하면서 눈물이 났어요. 직원분들이 너무 친절하게 도와주셨고 최고의 날이었습니다.', name: '홍천 신부', date: '2025년 11월', img: `${base}images/instagram/07.webp` },
 ];
+
+const stats = [
+  { num: 120, suffix: '+', label: '드레스 보유' },
+  { num: 7, suffix: '년+', label: '춘천 No.1' },
+  { num: 2, suffix: '회', label: '피팅 시스템' },
+  { num: 98, suffix: '%', label: '신부 만족도' },
+];
 ---
 <Layout title={title} description={description}>
 
-<!-- ══════════════════════════════════════════════════════════
-     스크롤 스토리텔링 — 배경 고정 + 스크롤 시 이미지 변환
-     ══════════════════════════════════════════════════════════ -->
+<!-- ══════ 골드 파티클 캔버스 ════════════════════════════════════════════ -->
+<canvas id="particle-canvas" style="position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.6;"></canvas>
 
-<!-- 데스크탑: 고정 배경 컨테이너 -->
+<!-- ══════ 스크롤 스토리텔링 배경 (데스크탑) ══════════════════════════════ -->
 <div id="story-fixed-bg" style="position:fixed;inset:0;z-index:0;pointer-events:none;display:none;">
   {storyPanels.map((panel, i) => (
     <div
       class="story-bg-slide"
       data-index={i}
-      style={`position:absolute;inset:0;background-image:url('${panel.bg}');background-size:cover;background-position:center;opacity:${i===0?1:0};transition:opacity 0.9s ease;`}
+      style={`position:absolute;inset:0;background-image:url('${panel.bg}');background-size:cover;background-position:center top;opacity:${i===0?1:0};transition:opacity 1s ease;`}
     ></div>
   ))}
-  <!-- 그라데이션 오버레이 -->
-  <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(7,3,5,0.35) 0%, rgba(7,3,5,0.1) 35%, rgba(7,3,5,0.1) 65%, rgba(7,3,5,0.85) 100%);"></div>
+  <!-- 다층 오버레이 -->
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,3,5,0.4) 0%,rgba(7,3,5,0.05) 40%,rgba(7,3,5,0.05) 60%,rgba(7,3,5,0.9) 100%);"></div>
+  <div id="bg-vignette" style="position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(7,3,5,0.5) 100%);"></div>
 </div>
 
-<!-- 스크롤 스토리텔링 섹션들 -->
+<!-- ══════ 스크롤 스토리텔링 섹션들 ══════════════════════════════════════ -->
 <div id="story-container">
   {storyPanels.map((panel, i) => (
     <section
       class="story-panel"
       data-index={i}
-      style={`position:relative;height:100dvh;min-height:500px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8vw 12vh;z-index:1;`}
+      style={`position:relative;height:100dvh;min-height:600px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8vw 12vh;z-index:2;`}
     >
-      <!-- 모바일용 배경 (데스크탑에서는 hidden) -->
-      <div class="mobile-bg" style={`display:none;position:absolute;inset:0;background-image:url('${panel.bg}');background-size:cover;background-position:center;z-index:0;`}></div>
-      <div class="mobile-bg" style="display:none;position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,3,5,0.3) 0%,rgba(7,3,5,0.0) 40%,rgba(7,3,5,0.8) 100%);z-index:0;"></div>
+      <!-- 모바일용 배경 -->
+      <div class="mobile-bg" style={`display:none;position:absolute;inset:0;background-image:url('${panel.bg}');background-size:cover;background-position:center top;z-index:0;`}></div>
+      <div class="mobile-bg" style="display:none;position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,3,5,0.35) 0%,rgba(7,3,5,0.0) 35%,rgba(7,3,5,0.75) 85%,rgba(7,3,5,0.92) 100%);z-index:1;"></div>
 
       <!-- 콘텐츠 -->
-      <div class="story-content" style="position:relative;z-index:2;max-width:700px;">
+      <div class={`story-content${i===0?' hero-content':''}`} style="position:relative;z-index:3;max-width:750px;">
         {i === 0 ? (
           <>
-            <p class="gsap-fade" style="font-size:10px;letter-spacing:0.6em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:24px;">{panel.eyebrow}</p>
-            <h1 class="font-display gsap-fade" style="font-size:clamp(64px,11vw,140px);font-weight:300;color:white;line-height:0.9;letter-spacing:0.02em;margin-bottom:28px;">
-              <span style="display:block;">Wedding</span>
-              <span class="gold-gradient" style="display:block;font-style:italic;">March</span>
+            <!-- 아이브로우 라인 -->
+            <div id="hero-eyebrow" style="display:flex;align-items:center;gap:16px;margin-bottom:28px;overflow:hidden;">
+              <span id="eyebrow-line" style="display:block;height:1px;width:0;background:linear-gradient(90deg,transparent,rgba(212,175,117,0.6));transition:width 1.2s ease 0.5s;"></span>
+              <span style="font-size:10px;letter-spacing:0.55em;text-transform:uppercase;color:rgba(255,255,255,0.45);opacity:0;transition:opacity 0.8s ease 0.9s;" id="eyebrow-text">{panel.eyebrow}</span>
+            </div>
+            <!-- 히어로 타이틀 — SplitType 애니메이션 대상 -->
+            <h1 id="hero-title" class="font-display" style="font-size:clamp(68px,12vw,148px);font-weight:300;color:white;line-height:0.88;letter-spacing:0.02em;margin-bottom:30px;">
+              <span id="title-line1" style="display:block;">Wedding</span>
+              <span id="title-line2" class="gold-gradient" style="display:block;font-style:italic;">March</span>
             </h1>
-            <p class="gsap-fade" style="font-size:clamp(15px,2vw,20px);color:rgba(255,255,255,0.65);font-weight:300;letter-spacing:0.1em;margin-bottom:36px;">{panel.desc}</p>
-            <div class="gsap-fade" style="display:flex;gap:14px;flex-wrap:wrap;">
-              <a href={`${base}contact`} class="btn-primary">피팅 예약하기</a>
-              <a href={`${base}gallery`} class="btn-outline">드레스 보러가기</a>
+            <!-- 서브타이틀 -->
+            <p id="hero-sub" style="font-size:clamp(14px,1.8vw,19px);color:rgba(255,255,255,0.58);font-weight:300;letter-spacing:0.08em;margin-bottom:40px;opacity:0;transform:translateY(16px);">
+              {panel.desc}
+            </p>
+            <!-- CTA 버튼 — 마그네틱 -->
+            <div id="hero-cta" style="display:flex;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(16px);">
+              <a href={`${base}contact`} class="btn-primary magnetic">피팅 예약하기</a>
+              <a href={`${base}gallery`} class="btn-outline magnetic">드레스 보러가기</a>
             </div>
           </>
         ) : (
           <>
-            <p style="font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(212,175,117,0.8);margin-bottom:16px;">{panel.eyebrow}</p>
-            <div style="display:flex;align-items:flex-end;gap:24px;margin-bottom:20px;flex-wrap:wrap;">
-              <h2 class="font-display" style="font-size:clamp(48px,8vw,100px);font-weight:300;color:white;line-height:0.9;letter-spacing:0.02em;">{panel.title}</h2>
+            <p style="font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(212,175,117,0.75);margin-bottom:16px;">{panel.eyebrow}</p>
+            <div style="display:flex;align-items:flex-end;gap:28px;margin-bottom:20px;flex-wrap:wrap;">
+              <h2 class="font-display" style="font-size:clamp(52px,9vw,108px);font-weight:300;color:white;line-height:0.88;letter-spacing:0.02em;">{panel.title}</h2>
               {panel.stat && (
                 <div style="padding-bottom:8px;">
-                  <p class="font-display" style="font-size:clamp(36px,5vw,60px);font-weight:300;background:linear-gradient(90deg,#D4AF75,#F0D9A8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">{panel.stat}</p>
-                  <p style="font-size:9px;letter-spacing:0.4em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:4px;">{panel.statLabel}</p>
+                  <span class="stat-panel-num font-display" data-target={panel.stat} style="font-size:clamp(38px,5.5vw,64px);font-weight:300;background:linear-gradient(90deg,#D4AF75,#F0D9A8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;display:block;">{panel.stat}</span>
+                  <p style="font-size:9px;letter-spacing:0.45em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:5px;">{panel.statLabel}</p>
                 </div>
               )}
             </div>
-            <p style="font-size:clamp(14px,1.6vw,18px);color:rgba(255,255,255,0.6);font-weight:300;max-width:500px;line-height:1.7;">{panel.desc}</p>
+            <p style="font-size:clamp(14px,1.6vw,17px);color:rgba(255,255,255,0.55);font-weight:300;max-width:480px;line-height:1.75;">{panel.desc}</p>
           </>
         )}
       </div>
 
-      <!-- 패널 번호 (우하단) -->
-      <div style="position:absolute;bottom:40px;right:8vw;z-index:2;text-align:right;">
-        <p style="font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.2em;">{String(i+1).padStart(2,'0')} / {String(storyPanels.length).padStart(2,'0')}</p>
+      <!-- 패널 번호 -->
+      <div style="position:absolute;bottom:40px;right:8vw;z-index:3;text-align:right;">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.2em;">{String(i+1).padStart(2,'0')} / {String(storyPanels.length).padStart(2,'0')}</p>
       </div>
 
-      <!-- 첫 패널 스크롤 유도 화살표 -->
+      <!-- 첫 패널 스크롤 유도 -->
       {i === 0 && (
-        <div id="scroll-arrow" style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bounce 2s ease-in-out infinite;">
-          <span style="font-size:9px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(255,255,255,0.4);">Scroll</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(212,175,117,0.6)" stroke-width="1.5">
-            <path d="M12 5v14M5 12l7 7 7-7"/>
-          </svg>
+        <div id="scroll-arrow" style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <span style="font-size:9px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(255,255,255,0.35);">Scroll</span>
+          <div style="width:1px;height:40px;background:linear-gradient(to bottom,rgba(212,175,117,0.6),transparent);animation:lineDown 1.8s ease-in-out infinite;"></div>
         </div>
       )}
     </section>
   ))}
 </div>
 
-<style>
-@keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(8px); }
-  }
-</style>
+<!-- ══════ STATS 섹션 ══════════════════════════════════════════════════════ -->
+<section id="stats-section" style="background:var(--dark);position:relative;z-index:2;overflow:hidden;">
+  <!-- 배경 글로우 -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(212,175,117,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);position:relative;">
+    {stats.map((s, idx) => (
+      <div class="stat-item">
+        <span class="stat-num counter-num" data-target={s.num} data-suffix={s.suffix}>0{s.suffix}</span>
+        <span class="stat-label">{s.label}</span>
+      </div>
+    ))}
+  </div>
+  <!-- 상하 구분선 -->
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,117,0.15),transparent);"></div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,117,0.15),transparent);"></div>
+</section>
 
-<!-- ══════ MARQUEE ══════════════════════════════════════════ -->
+<!-- ══════ MARQUEE ══════════════════════════════════════════════════════════ -->
 <div class='marquee-outer' style='position:relative;z-index:2;'>
   <div class='marquee-track'>
     {[1,2].map(() => (
@@ -161,15 +184,15 @@ const reviews = [
   </div>
 </div>
 
-<!-- ══════ 가로 갤러리 ════════════════════════════════════════ -->
-<section style="background:var(--dark,#0D0608);padding:80px 0;position:relative;z-index:2;">
-  <div style="max-width:1100px;margin:0 auto;padding:0 8vw;margin-bottom:36px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;">
+<!-- ══════ 갤러리 섹션 ══════════════════════════════════════════════════════ -->
+<section style="background:var(--dark);padding:80px 0 60px;position:relative;z-index:2;">
+  <div style="max-width:1100px;margin:0 auto;padding:0 8vw;margin-bottom:40px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;">
     <div>
-      <span class='section-label' style="color:rgba(212,175,117,0.7);">Our Collection</span>
+      <span class='section-label gsap-fade' style="color:rgba(212,175,117,0.7);">Our Collection</span>
       <h2 class='font-display gsap-fade' style="font-size:clamp(32px,5vw,56px);font-weight:300;color:white;letter-spacing:0.04em;">드레스 갤러리</h2>
     </div>
-    <a href={`${base}gallery`} style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold,#D4AF75);text-decoration:none;border-bottom:1px solid rgba(212,175,117,0.4);padding-bottom:3px;transition:all 0.3s;white-space:nowrap;"
-       onmouseover="this.style.borderBottomColor='#D4AF75'" onmouseout="this.style.borderBottomColor='rgba(212,175,117,0.4)'">
+    <a href={`${base}gallery`} class="gsap-fade" style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(212,175,117,0.35);padding-bottom:3px;transition:all 0.3s;white-space:nowrap;"
+       onmouseover="this.style.borderBottomColor='#D4AF75'" onmouseout="this.style.borderBottomColor='rgba(212,175,117,0.35)'">
       전체 갤러리 →
     </a>
   </div>
@@ -183,26 +206,28 @@ const reviews = [
   </div>
 </section>
 
-<!-- ══════ 리뷰 ══════════════════════════════════════════════ -->
-<section style="background:var(--dark,#0D0608);padding:80px 8vw 100px;position:relative;z-index:2;border-top:1px solid rgba(255,255,255,0.05);">
+<!-- ══════ 리뷰 ══════════════════════════════════════════════════════════════ -->
+<section style="background:var(--dark);padding:80px 8vw 100px;position:relative;z-index:2;border-top:1px solid rgba(255,255,255,0.05);">
   <div style="max-width:1100px;margin:0 auto;">
     <div style="text-align:center;margin-bottom:60px;">
-      <span class='section-label' style="color:rgba(212,175,117,0.7);">Bride Reviews</span>
+      <span class='section-label gsap-fade' style="color:rgba(212,175,117,0.7);">Bride Reviews</span>
       <h2 class='font-display gsap-fade' style="font-size:clamp(30px,4vw,52px);font-weight:300;color:white;letter-spacing:0.04em;">신부들의 이야기</h2>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;">
-      {reviews.map((rv) => (
-        <div class="gsap-fade" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:36px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:56px;line-height:1;color:rgba(212,175,117,0.12);margin-bottom:14px;font-weight:300;">"</div>
-          <div style="display:flex;gap:2px;margin-bottom:18px;">{'★★★★★'.split('').map(s => <span style="color:var(--gold,#D4AF75);font-size:12px;">{s}</span>)}</div>
-          <p style="font-size:14px;line-height:1.85;color:rgba(255,255,255,0.58);font-weight:300;font-style:italic;margin-bottom:24px;">"{rv.text}"</p>
-          <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.07);padding-top:18px;">
-            <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;border:1px solid rgba(212,175,117,0.3);">
+      {reviews.map((rv, idx) => (
+        <div class="review-card" data-delay={idx * 0.15}>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:60px;line-height:1;color:rgba(212,175,117,0.1);margin-bottom:14px;font-weight:300;">"</div>
+          <div style="display:flex;gap:2px;margin-bottom:18px;">
+            {'★★★★★'.split('').map(s => <span style="color:var(--gold);font-size:12px;">{s}</span>)}
+          </div>
+          <p style="font-size:14px;line-height:1.85;color:rgba(255,255,255,0.55);font-weight:300;font-style:italic;margin-bottom:24px;">"{rv.text}"</p>
+          <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.06);padding-top:18px;">
+            <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;border:1px solid rgba(212,175,117,0.25);">
               <img src={rv.img} alt="신부" style="width:100%;height:100%;object-fit:cover;" loading='lazy' />
             </div>
             <div>
-              <p style="font-size:11px;color:var(--gold,#D4AF75);letter-spacing:0.15em;">{rv.name}</p>
-              <p style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:2px;">{rv.date}</p>
+              <p style="font-size:11px;color:var(--gold);letter-spacing:0.15em;">{rv.name}</p>
+              <p style="font-size:10px;color:rgba(255,255,255,0.28);margin-top:2px;">{rv.date}</p>
             </div>
           </div>
         </div>
@@ -211,65 +236,162 @@ const reviews = [
   </div>
 </section>
 
-<!-- ══════ 인스타 스트립 ════════════════════════════════════ -->
-<section style="background:var(--dark,#0D0608);padding-bottom:80px;overflow:hidden;position:relative;z-index:2;">
+<!-- ══════ 인스타 스트립 ══════════════════════════════════════════════════════ -->
+<section style="background:var(--dark);padding-bottom:0;overflow:hidden;position:relative;z-index:2;">
+  <!-- 헤더 -->
+  <div style="padding:60px 8vw 32px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+    <div>
+      <span class='section-label gsap-fade' style="color:rgba(212,175,117,0.7);">Instagram</span>
+      <h3 class='font-display gsap-fade' style="font-size:clamp(26px,4vw,42px);font-weight:300;color:white;">@ch_weddingmarch</h3>
+    </div>
+    <a href="https://www.instagram.com/ch_weddingmarch/" target="_blank" rel="noopener"
+       class="gsap-fade btn-gold" style="white-space:nowrap;">팔로우</a>
+  </div>
+  <!-- 6 photos 그리드 -->
   <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:2px;">
     {['10','11','12','13','14','15'].map(n => (
       <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
-         style="display:block;aspect-ratio:1;overflow:hidden;">
+         class="insta-tile"
+         style="display:block;aspect-ratio:1;overflow:hidden;position:relative;">
         <img src={`${base}images/instagram/${n}.webp`} alt='웨딩마치 인스타그램'
-             style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;"
-             loading='lazy'
-             onmouseover="this.style.transform='scale(1.07)'"
-             onmouseout="this.style.transform='scale(1)'" />
+             style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(0.23,1,0.32,1);"
+             loading='lazy' />
+        <div class="insta-hover" style="position:absolute;inset:0;background:rgba(7,3,5,0.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.4s;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none"/>
+          </svg>
+        </div>
       </a>
     ))}
   </div>
 </section>
 
-<!-- ══════ 최종 CTA ══════════════════════════════════════════ -->
-<section style="background:var(--cream,#FEFCF9);padding:120px 8vw;text-align:center;position:relative;z-index:2;overflow:hidden;">
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(183,110,121,0.07) 0%,transparent 65%);pointer-events:none;"></div>
+<!-- ══════ 최종 CTA ══════════════════════════════════════════════════════════ -->
+<section style="background:var(--cream);padding:130px 8vw 120px;text-align:center;position:relative;z-index:2;overflow:hidden;">
+  <!-- 배경 오브 -->
+  <div style="position:absolute;top:-80px;left:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(183,110,121,0.08),transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-100px;right:-60px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,117,0.07),transparent 70%);pointer-events:none;"></div>
   <div style="max-width:640px;margin:0 auto;position:relative;">
     <span class='section-label gsap-fade'>Start Your Journey</span>
-    <h2 class='font-display gsap-fade' style="font-size:clamp(36px,6vw,72px);font-weight:300;color:#1a1a1a;line-height:1.05;margin-bottom:20px;letter-spacing:0.02em;">
+    <h2 class='font-display gsap-fade' style="font-size:clamp(38px,6.5vw,76px);font-weight:300;color:#1a1a1a;line-height:1.02;margin-bottom:20px;letter-spacing:0.02em;">
       당신의 특별한 날,<br/>
       <span class='gold-gradient' style="font-style:italic;">웨딩마치와 함께</span>
     </h2>
     <div class='section-divider'></div>
-    <p class='gsap-fade' style="font-size:16px;color:#888;font-weight:300;line-height:1.8;margin-bottom:40px;">
+    <p class='gsap-fade' style="font-size:16px;color:#999;font-weight:300;line-height:1.85;margin-bottom:44px;">
       춘천 최고의 웨딩드레스 전문샵에서<br/>평생 기억될 드레스를 만나보세요.
     </p>
-    <a href={`${base}contact`} class='btn-primary gsap-fade' style="padding:18px 56px;font-size:12px;">무료 상담 예약하기</a>
+    <a href={`${base}contact`} class='btn-primary gsap-fade magnetic' style="padding:18px 60px;font-size:12px;">무료 상담 예약하기</a>
   </div>
 </section>
 
 </Layout>
 
+<style>
+@keyframes lineDown {
+  0%, 100% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+  50% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+/* 인스타 타일 호버 */
+.insta-tile:hover img { transform: scale(1.08); }
+.insta-tile:hover .insta-hover { opacity: 1; }
+
+/* 모바일 stats grid */
+@media (max-width: 600px) {
+  #stats-section > div > div:not(:first-child)::before { display: none; }
+}
+</style>
+
 <script>
   const gsap = (window as any).gsap;
   const ScrollTrigger = (window as any).ScrollTrigger;
+  const SplitType = (window as any).SplitType;
 
+  // ── 파티클 캔버스 ──────────────────────────────────────────────────────
+  (function initParticles() {
+    const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement | null;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    const particles = Array.from({ length: 50 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 1.5 + 0.3,
+      speed: Math.random() * 0.4 + 0.15,
+      opacity: Math.random() * 0.45 + 0.05,
+      drift: (Math.random() - 0.5) * 0.25,
+      twinkle: Math.random() * Math.PI * 2,
+    }));
+
+    let running = true;
+    function animate() {
+      if (!running) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.y -= p.speed;
+        p.x += p.drift;
+        p.twinkle += 0.03;
+        const alpha = p.opacity * (0.6 + 0.4 * Math.sin(p.twinkle));
+        if (p.y < -5) { p.y = canvas.height + 5; p.x = Math.random() * canvas.width; }
+        if (p.x < -5 || p.x > canvas.width + 5) p.x = Math.random() * canvas.width;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(212,175,117,${alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // 스크롤 후 반투명 처리
+    window.addEventListener('scroll', () => {
+      const opacity = Math.max(0, 1 - window.scrollY / (window.innerHeight * 2));
+      canvas.style.opacity = String(opacity * 0.6);
+    }, { passive: true });
+  })();
+
+  // ── GSAP 초기화 ─────────────────────────────────────────────────────────
   if (gsap && ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // ── 디바이스 감지 ──────────────────────────────────────────────────
+    // ── 디바이스 감지 ──────────────────────────────────────────────────────
     const isDesktop = window.innerWidth >= 768;
     const fixedBg = document.getElementById('story-fixed-bg') as HTMLElement | null;
-    const mobileBgs = document.querySelectorAll<HTMLElement>('.mobile-bg');
 
     if (isDesktop && fixedBg) {
-      // 데스크탑: 고정 배경 활성화
       fixedBg.style.display = 'block';
     } else {
-      // 모바일: 각 섹션 배경 표시
-      mobileBgs.forEach(el => { el.style.display = 'block'; });
+      document.querySelectorAll<HTMLElement>('.mobile-bg').forEach(el => { el.style.display = 'block'; });
     }
 
-    // ── 스크롤 트리거로 배경 이미지 변환 ──────────────────────────────
+    // ── 배경 전환 ────────────────────────────────────────────────────────
     if (isDesktop && fixedBg) {
       const bgSlides = fixedBg.querySelectorAll<HTMLElement>('.story-bg-slide');
       const panels = document.querySelectorAll<HTMLElement>('.story-panel');
+
+      function switchBg(index: number) {
+        bgSlides.forEach((slide, j) => {
+          gsap.to(slide, {
+            opacity: j === index ? 1 : 0,
+            duration: 1.0,
+            ease: 'power2.inOut',
+          });
+        });
+      }
 
       panels.forEach((panel, i) => {
         ScrollTrigger.create({
@@ -281,46 +403,138 @@ const reviews = [
         });
       });
 
-      function switchBg(index: number) {
-        bgSlides.forEach((slide, j) => {
-          gsap.to(slide, {
-            opacity: j === index ? 1 : 0,
-            duration: 0.8,
-            ease: 'power2.inOut',
-          });
+      // 배경 패럴랙스 (미세한 zoom)
+      bgSlides.forEach((slide) => {
+        gsap.to(slide, {
+          scale: 1.08,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#story-container',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1.5,
+          },
         });
-      }
+      });
     }
 
     // ── 히어로 진입 애니메이션 ──────────────────────────────────────────
-    const heroContent = document.querySelector('#story-container .story-panel:first-child .story-content');
-    if (heroContent) {
-      const elements = heroContent.querySelectorAll('.gsap-fade');
-      gsap.from(elements, {
-        y: 50, opacity: 0, duration: 1.0, stagger: 0.15,
-        ease: 'power3.out', delay: 0.4,
+    const eyebrowLine = document.getElementById('eyebrow-line') as HTMLElement | null;
+    const eyebrowText = document.getElementById('eyebrow-text') as HTMLElement | null;
+    const titleLine1 = document.getElementById('title-line1') as HTMLElement | null;
+    const titleLine2 = document.getElementById('title-line2') as HTMLElement | null;
+    const heroSub = document.getElementById('hero-sub') as HTMLElement | null;
+    const heroCta = document.getElementById('hero-cta') as HTMLElement | null;
+
+    // 아이브로우 라인
+    if (eyebrowLine) {
+      setTimeout(() => {
+        eyebrowLine.style.width = '60px';
+      }, 300);
+    }
+    if (eyebrowText) {
+      setTimeout(() => {
+        eyebrowText.style.opacity = '1';
+      }, 900);
+    }
+
+    // 제목 Split 애니메이션
+    if (SplitType && titleLine1 && titleLine2) {
+      const split1 = new SplitType(titleLine1, { types: 'chars' });
+      const split2 = new SplitType(titleLine2, { types: 'chars' });
+      gsap.from([...split1.chars, ...split2.chars], {
+        y: '120%',
+        opacity: 0,
+        duration: 1.0,
+        stagger: 0.04,
+        ease: 'power4.out',
+        delay: 0.6,
+      });
+    } else if (titleLine1 && titleLine2) {
+      // Fallback: 블록 단위 페이드
+      gsap.from([titleLine1, titleLine2], {
+        y: 60, opacity: 0, duration: 1.1, stagger: 0.2, ease: 'power3.out', delay: 0.5,
       });
     }
 
-    // ── 일반 GSAP 페이드 (갤러리, 리뷰, CTA) ───────────────────────────
+    // 서브타이틀 + CTA
+    if (heroSub) {
+      gsap.to(heroSub, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: 1.4 });
+    }
+    if (heroCta) {
+      gsap.to(heroCta, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: 1.65 });
+    }
+
+    // ── 일반 gsap-fade ────────────────────────────────────────────────────
     document.querySelectorAll('.gsap-fade').forEach(el => {
-      // 이미 히어로에서 처리한 것은 스킵
       if (el.closest('#story-container')) return;
       gsap.from(el, {
-        y: 30, opacity: 0, duration: 0.8, ease: 'power3.out',
+        y: 35, opacity: 0, duration: 0.85, ease: 'power3.out',
         scrollTrigger: { trigger: el, start: 'top 82%' },
       });
     });
+
+    // ── 리뷰 카드 reveal ──────────────────────────────────────────────────
+    document.querySelectorAll<HTMLElement>('.review-card').forEach((card) => {
+      const delay = parseFloat(card.dataset.delay || '0');
+      gsap.to(card, {
+        opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: card, start: 'top 82%' },
+        delay,
+      });
+    });
+
+    // ── 카운터 애니메이션 ─────────────────────────────────────────────────
+    document.querySelectorAll<HTMLElement>('.counter-num').forEach(el => {
+      const target = parseInt(el.dataset.target || '0');
+      const suffix = el.dataset.suffix || '';
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: target,
+            duration: 2.0,
+            ease: 'power2.out',
+            onUpdate: () => {
+              el.textContent = Math.round(obj.val) + suffix;
+            },
+          });
+        },
+      });
+    });
+
+    // ── 인스타 그리드 stagger reveal ──────────────────────────────────────
+    gsap.from('.insta-tile', {
+      opacity: 0, scale: 0.92, duration: 0.6, stagger: 0.08, ease: 'power2.out',
+      scrollTrigger: { trigger: '.insta-tile', start: 'top 85%' },
+    });
+
   } else {
     // GSAP 없을 때 fallback
-    const mobileBgs = document.querySelectorAll<HTMLElement>('.mobile-bg');
-    mobileBgs.forEach(el => { el.style.display = 'block'; });
-    document.querySelectorAll<HTMLElement>('.gsap-fade').forEach(el => {
-      el.style.opacity = '1'; el.style.transform = 'none';
-    });
+    document.querySelectorAll<HTMLElement>('.mobile-bg').forEach(el => { el.style.display = 'block'; });
+    document.querySelectorAll<HTMLElement>('.gsap-fade').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+    document.querySelectorAll<HTMLElement>('.review-card').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+    document.querySelectorAll<HTMLElement>('#hero-sub,#hero-cta').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+    document.querySelectorAll<HTMLElement>('#eyebrow-text').forEach(el => { el.style.opacity = '1'; });
   }
 
-  // ── 가로 갤러리 드래그 ─────────────────────────────────────────────
+  // ── 마그네틱 버튼 ─────────────────────────────────────────────────────
+  document.querySelectorAll<HTMLElement>('.magnetic').forEach(btn => {
+    btn.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = btn.getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width / 2) * 0.18;
+      const y = (e.clientY - rect.top - rect.height / 2) * 0.18;
+      btn.style.transform = `translate(${x}px,${y}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+
+  // ── 가로 갤러리 드래그 ────────────────────────────────────────────────
   const track = document.getElementById('hgal-track') as HTMLElement | null;
   if (track) {
     let isDown = false, startX = 0, scrollLeft = 0;
@@ -329,14 +543,13 @@ const reviews = [
       startX = e.pageX - track.offsetLeft;
       scrollLeft = track.scrollLeft;
     });
-    ['mouseleave','mouseup'].forEach(evt => track.addEventListener(evt, () => { isDown = false; track.style.cursor = 'grab'; }));
+    ['mouseleave', 'mouseup'].forEach(ev => track.addEventListener(ev, () => { isDown = false; track.style.cursor = 'grab'; }));
     track.addEventListener('mousemove', e => {
       if (!isDown) return;
       e.preventDefault();
       track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX) * 1.5;
     });
     track.style.cursor = 'grab';
-    // 터치
     let tx = 0;
     track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
     track.addEventListener('touchmove', e => {
