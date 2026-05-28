@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const title = '예약 · 문의 | 웨딩마치 춘천 웨딩드레스';
-const description = '춘천 웨딩마치 예약 및 문의. 카카오톡 채널 또는 인스타그램 DM으로 연락주세요. 강원도 춘천 웨딩드레스 전문샵.';
+const description = '춘천 웨딩마치 예약 및 문의. 인스타그램 DM 또는 전화로 연락주세요. 강원도 춘천 웨딩드레스 전문샵.';
 ---
 <Layout title={title} description={description}>
 
@@ -26,22 +26,8 @@ const description = '춘천 웨딩마치 예약 및 문의. 카카오톡 채널 
         <span class='section-label'>Quick Contact</span>
         <h2 class='font-display' style="font-size:clamp(28px,4vw,44px); font-weight:300; color:#1a1a1a; letter-spacing:0.05em;">바로 연락하기</h2>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
-        <a href='http://pf.kakao.com/_placeholder/chat' target='_blank' rel='noopener'
-           style="display:flex; flex-direction:column; align-items:center; gap:16px; padding:36px 24px; background:white; border:1px solid #E8DDD5; text-decoration:none; transition:all 0.3s; text-align:center;"
-           onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.08)'"
-           onmouseout="this.style.transform='';this.style.boxShadow=''">
-          <div style="width:56px; height:56px; border-radius:50%; background:#FEE500; display:flex; align-items:center; justify-content:center;">
-            <svg viewBox='0 0 24 24' style="width:28px; height:28px;" fill='#3C1E1E'>
-              <path d='M12 3C6.477 3 2 6.582 2 11c0 2.75 1.55 5.19 3.93 6.72l-1.01 3.73c-.09.33.27.59.55.39L9.7 19.1A11.2 11.2 0 0012 19c5.523 0 10-3.582 10-8s-4.477-8-10-8z'/>
-            </svg>
-          </div>
-          <div>
-            <p style="font-size:13px; color:#1a1a1a; font-weight:400; letter-spacing:0.05em; margin-bottom:4px;">카카오톡 채널</p>
-            <p style="font-size:11px; color:var(--rose,#B76E79); letter-spacing:0.1em;">웨딩마치</p>
-            <p style="font-size:11px; color:#aaa; margin-top:4px;">평균 30분 내 답변</p>
-          </div>
-        </a>
+      <!-- TODO: 카카오 채널 ID 확보 후 교체 (현재 채널 미확보로 카카오 버튼 제거, 인스타 DM/전화 CTA로 대체) -->
+      <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px; max-width:680px; margin:0 auto;">
         <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
            style="display:flex; flex-direction:column; align-items:center; gap:16px; padding:36px 24px; background:white; border:1px solid #E8DDD5; text-decoration:none; transition:all 0.3s; text-align:center;"
            onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.08)'"

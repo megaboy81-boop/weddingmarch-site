@@ -2,55 +2,92 @@
 import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const title = '패키지 · 가격 | 웨딩마치 춘천 웨딩드레스';
-const description = '춘천 웨딩마치 웨딩 패키지 가격표. 드레스 대여, 헤어·메이크업, 도우미 서비스. 강원도 춘천 웨딩 원스톱 서비스.';
+const title = '춘천 웨딩 스드메 가격 · 정찰 패키지 | 웨딩마치 춘천';
+const description = '춘천 웨딩마치 스드메 가격 정찰 안내. 제휴 스튜디오 11곳·드레스·헤어메이크업 기본가와 선택 품목, 환불·위약금 기준까지 공정위 결혼서비스 가격표시제에 따라 투명 공개. 강원도 춘천 웨딩 원스톱.';
 
-const packages = [
+// ── 카테고리 안내 카드 (페이지 상단 3개 진입 카드) ──
+const categories = [
   {
-    name: 'Dress Only',
-    nameKo: '드레스 패키지',
-    badge: 'Essential',
-    highlight: false,
-    features: [
-      '웨딩드레스 대여 (120벌 중 선택)',
-      '2회 피팅 포함 (3개월 전 + 1개월 전)',
-      '드레스 수선 서비스 포함',
-      '피팅 당일 스타일링 컨설팅',
-    ],
-    cta: '가격 문의',
-    note: '드레스 종류에 따라 가격 상이'
+    name: 'Studio',
+    nameKo: '스튜디오 촬영',
+    desc: '제휴 스튜디오 11곳 중 선택. 기본 20R/20P 구성에 담당자 지정·야외/야간·앨범 등 선택 가능.',
+    price: '90 ~ 140만원',
+    priceNote: '제휴사·구성에 따라 상이',
+    anchor: 'studio',
   },
   {
-    name: 'All-in-One',
-    nameKo: '웨딩 올인원',
-    badge: 'Most Popular',
-    highlight: true,
-    features: [
-      '웨딩드레스 대여 (2회 피팅 포함)',
-      '결혼식 당일 헤어·메이크업',
-      '도우미 서비스 (1인)',
-      '미래웨딩홀 이동 없이 편리하게',
-      '피팅 사진 촬영 서비스',
-      '웨딩 당일 전담 스탭 배치',
-    ],
-    cta: '예약 상담',
-    note: '가장 많이 선택하는 패키지'
+    name: 'Dress',
+    nameKo: '드레스',
+    desc: '본식·촬영 드레스 대여. 핼퍼·디자인 추가·재피팅·턱시도 옵션 선택 가능.',
+    price: '본식 80만 / 촬영 15만',
+    priceNote: '핼퍼·옵션 별도',
+    anchor: 'dress',
   },
   {
     name: 'Hair & Make',
     nameKo: '헤어·메이크업',
-    badge: 'A la Carte',
-    highlight: false,
-    features: [
-      '결혼식 당일 헤어스타일링',
-      '본식 / 촬영 메이크업',
-      '숙련 스탭 5인+ 운영',
-      '돌잔치·행사 스타일링 가능',
-      '개별 선택 및 조합 가능',
-    ],
-    cta: '가격 문의',
-    note: '개별 선택 가능'
-  }
+    desc: '본식·앞잔치·테스트·일반(혼주) 헤어메이크업. 담당자 지정·헤어피스·얼리스타트 등 선택.',
+    price: '본식 65 ~ 80만원',
+    priceNote: '원장급 지정 +20만',
+    anchor: 'hairmakeup',
+  },
+];
+
+// ── ① 스튜디오 제휴 11곳 비교표 (정본: 가격표시제_추출_2026-05-28.md) ──
+const studioRows = [
+  { name: '춘천 피아',     base: '110~130만',  staff: '대표 지정 30만',                          outdoor: '야외/야간 서비스',                    raw: '440,000' },
+  { name: '원주 테라스',   base: '90~110만',   staff: 'ㅡ',                                       outdoor: '야간 10만',                            raw: '330,000' },
+  { name: '원규',         base: '120~140만',  staff: '실장 200,000 · 팀장 100,000',             outdoor: '야간 로드씬 22만',                     raw: '440,000' },
+  { name: '메이',         base: '90~110만',   staff: '상담 안내',                                outdoor: '상담 안내',                            raw: '440,000' },
+  { name: '가을 시그니처', base: '90~110만',   staff: '220,000',                                  outdoor: '야간&노을 110,000',                    raw: '440,000' },
+  { name: '가을 더브라이드', base: '110~130만', staff: '220,000',                                 outdoor: '야간&노을 220,000',                    raw: '440,000' },
+  { name: '구호 블랙라벨', base: '100~120만',  staff: '200,000',                                  outdoor: '시간추가 1h 110,000 · 야외스냅 330,000', raw: '440,000' },
+  { name: '이포토에세이', base: '100~120만',  staff: '220,000',                                  outdoor: '야간 220,000 (오후 필수)',             raw: '440,000' },
+  { name: '브라키오',     base: '100~120만',  staff: '작가지정 200,000 · 2인추가 300,000 · 영상추가 300,000', outdoor: '야외 무료 · 야간 110,000 · 샴페인샤워 55,000', raw: '440,000' },
+  { name: '플로우',       base: '110~130만',  staff: '실장 110,000 · 이사 330,000',             outdoor: '노을&야간 무료',                       raw: '440,000' },
+  { name: '섬',          base: '110~130만',  staff: '작가 150,000',                             outdoor: '야간 220,000 (오후 필수)',             raw: '550,000' },
+];
+
+// 스튜디오 공통 선택 품목 (아코디언)
+const studioOptions = [
+  { item: '앨범 추가',        detail: '스튜디오별 1장·1p·1컷 기준 11,000 ~ 55,000원' },
+  { item: '들러리 촬영',      detail: '1인 110,000원 기준 (4인 220,000 등 스튜디오별 상이) · 일부 반려동물 1마리 110,000원' },
+  { item: '선수정본 (모바일)', detail: '5컷 기준 40,000 ~ 55,000원 (스튜디오별 컷수·금액 상이, 최대 220,000원)' },
+  { item: '액자 변경',        detail: '11,000 ~ 1,100,000원 (사이즈·스튜디오별 상이)' },
+  { item: '드레스 외 의상',   detail: '대부분 서비스 제공 (벌수 무관/제한), 추가 시 50,000 ~ 275,000원 (스튜디오별 상이)' },
+];
+
+// ── ② 드레스 가격표 ──
+const dressRows = [
+  { item: '본식 드레스', base: '800,000원',  helper: '본식 1회당 200,000 ~ 250,000원', design: '300,000 ~ 2,000,000원' },
+  { item: '촬영 드레스', base: '150,000원',  helper: '촬영 1회당 200,000 ~ 350,000원', design: '200,000원' },
+];
+const dressOptions = [
+  { item: '드레스 추가 대여', detail: '기본가격과 동일' },
+  { item: '재피팅비 (본식)',  detail: '1회 3벌 50,000원' },
+  { item: '드레스 투어 (촬영)', detail: '1회 3벌 50,000원' },
+  { item: '턱시도 대여',      detail: '150,000 ~ 200,000원' },
+];
+
+// ── ③ 헤어·메이크업 가격표 ──
+const hairRows = [
+  { item: '본식 (신랑·신부)',            base: '650,000 ~ 800,000원', staff: '실장급 무료 / 원장급 +200,000원', etc: '헤어피스 35,000~110,000 · 촬영 헤어변경 350,000 · 가발 35,000~110,000 · 흑채 무료' },
+  { item: '앞잔치·셀프촬영',             base: '440,000원',          staff: '원장급 +200,000원',              etc: '얼리스타트(7시 이전·1인) 30,000~50,000 (모든 헤메 공통 적용)' },
+  { item: '테스트 헤메 (신부)',          base: '계약 전 385,000 / 계약 후 275,000원', staff: '실장급 무료 / 원장급 +200,000원', etc: '신랑 추가 시 +100,000 · 혼주 테스트 헤메는 일반 헤메와 동일' },
+  { item: '일반 헤메 (일반·혼주·돌잔치)', base: '여성 1인 180,000~200,000 / 남성 1인 60,000~80,000원', staff: '지정 불가', etc: '협력업체·패키지에 따라 금액 상이' },
+];
+
+// ── ④ 환불·위약금 기준 (정본 데이터) ──
+const refundDress = [
+  '계약 후 6일 이후 취소 시 — 계약금 환급 어려움',
+  '계약 후 6일 이내 취소 시 — 피팅비 제외 환급',
+  '계약일 30일 경과 · 예식 5주 전 취소 시 — 위약금 80%',
+  '예식일 한 달 이내 취소 시 — 위약금 100%',
+];
+const refundHair = [
+  '결제일로부터 14일 경과 또는 행사 한 달 이내 취소 시 — 수수료 50%',
+  '행사 2주 이내 취소 시 — 80%',
+  '행사 진행 주 · 당일 취소 시 — 위약금 100%',
 ];
 
 const faqs = [
@@ -86,62 +123,245 @@ const faqs = [
     </div>
   </section>
 
-  <!-- 패키지 카드 -->
+  <!-- 카테고리 진입 카드 -->
   <section class='py-20 px-6' style='background: #FAF8F5;'>
     <div class='max-w-6xl mx-auto'>
-      <div class='text-center mb-14'>
-        <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-4'>Our Services</p>
-        <h2 class='font-display text-4xl font-light text-gray-900 mb-4'>웨딩 서비스 패키지</h2>
-        <div class='w-12 h-px bg-[#B76E79] mx-auto'></div>
+      <div class='text-center mb-12'>
+        <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-4'>Transparent Pricing</p>
+        <h2 class='font-display text-4xl font-light text-gray-900 mb-4'>가격 안내</h2>
+        <div class='w-12 h-px bg-[#B76E79] mx-auto mb-5'></div>
+        <p class='text-sm text-gray-500 font-light leading-relaxed max-w-2xl mx-auto'>
+          스드메 패키지는 <strong class='font-normal text-gray-700'>제휴 스튜디오 선택</strong>에 따라 구성됩니다.
+          공정거래위원회 「결혼서비스 가격표시제」에 따라 카테고리별 기본가·선택 품목·환불 기준을 모두 공개합니다.
+        </p>
       </div>
 
       <div class='grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8'>
-        {packages.map((pkg) => (
-          <div class={`relative flex flex-col ${pkg.highlight ? 'shadow-2xl scale-[1.02]' : 'shadow-sm hover:shadow-xl'} transition-all duration-500`}>
-            <!-- 배지 -->
-            {pkg.highlight && (
-              <div class='absolute -top-4 left-1/2 -translate-x-1/2 bg-[#B76E79] text-white text-[10px] tracking-[0.3em] uppercase px-5 py-1.5 font-light z-10'>
-                {pkg.badge}
-              </div>
-            )}
-
-            <div class={`flex flex-col h-full border ${pkg.highlight ? 'border-[#B76E79] bg-white' : 'border-[#E8DDD5] bg-white'} p-8 md:p-10`}>
-              <!-- 헤더 -->
-              <div class='mb-8 pb-6 border-b border-[#E8DDD5]'>
-                {!pkg.highlight && (
-                  <span class='text-[10px] tracking-[0.3em] text-[#B76E79] uppercase border border-[#D4A0A7] px-2 py-0.5 mb-3 inline-block'>{pkg.badge}</span>
-                )}
-                <p class='font-display text-3xl font-light text-gray-900 mb-1'>{pkg.name}</p>
-                <p class='text-sm text-gray-400 font-light tracking-wide'>{pkg.nameKo}</p>
-              </div>
-
-              <!-- 가격 표시 -->
-              <div class='mb-8'>
-                <div class='flex items-baseline gap-2'>
-                  <span class='font-display text-4xl font-light text-[#B76E79]'>문의</span>
-                  <span class='text-gray-400 text-sm font-light'>/ 상담 후 안내</span>
-                </div>
-                {pkg.note && <p class='text-xs text-gray-400 mt-2 font-light'>{pkg.note}</p>}
-              </div>
-
-              <!-- 특징 목록 -->
-              <ul class='space-y-3 mb-8 flex-grow'>
-                {pkg.features.map((feat) => (
-                  <li class='flex items-start gap-3 text-sm text-gray-600 font-light'>
-                    <span class='text-[#B76E79] mt-0.5 text-xs flex-shrink-0'>✦</span>
-                    {feat}
-                  </li>
-                ))}
-              </ul>
-
-              <!-- CTA -->
-              <a href='/contact'
-                 class={`block text-center py-4 text-xs tracking-[0.3em] uppercase font-light transition-all duration-300 ${pkg.highlight ? 'bg-[#B76E79] text-white hover:bg-[#8B3A47]' : 'border border-[#B76E79] text-[#B76E79] hover:bg-[#B76E79] hover:text-white'}`}>
-                {pkg.cta}
-              </a>
+        {categories.map((cat) => (
+          <a href={`#${cat.anchor}`} class='group flex flex-col h-full border border-[#E8DDD5] bg-white p-8 md:p-9 hover:border-[#B76E79] transition-all duration-300 hover:shadow-xl'>
+            <div class='mb-6 pb-5 border-b border-[#E8DDD5]'>
+              <p class='font-display text-3xl font-light text-gray-900 mb-1'>{cat.name}</p>
+              <p class='text-sm text-gray-400 font-light tracking-wide'>{cat.nameKo}</p>
             </div>
+            <div class='mb-5'>
+              <span class='font-display text-2xl md:text-3xl font-light text-[#B76E79]'>{cat.price}</span>
+              <p class='text-xs text-gray-400 mt-1 font-light'>{cat.priceNote}</p>
+            </div>
+            <p class='text-sm text-gray-600 font-light leading-relaxed flex-grow'>{cat.desc}</p>
+            <span class='mt-6 text-xs tracking-[0.3em] uppercase text-[#B76E79] font-light group-hover:translate-x-1 transition-transform inline-block'>자세히 보기 →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ① 스튜디오 가격 -->
+  <section id='studio' class='py-20 px-6 scroll-mt-20' style='background: #FFFFFF;'>
+    <div class='max-w-5xl mx-auto'>
+      <div class='text-center mb-10'>
+        <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-3'>① Studio</p>
+        <h2 class='font-display text-3xl md:text-4xl font-light text-gray-900 mb-4'>스튜디오 가격</h2>
+        <div class='w-12 h-px bg-[#B76E79] mx-auto mb-5'></div>
+        <p class='text-sm text-gray-500 font-light leading-relaxed max-w-2xl mx-auto'>
+          제휴 스튜디오 11곳 중 선택. 공통 기본 구성은 <strong class='font-normal text-gray-700'>20R / 20P</strong>이며,
+          담당자 지정·야외/야간·원본/수정본 등은 스튜디오별로 다릅니다.
+        </p>
+      </div>
+
+      <!-- 모바일: 가로스크롤 표 -->
+      <div class='border border-[#E8DDD5] overflow-x-auto'>
+        <table class='w-full text-left min-w-[640px]'>
+          <thead>
+            <tr style='background:#FAF8F5;'>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#B76E79] font-light whitespace-nowrap'>스튜디오</th>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#B76E79] font-light whitespace-nowrap'>기본가격<br/><span class='text-[10px] text-gray-400 normal-case'>(20R/20P)</span></th>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#B76E79] font-light'>담당자 지정</th>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#B76E79] font-light'>야외 / 야간</th>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#B76E79] font-light whitespace-nowrap'>원본/수정본</th>
+            </tr>
+          </thead>
+          <tbody>
+            {studioRows.map((row) => (
+              <tr class='border-t border-[#E8DDD5] align-top'>
+                <td class='px-4 py-4 text-sm text-gray-900 font-normal whitespace-nowrap'>{row.name}</td>
+                <td class='px-4 py-4 text-sm text-[#B76E79] font-normal whitespace-nowrap'>{row.base}</td>
+                <td class='px-4 py-4 text-sm text-gray-600 font-light leading-relaxed'>{row.staff}</td>
+                <td class='px-4 py-4 text-sm text-gray-600 font-light leading-relaxed'>{row.outdoor}</td>
+                <td class='px-4 py-4 text-sm text-gray-700 font-light whitespace-nowrap'>{row.raw}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class='text-[11px] text-gray-400 mt-2 font-light md:hidden'>← 좌우로 밀어 전체 항목을 확인하세요</p>
+
+      <!-- 스튜디오 선택 품목 (아코디언) -->
+      <div class='mt-8 border border-[#E8DDD5] bg-[#FAF8F5]'>
+        <button class='acc-btn w-full flex items-center justify-between px-6 py-5 text-left'>
+          <span class='text-sm font-normal text-gray-900 tracking-wide'>스튜디오 공통 선택 품목 (앨범·들러리·선수정본·액자·의상)</span>
+          <span class='acc-icon text-[#B76E79] ml-4 flex-shrink-0 transition-transform duration-300'>
+            <svg class='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M19 9l-7 7-7-7'/></svg>
+          </span>
+        </button>
+        <div class='acc-body hidden px-6 pb-6'>
+          <ul class='space-y-3'>
+            {studioOptions.map((opt) => (
+              <li class='flex flex-col sm:flex-row sm:items-baseline sm:gap-3 text-sm'>
+                <span class='text-gray-900 font-normal sm:w-32 flex-shrink-0'>{opt.item}</span>
+                <span class='text-gray-600 font-light leading-relaxed'>{opt.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② 드레스 가격 -->
+  <section id='dress' class='py-20 px-6 scroll-mt-20' style='background: #FAF8F5;'>
+    <div class='max-w-4xl mx-auto'>
+      <div class='text-center mb-10'>
+        <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-3'>② Dress</p>
+        <h2 class='font-display text-3xl md:text-4xl font-light text-gray-900 mb-4'>드레스 가격</h2>
+        <div class='w-12 h-px bg-[#B76E79] mx-auto mb-5'></div>
+        <p class='text-sm text-gray-500 font-light leading-relaxed'>피팅 안내 — 본식 2회 / 촬영 1회 (계약 조건에 따라 횟수 상이)</p>
+      </div>
+
+      <div class='border border-[#E8DDD5] overflow-x-auto bg-white'>
+        <table class='w-full text-left min-w-[560px]'>
+          <thead>
+            <tr style='background:#1a1008;'>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#D4A0A7] font-light'>구분</th>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#D4A0A7] font-light whitespace-nowrap'>기본가격</th>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#D4A0A7] font-light'>핼퍼 (도우미)</th>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#D4A0A7] font-light'>디자인 추가금</th>
+            </tr>
+          </thead>
+          <tbody>
+            {dressRows.map((row) => (
+              <tr class='border-t border-[#E8DDD5] align-top'>
+                <td class='px-4 py-4 text-sm text-gray-900 font-normal whitespace-nowrap'>{row.item}</td>
+                <td class='px-4 py-4 text-sm text-[#B76E79] font-normal whitespace-nowrap'>{row.base}</td>
+                <td class='px-4 py-4 text-sm text-gray-600 font-light leading-relaxed'>{row.helper}</td>
+                <td class='px-4 py-4 text-sm text-gray-600 font-light leading-relaxed'>{row.design}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class='mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3'>
+        {dressOptions.map((opt) => (
+          <div class='border border-[#E8DDD5] bg-white px-5 py-4'>
+            <p class='text-sm text-gray-900 font-normal mb-1'>{opt.item}</p>
+            <p class='text-sm text-gray-600 font-light leading-relaxed'>{opt.detail}</p>
           </div>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ 헤어·메이크업 가격 -->
+  <section id='hairmakeup' class='py-20 px-6 scroll-mt-20' style='background: #FFFFFF;'>
+    <div class='max-w-5xl mx-auto'>
+      <div class='text-center mb-10'>
+        <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-3'>③ Hair &amp; Make-up</p>
+        <h2 class='font-display text-3xl md:text-4xl font-light text-gray-900 mb-4'>헤어·메이크업 가격</h2>
+        <div class='w-12 h-px bg-[#B76E79] mx-auto mb-5'></div>
+        <p class='text-sm text-gray-500 font-light leading-relaxed max-w-2xl mx-auto'>
+          담당자 지정 — 실장급 무료 / <strong class='font-normal text-gray-700'>원장급 +200,000원</strong>.
+          얼리스타트(7시 이전·1인) 30,000~50,000원은 모든 헤메에 공통 적용됩니다.
+        </p>
+      </div>
+
+      <div class='border border-[#E8DDD5] overflow-x-auto'>
+        <table class='w-full text-left min-w-[680px]'>
+          <thead>
+            <tr style='background:#FAF8F5;'>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#B76E79] font-light'>구분</th>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#B76E79] font-light'>기본가격</th>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#B76E79] font-light'>담당자 지정</th>
+              <th class='px-4 py-4 text-xs tracking-[0.15em] uppercase text-[#B76E79] font-light'>기타 옵션</th>
+            </tr>
+          </thead>
+          <tbody>
+            {hairRows.map((row) => (
+              <tr class='border-t border-[#E8DDD5] align-top'>
+                <td class='px-4 py-4 text-sm text-gray-900 font-normal'>{row.item}</td>
+                <td class='px-4 py-4 text-sm text-[#B76E79] font-normal leading-relaxed'>{row.base}</td>
+                <td class='px-4 py-4 text-sm text-gray-600 font-light leading-relaxed'>{row.staff}</td>
+                <td class='px-4 py-4 text-sm text-gray-600 font-light leading-relaxed'>{row.etc}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class='text-[11px] text-gray-400 mt-2 font-light md:hidden'>← 좌우로 밀어 전체 항목을 확인하세요</p>
+    </div>
+  </section>
+
+  <!-- ④ 환불·위약금 기준 -->
+  <section class='py-20 px-6' style='background: #FAF8F5;'>
+    <div class='max-w-4xl mx-auto'>
+      <div class='text-center mb-10'>
+        <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-3'>④ Cancellation &amp; Refund</p>
+        <h2 class='font-display text-3xl md:text-4xl font-light text-gray-900 mb-4'>환불·위약금 기준</h2>
+        <div class='w-12 h-px bg-[#B76E79] mx-auto'></div>
+      </div>
+
+      <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+        <!-- 드레스 환불 -->
+        <div class='border border-[#E8DDD5] bg-white p-7'>
+          <h3 class='font-display text-xl font-light text-gray-900 mb-4 pb-3 border-b border-[#E8DDD5]'>드레스</h3>
+          <ul class='space-y-3'>
+            {refundDress.map((rule) => (
+              <li class='flex items-start gap-3 text-sm text-gray-600 font-light leading-relaxed'>
+                <span class='text-[#B76E79] mt-1 text-xs flex-shrink-0'>✦</span>
+                {rule}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- 헤어메이크업 환불 -->
+        <div class='border border-[#E8DDD5] bg-white p-7'>
+          <h3 class='font-display text-xl font-light text-gray-900 mb-4 pb-3 border-b border-[#E8DDD5]'>헤어·메이크업</h3>
+          <ul class='space-y-3'>
+            {refundHair.map((rule) => (
+              <li class='flex items-start gap-3 text-sm text-gray-600 font-light leading-relaxed'>
+                <span class='text-[#B76E79] mt-1 text-xs flex-shrink-0'>✦</span>
+                {rule}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- 스튜디오 환불 안내 -->
+      <div class='mt-6 border border-[#D4A0A7] bg-white px-7 py-5'>
+        <p class='text-sm text-gray-700 font-light leading-relaxed'>
+          <strong class='font-normal text-gray-900'>스튜디오</strong> — 환불·위약금 규정은 제휴 스튜디오별 규정을 기준으로 하며, 계약 시 안내드립니다.
+        </p>
+      </div>
+
+      <ul class='text-xs text-gray-500 mt-6 font-light leading-relaxed space-y-1.5'>
+        <li>· 표시 금액은 VAT 포함 기준가이며, 선택 품목·제휴사·시즌에 따라 변동될 수 있습니다. (2026년 기준)</li>
+        <li>· 근거: 공정거래위원회 「결혼준비대행업 표준약관」 · 「소비자분쟁해결기준」 · 「결혼서비스 가격표시제」</li>
+        <li>· 정확한 항목별 금액·환급 기준은 계약서 및 상담 시 안내드립니다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 혜택 안내 -->
+  <section class='py-16 px-6' style='background: #FFFFFF;'>
+    <div class='max-w-3xl mx-auto'>
+      <div class='border border-[#D4A0A7] bg-[#FAF8F5] p-8 md:p-10 text-center'>
+        <p class='text-xs tracking-[0.4em] text-[#B76E79] uppercase font-light mb-4'>Special Benefits</p>
+        <h3 class='font-display text-2xl font-light text-gray-900 mb-5'>혜택 안내</h3>
+        <p class='text-sm text-gray-700 font-light leading-relaxed mb-3'>
+          미래웨딩홀 예약 고객 · 당일 계약 · 비수기 시즌 · 리뷰 이벤트 시 추가 혜택을 드립니다.
+        </p>
+        <p class='text-xs text-gray-400 font-light'>자세한 맞춤 견적은 상담 시 안내해 드립니다.</p>
       </div>
     </div>
   </section>
@@ -157,7 +377,7 @@ const faqs = [
 
       <div class='grid grid-cols-1 md:grid-cols-4 gap-8'>
         {[
-          { step: '01', title: '상담 문의', desc: '인스타 DM 또는 카카오톡으로 문의주세요' },
+          { step: '01', title: '상담 문의', desc: '인스타 DM 또는 전화로 문의주세요' },
           { step: '02', title: '1차 피팅', desc: '결혼식 3개월 전 · 드레스 3벌 착용' },
           { step: '03', title: '2차 피팅', desc: '결혼식 1개월 전 · 최종 드레스 확정' },
           { step: '04', title: '결혼식 당일', desc: '헤어·메이크업·도우미 원스톱 서비스' },
@@ -209,7 +429,7 @@ const faqs = [
     <h2 class='font-display text-4xl font-light text-gray-900 mb-4'>무료 상담 예약</h2>
     <div class='w-12 h-px bg-[#B76E79] mx-auto mb-6'></div>
     <p class='text-gray-500 font-light mb-8'>궁금한 점이 있으시면 언제든지 문의해주세요</p>
-    <a href='/contact'
+    <a href={`${base}/contact`}
        class='inline-block bg-[#B76E79] text-white px-14 py-4 text-xs tracking-[0.3em] uppercase font-light hover:bg-[#8B3A47] transition-colors shadow-lg'>
       지금 문의하기
     </a>
@@ -218,6 +438,22 @@ const faqs = [
 </Layout>
 
 <script>
+  // 스튜디오 선택 품목 아코디언
+  document.querySelectorAll('.acc-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const body = btn.parentElement!.querySelector<HTMLElement>('.acc-body')!;
+      const icon = btn.querySelector<SVGElement>('.acc-icon')!;
+      const isOpen = !body.classList.contains('hidden');
+      if (isOpen) {
+        body.classList.add('hidden');
+        icon.style.transform = '';
+      } else {
+        body.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+      }
+    });
+  });
+
   document.querySelectorAll('.faq-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const item = btn.closest('.faq-item')!;
