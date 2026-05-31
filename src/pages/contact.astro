@@ -166,18 +166,16 @@ const description = '춘천 웨딩마치 예약 및 문의. 인스타그램 DM �
           </div>
         </div>
 
-        <!-- 카카오 지도 임베드 -->
-        <div style="border:1px solid #E8DDD5; overflow:hidden;">
-          <iframe
-            src='https://map.kakao.com/link/embed/13354093'
-            width='100%'
-            height='360'
-            frameborder='0'
-            scrolling='no'
-            title='웨딩마치 위치'
-            style='display:block; border:none;'>
-          </iframe>
-          <!-- 지도 앱 열기 버튼 -->
+        <!-- 지도 임베드 제거: 외부 지도 iframe은 장소 ID/정책 변경 시 깨질 수 있어 앱 링크로 안내 -->
+        <div style="border:1px solid #E8DDD5; overflow:hidden; background:white;">
+          <div style="min-height:260px; padding:40px 32px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; background:linear-gradient(135deg,#FEFCF9 0%,#F7E7CE 100%);">
+            <p style="font-size:10px; letter-spacing:0.45em; text-transform:uppercase; color:var(--rose,#B76E79); margin-bottom:16px;">Map Link</p>
+            <h3 class='font-display' style="font-size:clamp(26px,4vw,42px); font-weight:300; color:#1a1a1a; letter-spacing:0.04em; margin-bottom:16px;">웨딩마치 오시는 길</h3>
+            <p style="font-size:14px; color:#555; line-height:1.9; font-weight:300; margin-bottom:0;">
+              강원도 춘천시 퇴계로 118<br/>
+              미래타워 1층 104호
+            </p>
+          </div>
           <div style="display:flex; border-top:1px solid #E8DDD5;">
             <a href='https://map.naver.com/p/entry/place/13354093' target='_blank' rel='noopener'
               style="flex:1; padding:13px; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; text-align:center; text-decoration:none; background:var(--dark,#0D0608); color:var(--gold,#D4AF75); border-right:1px solid #333;">
@@ -204,29 +202,3 @@ const description = '춘천 웨딩마치 예약 및 문의. 인스타그램 DM �
   </section>
 
 </Layout>
-
-<script>
-  function showMapTab(tab: string) {
-    const naver = document.getElementById('map-naver');
-    const kakao = document.getElementById('map-kakao');
-    const tabN = document.getElementById('tab-naver');
-    const tabK = document.getElementById('tab-kakao');
-    if (!naver || !kakao || !tabN || !tabK) return;
-    if (tab === 'naver') {
-      naver.style.display = '';
-      kakao.style.display = 'none';
-      (tabN as HTMLElement).style.background = 'var(--dark,#0D0608)';
-      (tabN as HTMLElement).style.color = 'var(--gold,#D4AF75)';
-      (tabK as HTMLElement).style.background = 'white';
-      (tabK as HTMLElement).style.color = '#888';
-    } else {
-      naver.style.display = 'none';
-      kakao.style.display = '';
-      (tabK as HTMLElement).style.background = 'var(--dark,#0D0608)';
-      (tabK as HTMLElement).style.color = 'var(--gold,#D4AF75)';
-      (tabN as HTMLElement).style.background = 'white';
-      (tabN as HTMLElement).style.color = '#888';
-    }
-  }
-  (window as any).showMapTab = showMapTab;
-</script>
