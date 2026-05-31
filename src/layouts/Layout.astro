@@ -11,6 +11,8 @@ const {
 } = Astro.props;
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const homeHref = base || '/';
+const defaultOgImage = Astro.site ? new URL(ogImage, Astro.site).toString() : `${base}${ogImage}`;
 ---
 <!DOCTYPE html>
 <html lang='ko'>
@@ -25,13 +27,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <meta property='og:type' content='website' />
   <meta property='og:title' content={title} />
   <meta property='og:description' content={description} />
-  <meta property='og:image' content={`${base}/images/instagram/00.webp`} />
+  <meta property='og:image' content={defaultOgImage} />
   <meta property='og:locale' content='ko_KR' />
   <meta property='og:site_name' content='웨딩마치' />
   <meta name='twitter:card' content='summary_large_image' />
   <meta name='twitter:title' content={title} />
   <meta name='twitter:description' content={description} />
-  <meta name='twitter:image' content={`${base}/images/instagram/00.webp`} />
+  <meta name='twitter:image' content={defaultOgImage} />
   <script type='application/ld+json' set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": ["LocalBusiness","BeautySalon"],
@@ -223,7 +225,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </head>
 <body>
   <nav id='main-nav'>
-    <a href={base} class='nav-logo'>Wedding March</a>
+    <a href={homeHref} class='nav-logo'>Wedding March</a>
     <ul class='nav-links'>
       <li><a href={`${base}/gallery`}>갤러리</a></li>
       <li><a href={`${base}/packages`}>패키지</a></li>
@@ -235,7 +237,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <!-- 모바일 메뉴 -->
   <div id='mobileMenu' style='display:none;position:fixed;inset:0;background:rgba(7,3,5,0.97);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:36px;'>
-    <a href={base} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>홈</a>
+    <a href={homeHref} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>홈</a>
     <a href={`${base}/gallery`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>갤러리</a>
     <a href={`${base}/packages`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>패키지</a>
     <a href={`${base}/contact`} style='font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:300;color:white;text-decoration:none;'>오시는 길</a>
