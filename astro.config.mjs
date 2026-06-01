@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://ccweddingmarch.com',
+  site: 'http://ccweddingmarch.com',
   base: '/',
   integrations: [tailwind()],
   output: 'static',
