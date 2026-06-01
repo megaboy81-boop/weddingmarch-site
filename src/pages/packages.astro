@@ -117,7 +117,51 @@ const refundHair = [
   '행사 2주 이내 취소 시 — 80%',
   '행사 진행 주 · 당일 취소 시 — 위약금 100%',
 ];
-const refundStudio = [
+const refundStudioKnown = [
+  {
+    studio: '춘천 피아',
+    source: '피아스튜디오 프랜차이즈 공개 규정',
+    rule: '촬영일 한 달 전까지 변경·취소 무료 / 한 달 이내 300,000원 / 2주 이내 100%',
+  },
+  {
+    studio: '원규',
+    source: '원규노블레스 공개 규정',
+    rule: '변경: 30일 이전 무료, 30~15일 전 50% / 취소: 30일 이전 50%, 30일 이후 100%',
+  },
+  {
+    studio: '가을 시그니처',
+    source: '가을시그니처 공개 규정',
+    rule: '촬영 당일 또는 7일 전 변경·취소 100% / 촬영 30일 전 변경·취소 정상금액 50%',
+  },
+  {
+    studio: '가을 더브라이드',
+    source: '더브라이드 공개 규정',
+    rule: '촬영 7일 전 변경·취소 100% / 촬영 30일 전 변경·취소 220,000원',
+  },
+  {
+    studio: '구호 블랙라벨',
+    source: '구호스튜디오 공개 규정',
+    rule: '변경: 30일 이전 무료, 30~15일 전 50% / 취소: 30일 이전 50%, 30일 이후 100%',
+  },
+  {
+    studio: '이포토에세이',
+    source: '이포토에세이 공개 규정',
+    rule: '변경: 30일 이전 무료, 30~15일 전 50% / 취소: 30일 이전 50%, 30일 이후 100%',
+  },
+  {
+    studio: '섬',
+    source: '섬스튜디오 공개 규정',
+    rule: '변경: 30일 이전 무료, 30~15일 전 50% / 취소: 30일 이전 50%, 30일 이후 100%',
+  },
+];
+
+const refundStudioPending = [
+  '원주 테라스',
+  '브라키오',
+  '플로우',
+];
+
+const refundStudioDefault = [
   {
     type: '고객 사유 · 촬영 개시 이전',
     rule: '총 촬영요금의 10% 부담',
@@ -408,18 +452,50 @@ const faqs = [
 
       <!-- 스튜디오 환불 기준 -->
       <div class='mt-6 border border-[#D4A0A7] bg-white p-7'>
-        <h3 class='font-display text-xl font-light text-gray-900 mb-4 pb-3 border-b border-[#E8DDD5]'>스튜디오 촬영</h3>
-        <div class='grid grid-cols-1 sm:grid-cols-2 gap-3'>
-          {refundStudio.map((row) => (
-            <div class='border border-[#E8DDD5] bg-[#FAF8F5] px-5 py-4'>
-              <p class='text-sm text-gray-900 font-normal mb-1'>{row.type}</p>
-              <p class='text-sm text-gray-600 font-light leading-relaxed'>{row.rule}</p>
-            </div>
-          ))}
-        </div>
-        <p class='text-xs text-gray-500 font-light leading-relaxed mt-4'>
-          기준: 소비자분쟁해결기준 「사진현상 및 촬영업」. 제휴 스튜디오별 개별 규정이 고객에게 더 유리한 경우 해당 규정을 우선 적용합니다.
+        <h3 class='font-display text-xl font-light text-gray-900 mb-2'>스튜디오 촬영</h3>
+        <p class='text-xs text-gray-500 font-light leading-relaxed mb-5 pb-4 border-b border-[#E8DDD5]'>
+          공개 환불·위약금 규정이 확인된 제휴 스튜디오는 해당 규정을 표시합니다.
+          공개 기준이 확인되지 않은 스튜디오는 원문 확보 전까지 소비자분쟁해결기준 「사진현상 및 촬영업」 기준을 기본 적용합니다.
         </p>
+
+        <div class='mb-6'>
+          <p class='text-xs tracking-[0.25em] uppercase text-[#B76E79] font-light mb-3'>Public Studio Rules</p>
+          <div class='grid grid-cols-1 md:grid-cols-2 gap-3'>
+            {refundStudioKnown.map((row) => (
+              <div class='border border-[#E8DDD5] bg-[#FAF8F5] px-5 py-4'>
+                <p class='text-sm text-gray-900 font-normal mb-1'>{row.studio}</p>
+                <p class='text-[11px] text-[#B76E79] font-light mb-2'>{row.source}</p>
+                <p class='text-sm text-gray-600 font-light leading-relaxed'>{row.rule}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class='mb-6 border border-[#E8DDD5] bg-white px-5 py-4'>
+          <p class='text-xs tracking-[0.25em] uppercase text-[#B76E79] font-light mb-3'>Need Source Documents</p>
+          <p class='text-sm text-gray-900 font-normal mb-2'>공개 환불규정 미확인 스튜디오</p>
+          <p class='text-sm text-gray-600 font-light leading-relaxed'>
+            {refundStudioPending.join(' · ')}
+          </p>
+          <p class='text-xs text-gray-500 font-light leading-relaxed mt-3'>
+            제휴처 계약서 또는 가격표 원문 확보 후 개별 규정이 확인되면 홈페이지 기준을 업데이트합니다.
+          </p>
+        </div>
+
+        <div>
+          <p class='text-xs tracking-[0.25em] uppercase text-[#B76E79] font-light mb-3'>Default Standard</p>
+          <div class='grid grid-cols-1 sm:grid-cols-2 gap-3'>
+            {refundStudioDefault.map((row) => (
+              <div class='border border-[#E8DDD5] bg-[#FAF8F5] px-5 py-4'>
+                <p class='text-sm text-gray-900 font-normal mb-1'>{row.type}</p>
+                <p class='text-sm text-gray-600 font-light leading-relaxed'>{row.rule}</p>
+              </div>
+            ))}
+          </div>
+          <p class='text-xs text-gray-500 font-light leading-relaxed mt-4'>
+            기준: 소비자분쟁해결기준 「사진현상 및 촬영업」. 공개 규정 미확인 스튜디오는 위 기준을 기본 적용하며, 개별 규정이 확인되는 경우 계약서와 홈페이지에 반영합니다.
+          </p>
+        </div>
       </div>
 
       <ul class='text-xs text-gray-500 mt-6 font-light leading-relaxed space-y-1.5'>
