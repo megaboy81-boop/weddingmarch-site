@@ -68,6 +68,11 @@ const categories = [
   },
 ];
 
+const seasonEvent = {
+  image: `${base}/images/events/season-special-event.jpeg`,
+  alt: '웨딩마치 시즌 한정 특별 이벤트 안내',
+};
+
 // ── ① 스튜디오 제휴 10곳 비교표 (정본: 가격표시제_추출_2026-05-28.md) ──
 const studioRows = [
   { name: '춘천 피아',     base: '110~130만',  staff: '대표 지정 30만',                          outdoor: '야외/야간 서비스',                    raw: '440,000' },
@@ -198,7 +203,7 @@ const refundStudioDefault = [
 const faqs = [
   {
     q: '피팅은 언제 진행하나요?',
-    a: '1차 피팅은 결혼식 3개월 전, 2차 피팅은 1개월 전에 진행됩니다. 각 피팅 시 3벌씩 착용해보실 수 있습니다.'
+    a: '1차 피팅은 결혼식 3개월 전 3벌, 2차 피팅은 1개월 전 4벌 기준으로 진행됩니다.'
   },
   {
     q: '드레스 수선은 포함인가요?',
@@ -227,6 +232,16 @@ const faqs = [
       <p class='text-white/70 text-sm font-light mt-3'>드레스부터 당일 서비스까지 원스톱으로</p>
     </div>
   </section>
+
+  <!-- 시즌 이벤트 모달 -->
+  <div id='seasonEventModal' class='season-event-modal hidden' role='dialog' aria-modal='true' aria-labelledby='seasonEventTitle'>
+    <div class='season-event-backdrop' data-event-close></div>
+    <div class='season-event-frame'>
+      <button class='season-event-close' type='button' aria-label='이벤트 창 닫기' data-event-close>×</button>
+      <h2 id='seasonEventTitle' class='sr-only'>시즌 한정 특별 이벤트</h2>
+      <img class='season-event-banner' src={seasonEvent.image} alt={seasonEvent.alt} loading='eager' decoding='async' />
+    </div>
+  </div>
 
   <!-- 카테고리 진입 카드 -->
   <section class='py-20 px-6' style='background: #FAF8F5;'>
@@ -537,7 +552,7 @@ const faqs = [
         {[
           { step: '01', title: '상담 문의', desc: '인스타 DM 또는 전화로 문의주세요' },
           { step: '02', title: '1차 피팅', desc: '결혼식 3개월 전 · 드레스 3벌 착용' },
-          { step: '03', title: '2차 피팅', desc: '결혼식 1개월 전 · 최종 드레스 확정' },
+          { step: '03', title: '2차 피팅', desc: '결혼식 1개월 전 · 드레스 4벌 착용' },
           { step: '04', title: '결혼식 당일', desc: '헤어·메이크업·도우미 원스톱 서비스' },
         ].map((step) => (
           <div class='text-center'>
@@ -595,7 +610,100 @@ const faqs = [
 
 </Layout>
 
+<style>
+  .season-event-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 220;
+    display: grid;
+    place-items: center;
+    padding: 22px;
+  }
+
+  .season-event-modal.hidden {
+    display: none;
+  }
+
+  .season-event-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 14, 12, 0.72);
+    backdrop-filter: blur(10px);
+  }
+
+  .season-event-frame {
+    position: relative;
+    width: min(720px, calc(100vw - 44px));
+    max-height: calc(100vh - 44px);
+    background: #fbfaf7;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    box-shadow: 0 28px 80px rgba(17, 11, 8, 0.38);
+    overflow: hidden;
+  }
+
+  .season-event-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(26, 16, 8, 0.16);
+    border-radius: 999px;
+    background: rgba(251, 250, 247, 0.92);
+    color: #1a1008;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(17, 11, 8, 0.14);
+  }
+
+  .season-event-banner {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: calc(100vh - 44px);
+    object-fit: contain;
+  }
+
+  @media (max-width: 760px) {
+    .season-event-modal {
+      padding: 14px;
+      align-items: start;
+      overflow: auto;
+    }
+
+    .season-event-frame {
+      width: min(100%, 520px);
+      max-height: calc(100dvh - 28px);
+    }
+
+    .season-event-banner {
+      max-height: calc(100dvh - 28px);
+    }
+  }
+</style>
+
 <script>
+  const eventModal = document.getElementById('seasonEventModal');
+  if (eventModal) {
+    const closeEventModal = () => {
+      eventModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    };
+    const openEventModal = () => {
+      eventModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    };
+    window.setTimeout(openEventModal, 450);
+    eventModal.querySelectorAll('[data-event-close]').forEach((element) => {
+      element.addEventListener('click', closeEventModal);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !eventModal.classList.contains('hidden')) closeEventModal();
+    });
+  }
+
   // 스튜디오 선택 품목 아코디언
   document.querySelectorAll('.acc-btn').forEach(btn => {
     btn.addEventListener('click', () => {
