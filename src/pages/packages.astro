@@ -234,7 +234,7 @@ const faqs = [
   </section>
 
   <!-- 시즌 이벤트 모달 -->
-  <div id='seasonEventModal' class='season-event-modal hidden' role='dialog' aria-modal='true' aria-labelledby='seasonEventTitle'>
+  <div id='seasonEventModal' class='season-event-modal hidden' role='dialog' aria-modal='true' aria-hidden='true' aria-labelledby='seasonEventTitle'>
     <div class='season-event-backdrop' data-event-close></div>
     <div class='season-event-frame'>
       <button class='season-event-close' type='button' aria-label='이벤트 창 닫기' data-event-close>×</button>
@@ -618,10 +618,21 @@ const faqs = [
     display: grid;
     place-items: center;
     padding: 22px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+      opacity 0.46s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear;
   }
 
   .season-event-modal.hidden {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.42s ease,
+      visibility 0s linear 0.42s;
   }
 
   .season-event-backdrop {
@@ -629,6 +640,12 @@ const faqs = [
     inset: 0;
     background: rgba(18, 14, 12, 0.72);
     backdrop-filter: blur(10px);
+    opacity: 1;
+    transition: opacity 0.46s ease;
+  }
+
+  .season-event-modal.hidden .season-event-backdrop {
+    opacity: 0;
   }
 
   .season-event-frame {
@@ -639,6 +656,16 @@ const faqs = [
     border: 1px solid rgba(255, 255, 255, 0.72);
     box-shadow: 0 28px 80px rgba(17, 11, 8, 0.38);
     overflow: hidden;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition:
+      opacity 0.5s ease,
+      transform 0.58s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .season-event-modal.hidden .season-event-frame {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
   }
 
   .season-event-close {
@@ -682,18 +709,31 @@ const faqs = [
       max-height: calc(100dvh - 28px);
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .season-event-modal,
+    .season-event-backdrop,
+    .season-event-frame {
+      transition: none;
+    }
+  }
 </style>
 
 <script>
   const eventModal = document.getElementById('seasonEventModal');
   if (eventModal) {
+    let autoCloseTimer: ReturnType<typeof window.setTimeout> | undefined;
     const closeEventModal = () => {
+      if (autoCloseTimer) window.clearTimeout(autoCloseTimer);
       eventModal.classList.add('hidden');
+      eventModal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     };
     const openEventModal = () => {
       eventModal.classList.remove('hidden');
+      eventModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      autoCloseTimer = window.setTimeout(closeEventModal, 10000);
     };
     window.setTimeout(openEventModal, 450);
     eventModal.querySelectorAll('[data-event-close]').forEach((element) => {
