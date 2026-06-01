@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const title = '춘천 웨딩 스드메 가격 · 정찰 패키지 | 웨딩마치 춘천';
-const description = '춘천 웨딩마치 스드메 기본 패키지 180만원 정찰 안내. 제휴 스튜디오 11곳·드레스·헤어메이크업 기본가와 선택 품목, 환불·위약금 기준까지 공정위 결혼서비스 가격표시제에 따라 투명 공개. 강원도 춘천 웨딩 원스톱.';
+const description = '춘천 웨딩마치 스드메 기본 패키지 180만원 정찰 안내. 제휴 스튜디오 10곳·드레스·헤어메이크업 기본가와 선택 품목, 환불·위약금 기준까지 공정위 결혼서비스 가격표시제에 따라 투명 공개. 강원도 춘천 웨딩 원스톱.';
 
 // ── 대표 정찰 금액 (가격표시제 대응용 상단 노출) ──
 const fixedPriceRows = [
@@ -39,7 +39,7 @@ const categories = [
   {
     name: 'Studio',
     nameKo: '스튜디오 촬영',
-    desc: '스드메 기본 패키지 기준. 제휴 스튜디오 11곳 중 선택하며 담당자 지정·야외/야간·앨범 등 선택 가능.',
+    desc: '스드메 기본 패키지 기준. 제휴 스튜디오 10곳 중 선택하며 담당자 지정·야외/야간·앨범 등 선택 가능.',
     price: '스드메 180만원',
     priceNote: '촬영데이터 44만원',
     anchor: 'studio',
@@ -62,12 +62,11 @@ const categories = [
   },
 ];
 
-// ── ① 스튜디오 제휴 11곳 비교표 (정본: 가격표시제_추출_2026-05-28.md) ──
+// ── ① 스튜디오 제휴 10곳 비교표 (정본: 가격표시제_추출_2026-05-28.md) ──
 const studioRows = [
   { name: '춘천 피아',     base: '110~130만',  staff: '대표 지정 30만',                          outdoor: '야외/야간 서비스',                    raw: '440,000' },
   { name: '원주 테라스',   base: '90~110만',   staff: 'ㅡ',                                       outdoor: '야간 10만',                            raw: '330,000' },
   { name: '원규',         base: '120~140만',  staff: '실장 200,000 · 팀장 100,000',             outdoor: '야간 로드씬 22만',                     raw: '440,000' },
-  { name: '메이',         base: '90~110만',   staff: '상담 안내',                                outdoor: '상담 안내',                            raw: '440,000' },
   { name: '가을 시그니처', base: '90~110만',   staff: '220,000',                                  outdoor: '야간&노을 110,000',                    raw: '440,000' },
   { name: '가을 더브라이드', base: '110~130만', staff: '220,000',                                 outdoor: '야간&노을 220,000',                    raw: '440,000' },
   { name: '구호 블랙라벨', base: '100~120만',  staff: '200,000',                                  outdoor: '시간추가 1h 110,000 · 야외스냅 330,000', raw: '440,000' },
@@ -117,6 +116,24 @@ const refundHair = [
   '결제일로부터 14일 경과 또는 행사 한 달 이내 취소 시 — 수수료 50%',
   '행사 2주 이내 취소 시 — 80%',
   '행사 진행 주 · 당일 취소 시 — 위약금 100%',
+];
+const refundStudio = [
+  {
+    type: '고객 사유 · 촬영 개시 이전',
+    rule: '총 촬영요금의 10% 부담',
+  },
+  {
+    type: '고객 사유 · 촬영 개시 이후',
+    rule: '기촬영 단계비용 + 잔여금액의 10% 부담',
+  },
+  {
+    type: '업체 사유 · 촬영 개시 이전',
+    rule: '계약금 환급 + 총 촬영요금의 10% 배상',
+  },
+  {
+    type: '업체 사유 · 촬영 개시 이후',
+    rule: '계약금 환급 + 촬영한 사진 원판 제공',
+  },
 ];
 
 const faqs = [
@@ -215,7 +232,7 @@ const faqs = [
         <h2 class='font-display text-3xl md:text-4xl font-light text-gray-900 mb-4'>스튜디오 가격</h2>
         <div class='w-12 h-px bg-[#B76E79] mx-auto mb-5'></div>
         <p class='text-sm text-gray-500 font-light leading-relaxed max-w-2xl mx-auto'>
-          제휴 스튜디오 11곳 중 선택. 공통 기본 구성은 <strong class='font-normal text-gray-700'>20R / 20P</strong>이며,
+          제휴 스튜디오 10곳 중 선택. 공통 기본 구성은 <strong class='font-normal text-gray-700'>20R / 20P</strong>이며,
           담당자 지정·야외/야간·원본/수정본 등은 스튜디오별로 다릅니다.
         </p>
       </div>
@@ -389,17 +406,26 @@ const faqs = [
         </div>
       </div>
 
-      <!-- 스튜디오 환불 안내 -->
-      <div class='mt-6 border border-[#D4A0A7] bg-white px-7 py-5'>
-        <p class='text-sm text-gray-700 font-light leading-relaxed'>
-          <strong class='font-normal text-gray-900'>스튜디오</strong> — 환불·위약금 규정은 제휴 스튜디오별 규정을 기준으로 하며, 계약 시 안내드립니다.
+      <!-- 스튜디오 환불 기준 -->
+      <div class='mt-6 border border-[#D4A0A7] bg-white p-7'>
+        <h3 class='font-display text-xl font-light text-gray-900 mb-4 pb-3 border-b border-[#E8DDD5]'>스튜디오 촬영</h3>
+        <div class='grid grid-cols-1 sm:grid-cols-2 gap-3'>
+          {refundStudio.map((row) => (
+            <div class='border border-[#E8DDD5] bg-[#FAF8F5] px-5 py-4'>
+              <p class='text-sm text-gray-900 font-normal mb-1'>{row.type}</p>
+              <p class='text-sm text-gray-600 font-light leading-relaxed'>{row.rule}</p>
+            </div>
+          ))}
+        </div>
+        <p class='text-xs text-gray-500 font-light leading-relaxed mt-4'>
+          기준: 소비자분쟁해결기준 「사진현상 및 촬영업」. 제휴 스튜디오별 개별 규정이 고객에게 더 유리한 경우 해당 규정을 우선 적용합니다.
         </p>
       </div>
 
       <ul class='text-xs text-gray-500 mt-6 font-light leading-relaxed space-y-1.5'>
         <li>· 표시 금액은 VAT 포함 기준가이며, 선택 품목·제휴사·시즌에 따라 변동될 수 있습니다. (2026년 기준)</li>
         <li>· 근거: 공정거래위원회 「결혼준비대행업 표준약관」 · 「소비자분쟁해결기준」 · 「결혼서비스 가격표시제」</li>
-        <li>· 정확한 항목별 금액·환급 기준은 계약서 및 상담 시 안내드립니다.</li>
+        <li>· 제휴 스튜디오 변경 또는 선택 품목 추가 시 최종 계약금액은 계약서에 확정 표시됩니다.</li>
       </ul>
     </div>
   </section>
