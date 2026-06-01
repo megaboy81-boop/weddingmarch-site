@@ -160,15 +160,20 @@ const refundStudioKnown = [
     rule: '변경: 30일 이전 무료, 30~15일 전 50% / 취소: 30일 이전 50%, 30일 이후 100%',
   },
   {
+    studio: '브라키오',
+    source: '제휴 스튜디오 공통 기준',
+    rule: '취소: 촬영 개시 이전 총 촬영요금의 10% 부담 / 촬영 개시 이후 기촬영 단계비용 + 잔여금액의 10% 부담 / 업체 사유 시 계약금 환급 및 기준 배상',
+  },
+  {
+    studio: '플로우',
+    source: '제휴 스튜디오 공통 기준',
+    rule: '취소: 촬영 개시 이전 총 촬영요금의 10% 부담 / 촬영 개시 이후 기촬영 단계비용 + 잔여금액의 10% 부담 / 업체 사유 시 계약금 환급 및 기준 배상',
+  },
+  {
     studio: '섬',
     source: '섬스튜디오 공개 규정',
     rule: '변경: 30일 이전 무료, 30~15일 전 50% / 취소: 30일 이전 50%, 30일 이후 100%',
   },
-];
-
-const refundStudioOfficialStandard = [
-  '브라키오',
-  '플로우',
 ];
 
 const refundStudioDefault = [
@@ -464,8 +469,8 @@ const faqs = [
       <div class='mt-6 border border-[#D4A0A7] bg-white p-7'>
         <h3 class='font-display text-xl font-light text-gray-900 mb-2'>스튜디오 촬영</h3>
         <p class='text-xs text-gray-500 font-light leading-relaxed mb-5 pb-4 border-b border-[#E8DDD5]'>
-          공개 환불·위약금 규정 또는 전달받은 기준이 확인된 제휴 스튜디오는 해당 규정을 표시합니다.
-          별도 기준을 표시하지 않은 제휴 스튜디오는 소비자분쟁해결기준 「사진현상 및 촬영업」 기준을 기본 적용합니다.
+          제휴 스튜디오별 공개 환불·위약금 규정 또는 공통 적용 기준을 표시합니다.
+          세부 조건은 최종 계약서 기준으로 확정됩니다.
         </p>
 
         <div class='mb-6'>
@@ -479,17 +484,6 @@ const faqs = [
               </div>
             ))}
           </div>
-        </div>
-
-        <div class='mb-6 border border-[#E8DDD5] bg-white px-5 py-4'>
-          <p class='text-xs tracking-[0.25em] uppercase text-[#B76E79] font-light mb-3'>Official Standard</p>
-          <p class='text-sm text-gray-900 font-normal mb-2'>제휴 스튜디오 공통 기준 적용</p>
-          <p class='text-sm text-gray-600 font-light leading-relaxed'>
-            {refundStudioOfficialStandard.join(' · ')}
-          </p>
-          <p class='text-xs text-gray-500 font-light leading-relaxed mt-3'>
-            별도 안내가 없는 경우 아래 공식 기준을 기본으로 적용합니다.
-          </p>
         </div>
 
         <div>
