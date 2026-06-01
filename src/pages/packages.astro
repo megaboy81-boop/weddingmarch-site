@@ -3,34 +3,40 @@ import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const title = '춘천 웨딩 스드메 가격 · 정찰 패키지 | 웨딩마치 춘천';
-const description = '춘천 웨딩마치 스드메 기본 패키지 180만원 정찰 안내. 제휴 스튜디오 10곳·드레스·헤어메이크업 기본가와 선택 품목, 환불·위약금 기준까지 공정위 결혼서비스 가격표시제에 따라 투명 공개. 강원도 춘천 웨딩 원스톱.';
+const description = '춘천 웨딩마치 본식 패키지 180만원, 스튜디오 패키지 110~130만원, 촬영데이터 44~55만원 안내. 제휴 스튜디오·드레스·헤어메이크업 기본가와 환불·위약금 기준 공개.';
+const ogImage = '/images/bg-new/gal1.webp';
 
 // ── 대표 정찰 금액 (가격표시제 대응용 상단 노출) ──
 const fixedPriceRows = [
   {
-    item: '스드메 기본 패키지',
+    item: '본식 패키지',
     price: '1,800,000원',
-    detail: '제휴 스튜디오 + 드레스 + 헤어·메이크업 기본 구성 기준',
+    detail: '드레스 + 헤어·메이크업 구성 기준',
   },
   {
-    item: '촬영데이터',
-    price: '440,000원',
+    item: '스튜디오 패키지',
+    price: '1,100,000 ~ 1,300,000원',
     detail: '스드메 계약 시 200,000원 지원',
   },
   {
-    item: '혼주 메이크업',
-    price: '180,000원',
-    detail: '여성 1인 기준',
+    item: '촬영데이터',
+    price: '440,000 ~ 550,000원',
+    detail: '원본, 수정본 파일',
+  },
+  {
+    item: '혼주 헤어·메이크업',
+    price: '여 200,000원 / 남 80,000원',
+    detail: '오전 7시 이전 진행 시 얼리스타트 비용 발생',
   },
   {
     item: '혼주 한복',
     price: '400,000원',
-    detail: '기본 대여 기준',
+    detail: '여성 1인 기준',
   },
   {
-    item: '신상 피팅',
-    price: '30,000 ~ 50,000원',
-    detail: '드레스 상태와 피팅 조건에 따라 상이',
+    item: '웨딩드레스 투어',
+    price: '50,000원',
+    detail: '3벌 피팅 가능',
   },
 ];
 
@@ -39,17 +45,17 @@ const categories = [
   {
     name: 'Studio',
     nameKo: '스튜디오 촬영',
-    desc: '스드메 기본 패키지 기준. 제휴 스튜디오 10곳 중 선택하며 담당자 지정·야외/야간·앨범 등 선택 가능.',
-    price: '스드메 180만원',
-    priceNote: '촬영데이터 44만원',
+    desc: '제휴 스튜디오 10곳 중 선택하며 담당자 지정·야외/야간·앨범 등 선택 가능.',
+    price: '110 ~ 130만원',
+    priceNote: '스드메 계약 시 20만원 지원',
     anchor: 'studio',
   },
   {
     name: 'Dress',
     nameKo: '드레스',
     desc: '본식·촬영 드레스 대여. 핼퍼·디자인 추가·재피팅·턱시도 옵션 선택 가능.',
-    price: '본식 80만 / 촬영 15만',
-    priceNote: '핼퍼·옵션 별도',
+    price: '본식 패키지 180만원',
+    priceNote: '드레스 투어 5만원',
     anchor: 'dress',
   },
   {
@@ -57,7 +63,7 @@ const categories = [
     nameKo: '헤어·메이크업',
     desc: '본식·앞잔치·테스트·일반(혼주) 헤어메이크업. 담당자 지정·헤어피스·얼리스타트 등 선택.',
     price: '본식 65만원부터',
-    priceNote: '혼주 메이크업 18만원',
+    priceNote: '혼주 여 20만원 / 남 8만원',
     anchor: 'hairmakeup',
   },
 ];
@@ -65,7 +71,7 @@ const categories = [
 // ── ① 스튜디오 제휴 10곳 비교표 (정본: 가격표시제_추출_2026-05-28.md) ──
 const studioRows = [
   { name: '춘천 피아',     base: '110~130만',  staff: '대표 지정 30만',                          outdoor: '야외/야간 서비스',                    raw: '440,000' },
-  { name: '원주 테라스',   base: '90~110만',   staff: 'ㅡ',                                       outdoor: '야간 10만',                            raw: '330,000' },
+  { name: '원주 테라스',   base: '110~130만',  staff: 'ㅡ',                                       outdoor: '야간 10만',                            raw: '440,000' },
   { name: '원규',         base: '120~140만',  staff: '실장 200,000 · 팀장 100,000',             outdoor: '야간 로드씬 22만',                     raw: '440,000' },
   { name: '가을 시그니처', base: '90~110만',   staff: '220,000',                                  outdoor: '야간&노을 110,000',                    raw: '440,000' },
   { name: '가을 더브라이드', base: '110~130만', staff: '220,000',                                 outdoor: '야간&노을 220,000',                    raw: '440,000' },
@@ -87,22 +93,22 @@ const studioOptions = [
 
 // ── ② 드레스 가격표 ──
 const dressRows = [
-  { item: '본식 드레스', base: '800,000원',  helper: '본식 1회당 200,000 ~ 250,000원', design: '300,000 ~ 2,000,000원' },
-  { item: '촬영 드레스', base: '150,000원',  helper: '촬영 1회당 200,000 ~ 350,000원', design: '200,000원' },
+  { item: '본식 드레스', base: '800,000원',  helper: '촬영 & 본식 1회당 200,000 ~ 350,000원', design: '300,000 ~ 2,000,000원' },
+  { item: '촬영 드레스', base: '150,000원',  helper: '촬영 & 본식 1회당 200,000 ~ 350,000원', design: '200,000원' },
 ];
 const dressOptions = [
   { item: '드레스 추가 대여', detail: '기본가격과 동일' },
   { item: '재피팅비 (본식)',  detail: '1회 3벌 50,000원' },
-  { item: '드레스 투어 (촬영)', detail: '1회 3벌 50,000원' },
+  { item: '웨딩드레스 투어', detail: '50,000원 · 3벌 피팅 가능' },
   { item: '턱시도 대여',      detail: '150,000 ~ 200,000원' },
 ];
 
 // ── ③ 헤어·메이크업 가격표 ──
 const hairRows = [
   { item: '본식 (신랑·신부)',            base: '650,000 ~ 800,000원', staff: '실장급 무료 / 원장급 +200,000원', etc: '헤어피스 35,000~110,000 · 촬영 헤어변경 350,000 · 가발 35,000~110,000 · 흑채 무료' },
-  { item: '앞잔치·셀프촬영',             base: '440,000원',          staff: '원장급 +200,000원',              etc: '얼리스타트(7시 이전·1인) 30,000~50,000 (모든 헤메 공통 적용)' },
+  { item: '앞잔치·셀프촬영',             base: '440,000원',          staff: '원장급 +200,000원',              etc: '오전 7시 이전 진행 시 얼리스타트 비용 발생' },
   { item: '테스트 헤메 (신부)',          base: '계약 전 385,000 / 계약 후 275,000원', staff: '실장급 무료 / 원장급 +200,000원', etc: '신랑 추가 시 +100,000 · 혼주 테스트 헤메는 일반 헤메와 동일' },
-  { item: '일반 헤메 (일반·혼주·돌잔치)', base: '여성 1인 180,000~200,000 / 남성 1인 60,000~80,000원', staff: '지정 불가', etc: '협력업체·패키지에 따라 금액 상이' },
+  { item: '혼주 헤어·메이크업', base: '여성 1인 200,000원 / 남성 1인 80,000원', staff: '지정 불가', etc: '오전 7시 이전 진행 시 얼리스타트 비용 발생' },
 ];
 
 // ── ④ 환불·위약금 기준 (정본 데이터) ──
@@ -122,6 +128,11 @@ const refundStudioKnown = [
     studio: '춘천 피아',
     source: '피아스튜디오 프랜차이즈 공개 규정',
     rule: '촬영일 한 달 전까지 변경·취소 무료 / 한 달 이내 300,000원 / 2주 이내 100%',
+  },
+  {
+    studio: '원주 테라스',
+    source: '원주 테라스 전달 규정',
+    rule: '계약 후 24시간 이내 전액환불 / 촬영일 30일 전 취소 30% 환불 / 15일 전 총 금액 40% 공제 후 환불 / 7일 이내 총 금액 50% 공제 후 환불 / 촬영 완료 후 환불 불가',
   },
   {
     studio: '원규',
@@ -156,7 +167,6 @@ const refundStudioKnown = [
 ];
 
 const refundStudioPending = [
-  '원주 테라스',
   '브라키오',
   '플로우',
 ];
@@ -199,11 +209,11 @@ const faqs = [
   },
 ];
 ---
-<Layout title={title} description={description}>
+<Layout title={title} description={description} ogImage={ogImage}>
 
   <!-- 페이지 히어로 -->
   <section class='relative h-56 md:h-72 overflow-hidden'>
-    <img src={`${base}/images/instagram/08.webp`} alt='패키지 헤더' class='w-full h-full object-cover object-center' />
+    <img src={`${base}/images/bg-new/gal1.webp`} alt='웨딩마치 스튜디오 메이크업룸' class='w-full h-full object-cover object-center' />
     <div class='absolute inset-0' style='background: linear-gradient(to bottom, rgba(26,16,8,0.5), rgba(26,16,8,0.75));'></div>
     <div class='absolute inset-0 flex flex-col items-center justify-center text-center px-6'>
       <p class='text-white/60 text-xs tracking-[0.5em] uppercase font-light mb-3'>Services & Pricing</p>
@@ -232,7 +242,7 @@ const faqs = [
             <p class='text-xs tracking-[0.4em] uppercase font-light mb-4' style='color:#D4A0A7;'>Fixed Price</p>
             <h3 class='font-display text-3xl md:text-4xl font-light text-white mb-4'>대표 정찰 금액</h3>
             <p class='text-sm text-white/60 font-light leading-relaxed'>
-              상담 전 바로 확인할 수 있는 기본 기준가입니다. 세부 선택 품목은 아래 항목별 표에서 확인할 수 있습니다.
+              상담 전 바로 확인할 수 있는 기본 기준가입니다. 모든 금액은 제휴 또는 이벤트에 따라 진행 금액이 상이할 수 있습니다.
             </p>
           </div>
           <div class='divide-y divide-[#E8DDD5]'>
@@ -337,7 +347,7 @@ const faqs = [
         <p class='text-xs tracking-[0.5em] text-[#B76E79] uppercase font-light mb-3'>② Dress</p>
         <h2 class='font-display text-3xl md:text-4xl font-light text-gray-900 mb-4'>드레스 가격</h2>
         <div class='w-12 h-px bg-[#B76E79] mx-auto mb-5'></div>
-        <p class='text-sm text-gray-500 font-light leading-relaxed'>피팅 안내 — 본식 2회 / 촬영 1회 (계약 조건에 따라 횟수 상이)</p>
+        <p class='text-sm text-gray-500 font-light leading-relaxed'>피팅 안내 — 본식 2회 / 촬영 1회. 헬퍼 비용은 진행 지역 및 시간에 따라 상이합니다.</p>
       </div>
 
       <div class='border border-[#E8DDD5] overflow-x-auto bg-white'>
@@ -383,7 +393,7 @@ const faqs = [
         <div class='w-12 h-px bg-[#B76E79] mx-auto mb-5'></div>
         <p class='text-sm text-gray-500 font-light leading-relaxed max-w-2xl mx-auto'>
           담당자 지정 — 실장급 무료 / <strong class='font-normal text-gray-700'>원장급 +200,000원</strong>.
-          얼리스타트(7시 이전·1인) 30,000~50,000원은 모든 헤메에 공통 적용됩니다.
+          오전 7시 이전 진행 시 얼리스타트 비용이 발생합니다.
         </p>
       </div>
 
@@ -454,7 +464,7 @@ const faqs = [
       <div class='mt-6 border border-[#D4A0A7] bg-white p-7'>
         <h3 class='font-display text-xl font-light text-gray-900 mb-2'>스튜디오 촬영</h3>
         <p class='text-xs text-gray-500 font-light leading-relaxed mb-5 pb-4 border-b border-[#E8DDD5]'>
-          공개 환불·위약금 규정이 확인된 제휴 스튜디오는 해당 규정을 표시합니다.
+          공개 환불·위약금 규정 또는 전달받은 기준이 확인된 제휴 스튜디오는 해당 규정을 표시합니다.
           공개 기준이 확인되지 않은 스튜디오는 원문 확보 전까지 소비자분쟁해결기준 「사진현상 및 촬영업」 기준을 기본 적용합니다.
         </p>
 
@@ -499,7 +509,7 @@ const faqs = [
       </div>
 
       <ul class='text-xs text-gray-500 mt-6 font-light leading-relaxed space-y-1.5'>
-        <li>· 표시 금액은 VAT 포함 기준가이며, 선택 품목·제휴사·시즌에 따라 변동될 수 있습니다. (2026년 기준)</li>
+        <li>· 표시 금액은 VAT 포함 기준가이며, 제휴 또는 이벤트에 따라 진행 금액이 상이할 수 있습니다. (2026년 기준)</li>
         <li>· 근거: 공정거래위원회 「결혼준비대행업 표준약관」 · 「소비자분쟁해결기준」 · 「결혼서비스 가격표시제」</li>
         <li>· 제휴 스튜디오 변경 또는 선택 품목 추가 시 최종 계약금액은 계약서에 확정 표시됩니다.</li>
       </ul>
