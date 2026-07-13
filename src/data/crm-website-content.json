@@ -1,34 +1,38 @@
 {
-  "schemaVersion": 1,
-  "revision": "baseline-32cfd426244f",
-  "publishedAt": "",
-  "source": "public-baseline",
-  "approvedSections": [],
-  "intro": {
-    "enabled": false,
-    "text": "촬영보다 본식이 더 예뻤어요"
+  "approvedSections" : [
+    "intro"
+  ],
+  "channels" : {
+    "enabled" : false,
+    "insta" : "https://www.instagram.com/ch_weddingmarch/",
+    "kakao" : "",
+    "naver" : "",
+    "phone" : "0507-1377-3536"
   },
-  "prices": {
-    "enabled": false,
-    "items": []
+  "hours" : {
+    "enabled" : false,
+    "text" : "매일 10:00 – 19:00"
   },
-  "refund": {
-    "enabled": false,
-    "text": ""
+  "intro" : {
+    "enabled" : true,
+    "text" : "춘천 웨딩마치 · 드레스 120벌 · 2회 피팅 · 미래웨딩홀 1층. 상담을 통해 두 분의 예식 여정에 맞는 다음 준비를 안내합니다."
   },
-  "hours": {
-    "enabled": false,
-    "text": "매일 10:00 – 19:00"
+  "notice" : {
+    "enabled" : false,
+    "text" : ""
   },
-  "notice": {
-    "enabled": false,
-    "text": ""
+  "prices" : {
+    "enabled" : false,
+    "items" : [
+
+    ]
   },
-  "channels": {
-    "enabled": false,
-    "phone": "0507-1377-3536",
-    "naver": "",
-    "kakao": "",
-    "insta": "https://www.instagram.com/ch_weddingmarch/"
-  }
+  "publishedAt" : "2026-07-13T15:02:43Z",
+  "refund" : {
+    "enabled" : false,
+    "text" : ""
+  },
+  "revision" : "wm-20260714_000243-169f45be2d",
+  "schemaVersion" : 1,
+  "source" : "weddingmarch-crm"
 }
