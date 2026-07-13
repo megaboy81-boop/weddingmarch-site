@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { effectiveWebsiteContent } from '../data/crmWebsiteContent';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const title = '춘천웨딩드레스 웨딩마치 | 2회 피팅 · 드레스 120벌 · 미래웨딩홀 입점';
@@ -90,7 +91,7 @@ const stats = [
           <div style="overflow:hidden;display:block;"><span class="title-slide-up" style="display:block;animation-delay:0.4s;">Wedding</span></div>
           <div style="overflow:hidden;display:block;"><span class="gold-gradient title-slide-up" style="display:block;font-style:italic;animation-delay:0.65s;">March</span></div>
         </h1>
-        <p id="hero-sub" style="font-size:clamp(14px,1.8vw,19px);color:rgba(255,255,255,0.58);font-weight:300;letter-spacing:0.08em;margin-bottom:40px;opacity:0;transform:translateY(16px);">촬영보다 본식이 더 예뻤어요</p>
+        <p id="hero-sub" data-crm-section="intro" style="font-size:clamp(14px,1.8vw,19px);color:rgba(255,255,255,0.58);font-weight:300;letter-spacing:0.08em;margin-bottom:40px;opacity:0;transform:translateY(16px);">{effectiveWebsiteContent.intro}</p>
         <div id="hero-cta" style="display:flex;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(16px);pointer-events:auto;">
           <a href={`${base}/contact`} class="btn-primary magnetic">피팅 예약하기</a>
           <a href={`${base}/gallery`} class="btn-outline magnetic">드레스 보러가기</a>
@@ -233,13 +234,13 @@ const stats = [
       <span class='section-label gsap-fade' style="color:rgba(212,175,117,0.7);">Instagram</span>
       <h3 class='font-display gsap-fade' style="font-size:clamp(26px,4vw,42px);font-weight:300;color:white;">@ch_weddingmarch</h3>
     </div>
-    <a href="https://www.instagram.com/ch_weddingmarch/" target="_blank" rel="noopener"
+    <a href={effectiveWebsiteContent.insta} target="_blank" rel="noopener"
        class="gsap-fade btn-gold" style="white-space:nowrap;">팔로우</a>
   </div>
   <!-- 6 photos 그리드 -->
   <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:2px;">
     {['155','165','270','465','1450','1465'].map(n => (
-      <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
+      <a href={effectiveWebsiteContent.insta} target='_blank' rel='noopener'
          class="insta-tile"
          style="display:block;aspect-ratio:1;overflow:hidden;position:relative;">
         <img src={`${base}/images/instagram/${n}.webp`} alt='웨딩마치 인스타그램'

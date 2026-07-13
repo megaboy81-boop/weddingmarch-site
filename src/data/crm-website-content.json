@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "revision": "baseline-32cfd426244f",
+  "publishedAt": "",
+  "source": "public-baseline",
+  "approvedSections": [],
+  "intro": {
+    "enabled": false,
+    "text": "촬영보다 본식이 더 예뻤어요"
+  },
+  "prices": {
+    "enabled": false,
+    "items": []
+  },
+  "refund": {
+    "enabled": false,
+    "text": ""
+  },
+  "hours": {
+    "enabled": false,
+    "text": "매일 10:00 – 19:00"
+  },
+  "notice": {
+    "enabled": false,
+    "text": ""
+  },
+  "channels": {
+    "enabled": false,
+    "phone": "0507-1377-3536",
+    "naver": "",
+    "kakao": "",
+    "insta": "https://www.instagram.com/ch_weddingmarch/"
+  }
+}

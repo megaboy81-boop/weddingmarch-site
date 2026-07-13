@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { crmWebsiteContent, effectiveWebsiteContent, phoneHref } from '../data/crmWebsiteContent';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const title = '예약 · 문의 | 웨딩마치 춘천 웨딩드레스';
 const description = '춘천 웨딩마치 예약 및 문의. 인스타그램 DM 또는 전화로 연락주세요. 강원도 춘천 웨딩드레스 전문샵.';
@@ -28,7 +29,7 @@ const description = '춘천 웨딩마치 예약 및 문의. 인스타그램 DM �
       </div>
       <!-- TODO: 카카오 채널 ID 확보 후 교체 (현재 채널 미확보로 카카오 버튼 제거, 인스타 DM/전화 CTA로 대체) -->
       <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px; max-width:680px; margin:0 auto;">
-        <a href='https://www.instagram.com/ch_weddingmarch/' target='_blank' rel='noopener'
+        <a href={effectiveWebsiteContent.insta} target='_blank' rel='noopener'
            style="display:flex; flex-direction:column; align-items:center; gap:16px; padding:36px 24px; background:white; border:1px solid #E8DDD5; text-decoration:none; transition:all 0.3s; text-align:center;"
            onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.08)'"
            onmouseout="this.style.transform='';this.style.boxShadow=''">
@@ -43,7 +44,7 @@ const description = '춘천 웨딩마치 예약 및 문의. 인스타그램 DM �
             <p style="font-size:11px; color:#aaa; margin-top:4px;">가장 빠른 채널</p>
           </div>
         </a>
-        <a href='tel:0507-1377-3536'
+        <a href={phoneHref}
            style="display:flex; flex-direction:column; align-items:center; gap:16px; padding:36px 24px; background:white; border:1px solid #E8DDD5; text-decoration:none; transition:all 0.3s; text-align:center;"
            onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.08)'"
            onmouseout="this.style.transform='';this.style.boxShadow=''">
@@ -54,11 +55,17 @@ const description = '춘천 웨딩마치 예약 및 문의. 인스타그램 DM �
           </div>
           <div>
             <p style="font-size:13px; color:#1a1a1a; font-weight:400; letter-spacing:0.05em; margin-bottom:4px;">전화 문의</p>
-            <p style="font-size:11px; color:var(--rose,#B76E79); letter-spacing:0.1em;">0507-1377-3536</p>
-            <p style="font-size:11px; color:#aaa; margin-top:4px;">매일 10:00 – 19:00</p>
+            <p style="font-size:11px; color:var(--rose,#B76E79); letter-spacing:0.1em;">{effectiveWebsiteContent.phone}</p>
+            <p style="font-size:11px; color:#aaa; margin-top:4px;" data-crm-section="hours">{effectiveWebsiteContent.hours}</p>
           </div>
         </a>
       </div>
+      {crmWebsiteContent.channels.enabled && (crmWebsiteContent.channels.naver || crmWebsiteContent.channels.kakao) && (
+        <div data-crm-section='channels' style='display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px;'>
+          {crmWebsiteContent.channels.naver && <a class='btn-primary' href={crmWebsiteContent.channels.naver} target='_blank' rel='noopener'>네이버 예약</a>}
+          {crmWebsiteContent.channels.kakao && <a class='btn-primary' href={crmWebsiteContent.channels.kakao} target='_blank' rel='noopener'>카카오 상담</a>}
+        </div>
+      )}
     </div>
   </section>
 
@@ -157,11 +164,11 @@ const description = '춘천 웨딩마치 예약 및 문의. 인스타그램 DM �
               </svg>
               네이버 플레이스
             </a>
-            <a href='tel:0507-1377-3536'
+            <a href={phoneHref}
                style="display:inline-flex; align-items:center; gap:6px; padding:10px 18px; border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.7); font-size:11px; letter-spacing:0.1em; text-decoration:none; transition:all 0.2s;"
                onmouseover="this.style.borderColor='rgba(255,255,255,0.5)';this.style.color='white'"
                onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.7)'">
-              📞 0507-1377-3536
+              📞 {effectiveWebsiteContent.phone}
             </a>
           </div>
         </div>
