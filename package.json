@@ -6,6 +6,7 @@
     "dev": "astro dev --host 0.0.0.0 --port 8092",
     "start": "astro dev --host 0.0.0.0 --port 8092",
     "build": "astro build",
+    "build:sites": "astro build && node scripts/prepare-sites-build.mjs",
     "verify:crm-content": "node scripts/verify-crm-content.mjs",
     "preview": "astro preview --host 0.0.0.0 --port 8092",
     "astro": "astro"
